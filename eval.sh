@@ -8,7 +8,7 @@
 #      +ckpt_path=/path/to/dp/checkpoint
 
 # RDP w. Force (Peeling)
-python eval_real_robot_flexiv.py \
+CUDA_VISIBLE_DEVICES=0 python eval_real_robot_flexiv.py \
       --config-name train_latent_diffusion_unet_real_image_workspace \
       task=real_wipe_image_gelsight_emb_ldp_24fps \
       +task.env_runner.output_dir=/path/for/saving/videos \

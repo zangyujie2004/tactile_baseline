@@ -316,7 +316,10 @@ class TrainDiffusionUnetImageWorkspace(BaseWorkspace):
                         # sample trajectory from training set, and evaluate difference
                         batch = dict_apply(train_sampling_batch, lambda x: x.to(device, non_blocking=True))
                         obs_dict = batch['obs']
-                        extended_obs_dict = batch['extended_obs']
+                        if 'extended_obs' in batch.keys():
+                            extended_obs_dict = batch['extended_obs']
+                        else:
+                            extended_obs_dict = None
                         gt_action = batch['action']
 
                         if 'latent' in cfg.name:
@@ -332,12 +335,16 @@ class TrainDiffusionUnetImageWorkspace(BaseWorkspace):
 
                         mse = torch.nn.functional.mse_loss(all_preds, all_gt)
                         step_log['train_action_mse_error'] = mse.item()
+
+                        l1 = torch.mean(torch.abs(all_preds[:,:,:9] - all_gt[:,:,:9]))
+                        step_log['train_pose_l1_error'] = l1.item()
                         del batch
                         del obs_dict
                         del gt_action
                         del result
                         del pred_action
                         del mse
+                        del l1
                 accelerator.wait_for_everyone()
                 
                 # checkpoint

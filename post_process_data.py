@@ -19,7 +19,7 @@ DEBUG_TACTILE_LATENCY = False  # for debugging tactile latency
 DRAW_FORCE = False  # for debugging force
 USE_ABSOLUTE_ACTION = True
 
-TAG = 'peel_v3'
+TAG = 'peel_data'
 ACTION_DIM = 4  # (4 + 15)
 TEMPORAL_DOWNSAMPLE_RATIO = 1  # the ratio for temporal down-sampling
 SENSOR_MODE = 'single_arm_two_realsense_two_tactile'
@@ -28,8 +28,8 @@ MCTAC_PCA_PATH = 'data/PCA_Transform_McTAC_v1'
 PCA_DIM = 15
 
 if __name__ == '__main__':
-    data_dir = f'/home/wendi/Desktop/record_data/{TAG}'
-    save_data_dir = f'/home/wendi/Desktop/record_data/{TAG}_downsample{TEMPORAL_DOWNSAMPLE_RATIO}{"_debug" if DEBUG else ""}_zarr'
+    data_dir = f'/home/pc/workspace/zyh/rdp_data/{TAG}'
+    save_data_dir = f'/home/pc/workspace/zyh/rdp_data/{TAG}_downsample{TEMPORAL_DOWNSAMPLE_RATIO}{"_debug" if DEBUG else ""}_zarr'
     save_data_path = osp.join(osp.join(osp.abspath(os.getcwd()), save_data_dir, f'replay_buffer.zarr'))
     os.makedirs(save_data_dir, exist_ok=True)
     if os.path.exists(save_data_path):

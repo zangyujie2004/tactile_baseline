@@ -176,7 +176,7 @@ class MultiImageObsEncoder(ModuleAttrMixin):
                 if "gripper" not in key: # do not apply transform to tactile image
                     img = self.key_transform_map[key](img)
                 feature = self.key_model_map[key](img)
-                features.append(feature)
+                features.append(feature) # B, 512
         
         # process lowdim input
         for key in self.low_dim_keys:

@@ -11,12 +11,14 @@ from reactive_diffusion_policy.model.diffusion.mask_generator import LowdimMaskG
 from reactive_diffusion_policy.model.vision.multi_image_obs_encoder import MultiImageObsEncoder
 from reactive_diffusion_policy.model.vision.timm_obs_encoder import TimmObsEncoder
 from reactive_diffusion_policy.common.pytorch_util import dict_apply
+from reactive_diffusion_policy.model.vision.tactile_3D_encoder import Tactile3DEncoder
 
 class DiffusionUnetImagePolicy(BaseImagePolicy):
     def __init__(self, 
             shape_meta: dict,
             noise_scheduler: DDPMScheduler,
-            obs_encoder: Union[MultiImageObsEncoder, TimmObsEncoder], 
+            # obs_encoder: Union[MultiImageObsEncoder, TimmObsEncoder],
+            obs_encoder: Tactile3DEncoder, 
             horizon, 
             n_action_steps, 
             n_obs_steps,

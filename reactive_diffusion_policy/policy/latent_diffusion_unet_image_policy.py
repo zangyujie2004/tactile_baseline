@@ -220,6 +220,7 @@ class LatentDiffusionUnetImagePolicy(DiffusionUnetImagePolicy):
 
         # get latent action
         batch_size = nactions.shape[0]
+        
         nlatent_actions = self.at.encoder(
             self.at.preprocess(nactions / self.at.act_scale)
         )

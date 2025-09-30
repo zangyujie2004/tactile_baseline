@@ -12,6 +12,7 @@ from termcolor import cprint
 from typing import Dict
 import copy
 import threading
+from real_sensors import RealRobotEnv
 # Add the project root to the Python path
 ROOT_DIR = str(pathlib.Path(__file__).parent)
 sys.path.append(ROOT_DIR)
@@ -22,24 +23,7 @@ from reactive_diffusion_policy.policy.diffusion_unet_image_policy import Diffusi
 from reactive_diffusion_policy.common.precise_sleep import precise_sleep
 
 
-
-class ObservationBuffer:
-
-    def __init__(self, maxlen: int = 8):
-        self._buf = collections.deque(maxlen=maxlen)
-        self._lock = threading.Lock()
-
-    def append_obs(self, obs):
-        with self._lock:
-            self._buf.append(obs)
-
-    def get_new_obs(self, n_obs_steps):
-        with self._lock:
-            if len(self._buf) < n_obs_steps:
-                return None
-            else:
-                obs_list = list(self._buf)[-n_obs_steps:]
-                return obs_list
+input_key_list = ['left_wrist_img', 'left_robot_tcp_pose', 'left_robot_gripper_width']
 
 class RealWorldDPInfer:
     def __init__(self, cfg: OmegaConf):
@@ -54,6 +38,10 @@ class RealWorldDPInfer:
         
         # The policy configuration is saved within the checkpoint
         policy_cfg = train_cfg.policy
+        self.env = RealRobotEnv(
+                                n_obs_steps=policy_cfg.n_obs_steps,
+                                pca_load_dir=cfg.inference.pca_path,
+                                robo_ip=cfg.inference.robot_ip)
         
         # Instantiate the policy
         self.policy: DiffusionUnetImagePolicy = hydra.utils.instantiate(policy_cfg)
@@ -69,83 +57,52 @@ class RealWorldDPInfer:
         self.policy.to(self.device)
         self.policy.eval()
 
-        self.obs_buffer = ObservationBuffer(maxlen=8)
         # =========== Initialize observation buffer ===========
         self.n_obs_steps = policy_cfg.n_obs_steps
         # Get the observation keys from the training config's shape_meta
         self.key_to_shape = train_cfg.shape_meta['obs']
 
-    def get_obs(self) -> Dict[str, np.ndarray]:
-        """从所有硬件获取一帧观测数据"""
-        obs_processed = {
-            'left_wrist_img': np.ones((240, 320, 3)),
-            'left_robot_tcp_pose': np.ones((9)),
-            'left_robot_gripper_width': np.ones((1)),
-            'left_gripper1_marker_offset_emb': np.ones((15))
-        }
-
-        return obs_processed
-
-    def process_action(self, raw_action: np.ndarray) -> np.ndarray:
-        """
-        Post-process the raw action from the policy to a format the robot can execute.
-        This might involve scaling, clipping, or converting coordinate frames.
-        """
-        # The env_runner has a method to process actions
-        action = self.raw_action
-
-        return action
 
     def run(self):
         """主推理循环"""
         print("Start inference loop...")
+        input_dict = dict()
 
         try:
+            rossub_thread = threading.Thread(target=self.env.ros_thread, daemon=True)
+            rossub_thread.start()
             while True:
-                obs = self.get_obs()
-                self.obs_buffer.append_obs(obs)
-                obs_list = self.obs_buffer.get_new_obs(self.n_obs_steps)
-                if obs_list is None:
+                obs = self.env.get_obs()
+                if obs is None:
                     continue
                 else:
                     
                 # 将多帧观测数据堆叠成一个批次
                     obs_processed = {
-                        key: torch.from_numpy(np.stack([o[key] for o in obs_list])).unsqueeze(0).to(self.device)
-                        for key in obs_list[0].keys()
+                        key: torch.from_numpy(np.stack([o[key] for o in obs])).unsqueeze(0).to(self.device)
+                        for key in obs[0].keys()
                     }
-
+                    # Data Processing
                     for key in obs_processed.keys():
                         if 'img' in key:
                             obs_processed[key] = obs_processed[key].permute(0, 1, 4, 2, 3)  # BNHWC -> BNCHW
                             obs_processed[key] = obs_processed[key].float() / 255.0
-                
+                    for key in input_key_list:
+                        input_dict[key] = obs_processed[key]
+                    
+                    # Data Processing
                     # 使用模型进行动作预测
                     with torch.no_grad():
-                        action_dict = self.policy.predict_action(obs_processed)
+                        action_dict = self.policy.predict_action(input_dict)
 
                     # 提取动作序列
                     action_sequence = action_dict['action'].detach().cpu().numpy()[0]
                     
                     # 依次执行动作序列中的每个动作
                     for i in range(min(self.cfg.n_action_steps, len(action_sequence))):
-                        action_to_execute = action_sequence[i]
-                        
-                        # 确保动作形状正确
-                        if action_to_execute.shape != (self.cfg.policy.shape_meta.action.shape[0],):
-                            action_to_execute = action_to_execute.flatten()
-
-                        # 将策略输出的动作转换为机器人可执行的格式
-                        executable_action = self.process_action(action_to_execute)
-                        
-                        # 控制机器人执行动作
-                        self.robot.set_pose(executable_action, wait=True)
-
-                    print("-" * 20)
+                        action_step = action_sequence[i]
+                        self.env.execute_action(action_step)
                     
-                    # 获取新的观测并更新缓冲区
-                    new_obs = self.get_obs()
-                    self.obs_buffer.append(new_obs)
 
         except KeyboardInterrupt:
             print("推理被用户中断。")
@@ -161,8 +118,9 @@ def main(cfg: OmegaConf):
     # Create the inference runner and start the loop
     OmegaConf.set_struct(cfg, False)
     cfg.inference = {
-        'ckpt_path': cfg.load_ckpt_path, # <--- 修改为你的模型路径
-        'robot_ip': '192.168.1.209' # <--- 修改为你的机器人IP
+        'ckpt_path': cfg.load_ckpt_path,
+        'pca_path': cfg.load_pca_path,
+        'robot_ip': '192.168.1.239'
     }
     OmegaConf.set_struct(cfg, True)
     runner = RealWorldDPInfer(cfg)

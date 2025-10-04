@@ -71,12 +71,12 @@ class RealWorldDPInfer:
         try:
             rossub_thread = threading.Thread(target=self.env.ros_thread, daemon=True)
             rossub_thread.start()
+            step_count = 0
             while True:
                 obs = self.env.get_obs()
                 if obs is None:
                     continue
                 else:
-                    
                 # 将多帧观测数据堆叠成一个批次
                     obs_processed = {
                         key: torch.from_numpy(np.stack([o[key] for o in obs])).unsqueeze(0).to(self.device)
@@ -103,6 +103,10 @@ class RealWorldDPInfer:
                         action_step = action_sequence[i]
                         self.env.execute_action(action_step)
                     
+                    step_count += 1
+                    if step_count >= self.env.max_steps:
+                        print(f"已执行{50}步，推理循环结束。")
+                        break  # 或者用 break 跳出 while True
 
         except KeyboardInterrupt:
             print("推理被用户中断。")

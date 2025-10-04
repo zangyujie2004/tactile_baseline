@@ -5,22 +5,14 @@ import hydra
 from omegaconf import OmegaConf
 import torch
 import numpy as np
-from collections import deque
-import time
-import collections
 from termcolor import cprint
-from typing import Dict
 import copy
 import threading
 from real_sensors import RealRobotEnv
-# Add the project root to the Python path
 ROOT_DIR = str(pathlib.Path(__file__).parent)
 sys.path.append(ROOT_DIR)
 os.chdir(ROOT_DIR)
-
-from reactive_diffusion_policy.common.pytorch_util import dict_apply
 from reactive_diffusion_policy.policy.diffusion_unet_image_policy import DiffusionUnetImagePolicy
-from reactive_diffusion_policy.common.precise_sleep import precise_sleep
 
 
 input_key_list = ['left_wrist_img', 'left_robot_tcp_pose', 'left_robot_gripper_width']

@@ -1,4 +1,4 @@
-CUDA_VISIBLE_DEVICES=0 python dp_infer.py \
+python dp_infer.py \
   --config-name train_diffusion_unet_real_image_workspace \
   task=real_wipe_image_gelsight_emb_dp_ablation_ensemble_absolute_12fps_not \
   task.name=dp_infer \

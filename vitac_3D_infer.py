@@ -2,22 +2,13 @@ import hydra
 from omegaconf import OmegaConf
 import torch
 import numpy as np
-import pathlib
 import sys
 import os
-import torch.nn.functional as F
-from collections import deque
-from scipy.spatial.transform import Rotation
 from termcolor import cprint
-from hydra.core.hydra_config import HydraConfig
-from typing import Dict
 from reactive_diffusion_policy.policy.diffusion_unet_3D_policy import DiffusionUnetImagePolicy
 sys.path.append(os.path.dirname(__file__))
 import copy
-import collections
-import dill
 import threading
-from reactive_diffusion_policy.common.pytorch_util import optimizer_to
 from real_sensors import RealRobotEnv
 
 # ======================== Main Inference Class ========================

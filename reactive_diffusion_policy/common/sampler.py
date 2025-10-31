@@ -135,6 +135,7 @@ class SequenceSampler:
     def sample_sequence(self, idx):
         buffer_start_idx, buffer_end_idx, sample_start_idx, sample_end_idx \
             = self.indices[idx]
+
         result = dict()
         for key in self.keys:
             input_arr = self.replay_buffer[key]

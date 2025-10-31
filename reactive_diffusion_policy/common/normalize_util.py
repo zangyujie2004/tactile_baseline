@@ -215,12 +215,30 @@ def robomimic_abs_action_only_dual_arm_normalizer_from_stat(stat):
 
 
 def array_to_stats(arr: np.ndarray):
+    # Check for NaN or Inf values
+    if np.any(np.isnan(arr)) or np.any(np.isinf(arr)):
+        print(f"[WARNING] array_to_stats: Found NaN or Inf in array with shape {arr.shape}")
+        print(f"  NaN count: {np.sum(np.isnan(arr))}")
+        print(f"  Inf count: {np.sum(np.isinf(arr))}")
+        print(f"  Min: {np.nanmin(arr) if not np.all(np.isnan(arr)) else 'all NaN'}")
+        print(f"  Max: {np.nanmax(arr) if not np.all(np.isnan(arr)) else 'all NaN'}")
+        # Replace NaN/Inf with safe values
+        arr = np.nan_to_num(arr, nan=0.0, posinf=1e6, neginf=-1e6)
+    
     stat = {
         'min': np.min(arr, axis=0),
         'max': np.max(arr, axis=0),
         'mean': np.mean(arr, axis=0),
         'std': np.std(arr, axis=0)
     }
+    
+    # Additional check: ensure no NaN in stats
+    for key, val in stat.items():
+        if np.any(np.isnan(val)):
+            print(f"[ERROR] array_to_stats: {key} contains NaN after computation!")
+            print(f"  Array shape: {arr.shape}")
+            print(f"  {key}: {val}")
+    
     return stat
 
 def concatenate_normalizer(normalizers: list):
@@ -242,6 +260,14 @@ def get_action_normalizer(actions: np.ndarray, temporally_independent_normalizat
         actions = actions.reshape(-1, actions.shape[-1])
 
     D = actions.shape[-1]
+    print(f"[DEBUG] get_action_normalizer: action shape = {actions.shape}, D = {D}")
+    
+    # Check for NaN or Inf values
+    if np.isnan(actions).any():
+        print(f"[WARNING] Found NaN values in actions! Count: {np.isnan(actions).sum()}")
+    if np.isinf(actions).any():
+        print(f"[WARNING] Found Inf values in actions! Count: {np.isinf(actions).sum()}")
+    
     if D == 3 or D == 4 or D == 6 or D == 8: # (x, y, z, gripper_width)
         normalizers = [get_range_normalizer_from_stat(array_to_stats(actions))]
     elif D == 9 or D == 10: # (x, y, z, rx1, rx2, rx3, ry1, ry2, ry3)
@@ -251,6 +277,19 @@ def get_action_normalizer(actions: np.ndarray, temporally_independent_normalizat
         normalizers.append(get_identity_normalizer_from_stat(array_to_stats(actions[...,3:9])))
         if D == 10:
             normalizers.append(get_range_normalizer_from_stat(array_to_stats(actions[...,9:])))
+    elif D == 25:
+        # For kinedex: 25-dim action (10 robot + 15 tactile)
+        # Robot action (10-dim): xyz (3) + 6d rotation (6) + gripper (1)
+        # Tactile embedding (15-dim): PCA-reduced tactile markers
+        normalizers = []
+        # normalize position (xyz)
+        normalizers.append(get_range_normalizer_from_stat(array_to_stats(actions[...,:3])))
+        # don't normalize rotation (6d)
+        normalizers.append(get_identity_normalizer_from_stat(array_to_stats(actions[...,3:9])))
+        # normalize gripper width
+        normalizers.append(get_range_normalizer_from_stat(array_to_stats(actions[...,9:10])))
+        # normalize tactile embedding (15-dim)
+        normalizers.append(get_range_normalizer_from_stat(array_to_stats(actions[...,10:])))    
     elif D == 18 or D == 20:
         normalizers = []
         normalizers.append(get_range_normalizer_from_stat(array_to_stats(actions[...,:3])))

@@ -35,6 +35,11 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
         action_shape = shape_meta['action']['shape']
         assert len(action_shape) == 1
         action_dim = action_shape[0]
+        
+        # Determine output action dimension (may be less than action_dim if tactile is included)
+        # For kinedex: full action_dim=25 (10 robot + 15 tactile), but output only first 10
+        self.output_action_dim = 10 if action_dim == 25 else action_dim
+        
         # get feature dim
         obs_feature_dim = obs_encoder.output_shape()[0]
 
@@ -174,15 +179,31 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
         naction_pred = nsample[...,:Da]
         action_pred = self.normalizer['action'].unnormalize(naction_pred)
 
+        # Extract robot action and tactile embedding separately
+        # For kinedex: action_pred is 25-dim (10 robot + 15 tactile)
+        action_pred_robot = action_pred[..., :self.output_action_dim]
+        
+        # Extract tactile embedding if action dimension includes it
+        action_pred_tactile = None
+        if Da > self.output_action_dim:
+            action_pred_tactile = action_pred[..., self.output_action_dim:]
+
         # get action
         start = To - 1
         end = start + self.n_action_steps
-        action = action_pred[:,start:end]
+        action = action_pred_robot[:,start:end]
         
         result = {
-            'action': action,
-            'action_pred': action_pred
+            'action': action,  # [B, n_action_steps, 10] - robot control
+            'action_pred': action_pred_robot,  # [B, horizon, 10] - full robot trajectory
+            'action_pred_full': action_pred  # [B, horizon, 25] - full prediction
         }
+        
+        # Add tactile prediction if available
+        if action_pred_tactile is not None:
+            result['action_pred_tactile'] = action_pred_tactile  # [B, horizon, 15] - tactile embedding
+            result['action_tactile'] = action_pred_tactile[:,start:end]  # [B, n_action_steps, 15]
+        
         return result
 
     # ========= training  ============
@@ -193,16 +214,6 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
         # normalize input
         assert 'valid_mask' not in batch
         nobs = self.normalizer.normalize(batch['obs'])
-        
-        # Debug: check action shape before normalization
-        if hasattr(self, '_debug_count'):
-            self._debug_count += 1
-        else:
-            self._debug_count = 0
-        if self._debug_count == 0:
-            print(f"[DEBUG] compute_loss: batch['action'].shape = {batch['action'].shape}")
-            print(f"[DEBUG] compute_loss: action has NaN = {torch.isnan(batch['action']).any()}")
-        
         nactions = self.normalizer['action'].normalize(batch['action'])
         batch_size = nactions.shape[0]
         horizon = nactions.shape[1]

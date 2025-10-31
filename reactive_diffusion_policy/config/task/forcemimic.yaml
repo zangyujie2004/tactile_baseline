@@ -104,7 +104,7 @@ env_runner:
     enable_gripper_width_clipping: True
 
 dataset:
-  _target_: reactive_diffusion_policy.dataset.real_3D_tactile_dataset.RealImageTactileDataset
+  _target_: reactive_diffusion_policy.dataset.forcemimic_dataset.RealImageTactileDataset
   shape_meta: *shape_meta
   dataset_path: ${task.dataset_path}
   horizon: ${horizon}

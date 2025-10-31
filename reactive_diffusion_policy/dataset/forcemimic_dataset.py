@@ -40,15 +40,17 @@ class RealImageTactileDataset(BaseImageDataset):
                  ):
         assert os.path.isdir(dataset_path)
 
+        pcd_keys = list()
         rgb_keys = list()
         lowdim_keys = list()
         obs_shape_meta = shape_meta['obs']
         for key, attr in obs_shape_meta.items():
             type = attr.get('type', 'low_dim')
-            if type == 'rgb':
-                rgb_keys.append(key)
+            if type == 'cloud_point':
+                pcd_keys.append(key)
             elif type == 'low_dim':
                 lowdim_keys.append(key)
+
 
         extended_rgb_keys = list()
         extended_lowdim_keys = list()
@@ -60,14 +62,11 @@ class RealImageTactileDataset(BaseImageDataset):
             elif type == 'low_dim':
                 extended_lowdim_keys.append(key)
 
-        print(f"[DEBUG] RealImageTactileDataset.__init__: dataset_path = '{dataset_path}'")
-        print(f"[DEBUG] rgb_keys: {rgb_keys}")
-        print(f"[DEBUG] lowdim_keys: {lowdim_keys}")
+
         zarr_path = os.path.join(dataset_path, 'replay_buffer.zarr')
-        print(f"[DEBUG] zarr_path = '{zarr_path}'")
-        zarr_load_keys = set(rgb_keys + lowdim_keys + extended_rgb_keys + extended_lowdim_keys + ['action'])
+        zarr_load_keys = set(pcd_keys + lowdim_keys  + ['action'])
         zarr_load_keys = list(filter(lambda key: "wrt" not in key, zarr_load_keys))
-        print(f"[DEBUG] zarr_load_keys: {zarr_load_keys}")
+
         replay_buffer = ReplayBuffer.copy_from_path(
             zarr_path, keys=zarr_load_keys)
 
@@ -109,7 +108,7 @@ class RealImageTactileDataset(BaseImageDataset):
 
         action_range = action_max - action_min
         action_range[action_range == 0.0] = 1.0
-
+    
         self._dataset_action_min = action_min
         self._dataset_action_max = action_max
         self._dataset_action_range = action_range
@@ -170,7 +169,7 @@ class RealImageTactileDataset(BaseImageDataset):
         self.replay_buffer = replay_buffer
         self.sampler = sampler
         self.shape_meta = shape_meta
-        self.rgb_keys = rgb_keys
+        self.pcd_keys = pcd_keys
         self.lowdim_keys = lowdim_keys
         self.extended_rgb_keys = extended_rgb_keys
         self.extended_lowdim_keys = extended_lowdim_keys
@@ -271,7 +270,7 @@ class RealImageTactileDataset(BaseImageDataset):
                         self.replay_buffer[key][:, :self.shape_meta['extended_obs'][key]['shape'][0]])
 
         # image
-        for key in list(set(self.rgb_keys + self.extended_rgb_keys)):
+        for key in list(set(self.pcd_keys)):
             normalizer[key] = get_image_range_normalizer()
         return normalizer
 
@@ -303,35 +302,22 @@ class RealImageTactileDataset(BaseImageDataset):
             indices = np.arange(buffer_start_idx, buffer_end_idx)
             tactile_data_for_action = self.replay_buffer[tactile_key][indices].astype(np.float32)
         
-        for key in self.rgb_keys:
-            # move channel last to channel first
-            # T,H,W,C
-            # convert uint8 image to float32
-            obs_dict[key] = np.moveaxis(data[key][T_slice][::-obs_downsample_ratio][::-1],-1,1
-                ).astype(np.float32) / 255.
-            # T,C,H,W
-            # save ram
-            if key not in self.rgb_keys:
-                del data[key]
+        # 在 __getitem__ 里找到你原来塞点云的地方，改成下面这样
+        for key in self.pcd_keys:          # 你已有的循环
+            if key == 'global_pts':        # 只转置这个 key
+                # 从 [T,3,8192] -> [T,8192,3] ；如果没有 T 维，[3,8192] -> [8192,3]
+                raw = data[key][T_slice][::-obs_downsample_ratio][::-1].astype(np.float32)
+                # raw = np.transpose(raw, (0, 2, 1)) if raw.ndim == 3 else np.transpose(raw, (1, 0))
+                obs_dict[key] = raw
+            else:                          # 其它 pcd 照旧
+                obs_dict[key] = np.moveaxis(
+                    data[key][T_slice][::-obs_downsample_ratio][::-1], -1, 1
+                ).astype(np.float32) / 255.0
+                
         for key in self.lowdim_keys:
             if 'wrt' not in key:
                 obs_dict[key] = data[key][:, :self.shape_meta['obs'][key]['shape'][0]][T_slice][::-obs_downsample_ratio][::-1].astype(np.float32)
                 # save ram
-                if key not in self.extended_lowdim_keys:
-                    del data[key]
-
-        # inter-gripper relative action
-        obs_dict.update(get_inter_gripper_actions(obs_dict, self.lowdim_keys, self.transforms))
-        for key in ['left_robot_wrt_right_robot_tcp_pose']:
-            if key in obs_dict:
-                obs_dict[key] = obs_dict[key][:, :self.shape_meta['obs'][key]['shape'][0]].astype(np.float32)
-        
-        extended_obs_dict = dict()
-        for key in self.extended_rgb_keys:
-            extended_obs_dict[key] = np.moveaxis(data[key],-1,1
-                ).astype(np.float32) / 255.
-            del data[key]
-
 
         action = data['action'].astype(np.float32)
         # handle latency by dropping first n_latency_steps action

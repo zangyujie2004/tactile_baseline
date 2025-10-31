@@ -4,14 +4,11 @@ defaults:
 
 name: kinedex
 
-image_shape: [3, 240, 320]
-dataset_path: /home/pc/workspace/tactile_data/dish/rdp_zarr
-
 shape_meta: &shape_meta
   # acceptable types: rgb, low_dim
   obs:
     left_wrist_img:
-      shape: ${task.image_shape}
+      shape: [3, 240, 320]
       type: rgb
     left_robot_tcp_pose:
       shape: [9]
@@ -100,7 +97,7 @@ env_runner:
     enable_gripper_width_clipping: True
 
 dataset:
-  _target_: reactive_diffusion_policy.dataset.forcemimic_dataset.RealImageTactileDataset
+  _target_: reactive_diffusion_policy.dataset.kinedex_dataset.RealImageTactileDataset
   shape_meta: *shape_meta
   dataset_path: ${task.dataset_path}
   horizon: ${horizon}

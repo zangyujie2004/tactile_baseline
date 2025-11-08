@@ -12,8 +12,7 @@ from omegaconf import DictConfig, ListConfig
 from reactive_diffusion_policy.policy.diffusion_unet_image_policy import DiffusionUnetImagePolicy
 from reactive_diffusion_policy.common.pytorch_util import dict_apply
 from reactive_diffusion_policy.common.precise_sleep import precise_sleep
-# from reactive_diffusion_policy.env.real_bimanual.real_env import RealRobotEnvironment
-from reactive_diffusion_policy.env.ours.sensors import RealRobotEnv
+from reactive_diffusion_policy.env.real_bimanual.real_env import RealRobotEnvironment
 from reactive_diffusion_policy.real_world.real_inference_util import (
     get_real_obs_dict)
 from reactive_diffusion_policy.real_world.real_world_transforms import RealWorldTransforms
@@ -26,7 +25,7 @@ from reactive_diffusion_policy.common.action_utils import (
     get_inter_gripper_actions
 )
 import requests
-# /home/robotics/Prometheus/Robotiq-Gripper/gripper.py
+
 
 import os
 import psutil
@@ -115,11 +114,10 @@ class RealRunner:
         self.extended_rgb_keys = extended_rgb_keys
         self.extended_lowdim_keys = extended_lowdim_keys
 
-        # self.env = RealRobotEnvironment(transforms=self.transforms, **env_params)
-        self.env = RealRobotEnv(transforms=self.transforms, **env_params)
+        rclpy.init(args=None)
+        self.env = RealRobotEnvironment(transforms=self.transforms, **env_params)
         # set gripper to max width
-        # self.env.send_gripper_command_direct(self.env.max_gripper_width, self.env.max_gripper_width)
-        # self.env.gripper.open_gripper()
+        self.env.send_gripper_command_direct(self.env.max_gripper_width, self.env.max_gripper_width)
         time.sleep(2)
 
         self.max_duration_time = max_duration_time
@@ -169,9 +167,6 @@ class RealRunner:
 
         self.stop_event = threading.Event()
         self.session = requests.Session()
-        self.latent_cnt = 0
-        self.fast_cnt = 0
-        self.step_cnt = 0
 
     def pre_process_obs(self, obs_dict: Dict) -> Tuple[Dict, Dict]:
         obs_dict = deepcopy(obs_dict)
@@ -335,8 +330,6 @@ class RealRunner:
                 dataset_obs_temporal_downsample_ratio = self.dataset_obs_temporal_downsample_ratio
                 tcp_step_action = policy.predict_from_latent_action(tcp_step_latent_action, extended_obs_dict, tcp_extended_obs_step, dataset_obs_temporal_downsample_ratio)['action'][0].detach().cpu().numpy()
                 gripper_step_action = policy.predict_from_latent_action(gripper_step_latent_action, extended_obs_dict, gripper_extended_obs_step, dataset_obs_temporal_downsample_ratio)['action'][0].detach().cpu().numpy()
-                self.fast_cnt += 1
-                logger.info(f"Slow cnt: {self.latent_cnt}, Fast cnt: {self.fast_cnt}, Step cnt: {self.step_cnt}")
                 if self.use_relative_action:
                     tcp_step_action = relative_actions_to_absolute_actions(tcp_step_action, tcp_base_absolute_action)
                     gripper_step_action = relative_actions_to_absolute_actions(gripper_step_action, gripper_base_absolute_action)
@@ -406,176 +399,183 @@ class RealRunner:
             assert not hasattr(policy, 'at') or not policy.at.use_rnn_decoder, "Policy should not use rnn decoder for action."
 
         device = policy.device
-        episode_idx = 0
 
-        logger.info(f"Start evaluation episode")
-        self.env.reset()
-        # set gripper to max width
-        # self.env.send_gripper_command_direct(self.env.max_gripper_width, self.env.max_gripper_width)
-        # self.env.gripper.open_gripper()
-        time.sleep(1)
-
-        policy.reset()
-        self.tcp_ensemble_buffer.clear()
-        self.gripper_ensemble_buffer.clear()
-        logger.debug("Reset environment and policy.")
-
-        if self.enable_video_recording:
-            video_path = os.path.join(self.video_dir, f'episode.mp4')
-            self.start_record_video(video_path)
-            logger.info(f"Start recording video to {video_path}")
-
-        self.stop_event.clear()
-        time.sleep(0.5)
-        # start a new thread for action command
-
-        self.action_step_count = 0
-        step_count = 0
-
-        action_thread = threading.Thread(target=self.action_command_thread, args=(policy, self.stop_event,),
-                                            daemon=True)
-        rossub_thread = threading.Thread(target=self.env.ros_thread, daemon=True)
-        action_thread.start()
-        rossub_thread.start()
-        steps_per_inference = int(self.control_fps / self.inference_fps)
-        start_timestamp = time.time()
         try:
-            time.sleep(10)
-            while True:
-                self.step_cnt = step_count
-                # profiler = Profiler()
-                # profiler.start()
-                start_time = time.time()
-                # get obs
-                obs = self.env.get_obs(
-                    obs_steps=self.n_obs_steps,
-                    temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
-                # obs = dict()
-
-                if len(obs) == 0:
-                    logger.warning("No observation received! Skip this step.")
-                    cur_time = time.time()
-                    precise_sleep(max(0., self.inference_interval_time - (cur_time - start_time)))
-                    step_count += steps_per_inference
+            for episode_idx in tqdm.tqdm(range(0, self.eval_episodes),
+                                         desc=f"Eval for {self.task_name}",
+                                         leave=False, mininterval=self.tqdm_interval_sec):
+                logger.info(f"Start evaluation episode {episode_idx}")
+                # ask user whether the environment resetting is done
+                reset_flag = py_cli_interaction.parse_cli_bool('Has the environment reset finished?', default_value=True)
+                if not reset_flag:
+                    logger.warning("Skip this episode.")
                     continue
 
-                # create obs dict
-                np_obs_dict = dict(obs)
-                # get transformed real obs dict
-                np_obs_dict = get_real_obs_dict(
-                    env_obs=np_obs_dict, shape_meta=self.shape_meta)
-                np_obs_dict, np_absolute_obs_dict = self.pre_process_obs(np_obs_dict)
+                logger.info("Start episode rollout.")
+                # start rollout
+                self.env.reset()
+                # set gripper to max width
+                self.env.send_gripper_command_direct(self.env.max_gripper_width, self.env.max_gripper_width)
+                time.sleep(1)
 
-                # device transfer
-                obs_dict = dict_apply(np_obs_dict,
-                                        lambda x: torch.from_numpy(x).unsqueeze(0).to(
-                                            device=device))
+                policy.reset()
+                self.tcp_ensemble_buffer.clear()
+                self.gripper_ensemble_buffer.clear()
+                logger.debug("Reset environment and policy.")
 
-                policy_time = time.time()
-                # run policy
-                with torch.no_grad():
-                    if self.use_latent_action_with_rnn_decoder:
-                        action_dict = policy.predict_action(obs_dict,
-                                                            dataset_obs_temporal_downsample_ratio=self.dataset_obs_temporal_downsample_ratio,
-                                                            return_latent_action=True)
-                    else:
-                        action_dict = policy.predict_action(obs_dict)
-                self.latent_cnt += 1
-                logger.debug(f"Policy inference time: {time.time() - policy_time:.3f}s")
+                if self.enable_video_recording:
+                    video_path = os.path.join(self.video_dir, f'episode_{episode_idx}.mp4')
+                    self.start_record_video(video_path)
+                    logger.info(f"Start recording video to {video_path}")
 
-                # device_transfer
-                np_action_dict = dict_apply(action_dict,
-                                            lambda x: x.detach().to('cpu').numpy())
+                self.stop_event.clear()
+                time.sleep(0.5)
+                # start a new thread for action command
+                action_thread = threading.Thread(target=self.action_command_thread, args=(policy, self.stop_event,),
+                                                 daemon=True)
+                action_thread.start()
 
-                action_all = np_action_dict['action'].squeeze(0)
-                if self.use_latent_action_with_rnn_decoder:
-                    # add first absolute action to get absolute action
-                    if self.use_relative_action:
-                        base_absolute_action = np.concatenate([
-                            np_absolute_obs_dict['left_robot_tcp_pose'][-1] if 'left_robot_tcp_pose' in np_absolute_obs_dict else np.array([]),
-                            np_absolute_obs_dict['right_robot_tcp_pose'][-1] if 'right_robot_tcp_pose' in np_absolute_obs_dict else np.array([])
-                        ], axis=-1)
-                        # print('base:', base_absolute_action)
-                        action_all = np.concatenate([
-                            action_all,
-                            base_absolute_action[np.newaxis, :].repeat(action_all.shape[0], axis=0)
-                        ], axis=-1)
-                    # add action step to get corresponding observation
-                    action_all = np.concatenate([
-                        action_all,
-                        np.arange(self.n_obs_steps * self.dataset_obs_temporal_downsample_ratio, action_all.shape[0] + self.n_obs_steps * self.dataset_obs_temporal_downsample_ratio)[:, np.newaxis]
-                    ], axis=-1)
-                else:
-                    if self.use_relative_action:
-                        base_absolute_action = np.concatenate([
-                            np_absolute_obs_dict['left_robot_tcp_pose'][-1] if 'left_robot_tcp_pose' in np_absolute_obs_dict else np.array([]),
-                            np_absolute_obs_dict['right_robot_tcp_pose'][-1] if 'right_robot_tcp_pose' in np_absolute_obs_dict else np.array([])
-                        ], axis=-1)
-                        action_all = relative_actions_to_absolute_actions(action_all, base_absolute_action)
+                self.action_step_count = 0
+                step_count = 0
+                steps_per_inference = int(self.control_fps / self.inference_fps)
+                start_timestamp = time.time()
+                last_timestamp = start_timestamp
+                try:
+                    while True:
+                        # profiler = Profiler()
+                        # profiler.start()
+                        start_time = time.time()
+                        # get obs
+                        obs = self.env.get_obs(
+                            obs_steps=self.n_obs_steps,
+                            temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
+                        # obs = dict()
 
-                if self.action_interpolation_ratio > 1:
-                    if self.use_latent_action_with_rnn_decoder:
-                        action_all = action_all.repeat(self.action_interpolation_ratio, axis=0)
-                    else:
-                        action_all = interpolate_actions_with_ratio(action_all, self.action_interpolation_ratio)
+                        if len(obs) == 0:
+                            logger.warning("No observation received! Skip this step.")
+                            cur_time = time.time()
+                            precise_sleep(max(0., self.inference_interval_time - (cur_time - start_time)))
+                            step_count += steps_per_inference
+                            continue
 
-                # TODO: only takes the first n_action_steps and add to the ensemble buffer
-                if step_count % self.tcp_action_update_interval == 0:
-                    if self.use_latent_action_with_rnn_decoder:
-                        tcp_action = action_all[self.latency_step:, ...]
-                    else:
-                        if action_all.shape[-1] == 4:
-                            tcp_action = action_all[self.latency_step:, :3]
-                        elif action_all.shape[-1] == 8:
-                            tcp_action = action_all[self.latency_step:, :6]
-                        elif action_all.shape[-1] == 10:
-                            tcp_action = action_all[self.latency_step:, :9]
-                        elif action_all.shape[-1] == 20:
-                            tcp_action = action_all[self.latency_step:, :18]
+                        # create obs dict
+                        np_obs_dict = dict(obs)
+                        # get transformed real obs dict
+                        np_obs_dict = get_real_obs_dict(
+                            env_obs=np_obs_dict, shape_meta=self.shape_meta)
+                        np_obs_dict, np_absolute_obs_dict = self.pre_process_obs(np_obs_dict)
+
+                        # device transfer
+                        obs_dict = dict_apply(np_obs_dict,
+                                              lambda x: torch.from_numpy(x).unsqueeze(0).to(
+                                                  device=device))
+
+                        policy_time = time.time()
+                        # run policy
+                        with torch.no_grad():
+                            if self.use_latent_action_with_rnn_decoder:
+                                action_dict = policy.predict_action(obs_dict,
+                                                                    dataset_obs_temporal_downsample_ratio=self.dataset_obs_temporal_downsample_ratio,
+                                                                    return_latent_action=True)
+                            else:
+                                action_dict = policy.predict_action(obs_dict)
+                        logger.debug(f"Policy inference time: {time.time() - policy_time:.3f}s")
+
+                        # device_transfer
+                        np_action_dict = dict_apply(action_dict,
+                                                    lambda x: x.detach().to('cpu').numpy())
+
+                        action_all = np_action_dict['action'].squeeze(0)
+                        if self.use_latent_action_with_rnn_decoder:
+                            # add first absolute action to get absolute action
+                            if self.use_relative_action:
+                                base_absolute_action = np.concatenate([
+                                    np_absolute_obs_dict['left_robot_tcp_pose'][-1] if 'left_robot_tcp_pose' in np_absolute_obs_dict else np.array([]),
+                                    np_absolute_obs_dict['right_robot_tcp_pose'][-1] if 'right_robot_tcp_pose' in np_absolute_obs_dict else np.array([])
+                                ], axis=-1)
+                                action_all = np.concatenate([
+                                    action_all,
+                                    base_absolute_action[np.newaxis, :].repeat(action_all.shape[0], axis=0)
+                                ], axis=-1)
+                            # add action step to get corresponding observation
+                            action_all = np.concatenate([
+                                action_all,
+                                np.arange(self.n_obs_steps * self.dataset_obs_temporal_downsample_ratio, action_all.shape[0] + self.n_obs_steps * self.dataset_obs_temporal_downsample_ratio)[:, np.newaxis]
+                            ], axis=-1)
                         else:
-                            raise NotImplementedError
-                    # add to ensemble buffer
-                    # logger.debug(f"Step: {step_count}, Add TCP action to ensemble buffer: {tcp_action}")
-                    self.tcp_ensemble_buffer.add_action(tcp_action, step_count)
+                            if self.use_relative_action:
+                                base_absolute_action = np.concatenate([
+                                    np_absolute_obs_dict['left_robot_tcp_pose'][-1] if 'left_robot_tcp_pose' in np_absolute_obs_dict else np.array([]),
+                                    np_absolute_obs_dict['right_robot_tcp_pose'][-1] if 'right_robot_tcp_pose' in np_absolute_obs_dict else np.array([])
+                                ], axis=-1)
+                                action_all = relative_actions_to_absolute_actions(action_all, base_absolute_action)
 
-                    if self.env.enable_exp_recording and not self.use_latent_action_with_rnn_decoder:
-                        self.env.get_predicted_action(tcp_action, type='full_tcp')
+                        if self.action_interpolation_ratio > 1:
+                            if self.use_latent_action_with_rnn_decoder:
+                                action_all = action_all.repeat(self.action_interpolation_ratio, axis=0)
+                            else:
+                                action_all = interpolate_actions_with_ratio(action_all, self.action_interpolation_ratio)
 
-                if step_count % self.gripper_action_update_interval == 0:
-                    if self.use_latent_action_with_rnn_decoder:
-                        gripper_action = action_all[self.gripper_latency_step:, ...]
-                    else:
-                        if action_all.shape[-1] == 4:
-                            gripper_action = action_all[self.gripper_latency_step:, 3:]
-                        elif action_all.shape[-1] == 8:
-                            gripper_action = action_all[self.gripper_latency_step:, 6:]
-                        elif action_all.shape[-1] == 10:
-                            gripper_action = action_all[self.gripper_latency_step:, 9:]
-                        elif action_all.shape[-1] == 20:
-                            gripper_action = action_all[self.gripper_latency_step:, 18:]
-                        else:
-                            raise NotImplementedError
-                    # add to ensemble buffer
-                    # logger.debug(f"Step: {step_count}, Add gripper action to ensemble buffer: {gripper_action}")
-                    self.gripper_ensemble_buffer.add_action(gripper_action, step_count)
+                        # TODO: only takes the first n_action_steps and add to the ensemble buffer
+                        if step_count % self.tcp_action_update_interval == 0:
+                            if self.use_latent_action_with_rnn_decoder:
+                                tcp_action = action_all[self.latency_step:, ...]
+                            else:
+                                if action_all.shape[-1] == 4:
+                                    tcp_action = action_all[self.latency_step:, :3]
+                                elif action_all.shape[-1] == 8:
+                                    tcp_action = action_all[self.latency_step:, :6]
+                                elif action_all.shape[-1] == 10:
+                                    tcp_action = action_all[self.latency_step:, :9]
+                                elif action_all.shape[-1] == 20:
+                                    tcp_action = action_all[self.latency_step:, :18]
+                                else:
+                                    raise NotImplementedError
+                            # add to ensemble buffer
+                            logger.debug(f"Step: {step_count}, Add TCP action to ensemble buffer: {tcp_action}")
+                            self.tcp_ensemble_buffer.add_action(tcp_action, step_count)
 
-                    if self.env.enable_exp_recording and not self.use_latent_action_with_rnn_decoder:
-                        self.env.get_predicted_action(gripper_action, type='full_gripper')
+                            if self.env.enable_exp_recording and not self.use_latent_action_with_rnn_decoder:
+                                self.env.get_predicted_action(tcp_action, type='full_tcp')
 
-                cur_time = time.time()
-                precise_sleep(max(0., self.inference_interval_time - (cur_time - start_time)))
-                if cur_time - start_timestamp >= self.max_duration_time:
-                    logger.info(f"Episode reaches max duration time {self.max_duration_time} seconds.")
-                    break
-                step_count += steps_per_inference
-                # profiler.stop()
-                # profiler.print()
+                        if step_count % self.gripper_action_update_interval == 0:
+                            if self.use_latent_action_with_rnn_decoder:
+                                gripper_action = action_all[self.gripper_latency_step:, ...]
+                            else:
+                                if action_all.shape[-1] == 4:
+                                    gripper_action = action_all[self.gripper_latency_step:, 3:]
+                                elif action_all.shape[-1] == 8:
+                                    gripper_action = action_all[self.gripper_latency_step:, 6:]
+                                elif action_all.shape[-1] == 10:
+                                    gripper_action = action_all[self.gripper_latency_step:, 9:]
+                                elif action_all.shape[-1] == 20:
+                                    gripper_action = action_all[self.gripper_latency_step:, 18:]
+                                else:
+                                    raise NotImplementedError
+                            # add to ensemble buffer
+                            logger.debug(f"Step: {step_count}, Add gripper action to ensemble buffer: {gripper_action}")
+                            self.gripper_ensemble_buffer.add_action(gripper_action, step_count)
 
-        except KeyboardInterrupt:
-            logger.warning("KeyboardInterrupt! Terminate the episode now!")
+                            if self.env.enable_exp_recording and not self.use_latent_action_with_rnn_decoder:
+                                self.env.get_predicted_action(gripper_action, type='full_gripper')
+
+                        cur_time = time.time()
+                        precise_sleep(max(0., self.inference_interval_time - (cur_time - start_time)))
+                        if cur_time - start_timestamp >= self.max_duration_time:
+                            logger.info(f"Episode {episode_idx} reaches max duration time {self.max_duration_time} seconds.")
+                            break
+                        step_count += steps_per_inference
+                        # profiler.stop()
+                        # profiler.print()
+
+                except KeyboardInterrupt:
+                    logger.warning("KeyboardInterrupt! Terminate the episode now!")
+                finally:
+                    self.stop_event.set()
+                    action_thread.join()
+                    if self.enable_video_recording:
+                        self.stop_record_video()
+                    self.env.save_exp(episode_idx)
+
         finally:
-            self.stop_event.set()
-            action_thread.join()
-            if self.enable_video_recording:
-                self.stop_record_video()
-            self.env.save_exp(episode_idx)
+            self.env.destroy_node()

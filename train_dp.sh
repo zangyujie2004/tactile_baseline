@@ -1,4 +1,4 @@
-#!/bin/bash
+a#!/bin/bash
 
 CUDA_VISIBLE_DEVICES=0 accelerate launch train.py \
     --config-name=train_diffusion_unet_real_image_workspace \

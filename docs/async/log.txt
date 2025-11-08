@@ -1,0 +1,535 @@
+2025-11-05 16:19:46.795 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:run:435 - Start evaluation episode
+2025-11-05 16:19:47.796 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:445 - Reset environment and policy.
+2025-11-05 16:19:48.408 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 0.28 FPS
+2025-11-05 16:19:49.448 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.38 FPS
+2025-11-05 16:19:50.512 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.04 FPS
+2025-11-05 16:19:51.521 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.88 FPS
+2025-11-05 16:19:52.582 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.07 FPS
+2025-11-05 16:19:53.300 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:19:53.300 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 81.0283 ms
+2025-11-05 16:19:53.300 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.00011181831359863281
+2025-11-05 16:19:53.322 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:504 - 推理推理, steps_per_inference is 4
+2025-11-05 16:19:53.584 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.97 FPS
+2025-11-05 16:19:53.929 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.607s
+2025-11-05 16:19:53.929 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:run:563 - 更新更新, tcp_action_update_interval is 16
+2025-11-05 16:19:53.931 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 43.1260 ms
+2025-11-05 16:19:53.931 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.002202272415161133
+2025-11-05 16:19:53.967 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0354313850402832
+2025-11-05 16:19:54.379 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.41051411628723145
+2025-11-05 16:19:54.379 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.44955945014953613
+2025-11-05 16:19:54.380 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 27.6697 ms
+2025-11-05 16:19:54.380 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0014843940734863281
+2025-11-05 16:19:54.382 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0011165142059326172
+2025-11-05 16:19:54.652 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.98 FPS
+2025-11-05 16:19:54.720 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.33753156661987305
+2025-11-05 16:19:54.720 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3415536880493164
+2025-11-05 16:19:54.722 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 102.8335 ms
+2025-11-05 16:19:54.722 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.002049684524536133
+2025-11-05 16:19:54.724 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0014426708221435547
+2025-11-05 16:19:55.058 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.33262014389038086
+2025-11-05 16:19:55.058 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.33763599395751953
+2025-11-05 16:19:55.060 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 40.4731 ms
+2025-11-05 16:19:55.060 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.002340078353881836
+2025-11-05 16:19:55.062 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0015347003936767578
+2025-11-05 16:19:55.393 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3295578956604004
+2025-11-05 16:19:55.393 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3349752426147461
+2025-11-05 16:19:55.395 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 41.4475 ms
+2025-11-05 16:19:55.395 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.001977682113647461
+2025-11-05 16:19:55.396 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0011298656463623047
+2025-11-05 16:19:55.724 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.93 FPS
+2025-11-05 16:19:55.724 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.32671332359313965
+2025-11-05 16:19:55.725 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3316948413848877
+2025-11-05 16:19:55.725 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 2.4246151447296143
+
+
+
+2025-11-05 16:19:55.725 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:19:55.725 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 38.3347 ms
+2025-11-05 16:19:55.725 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 9.822845458984375e-05
+2025-11-05 16:19:55.726 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:19:55.727 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 40.5862 ms
+2025-11-05 16:19:55.727 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0007226467132568359
+2025-11-05 16:19:55.729 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012481212615966797
+2025-11-05 16:19:56.078 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3486440181732178
+2025-11-05 16:19:56.078 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3516957759857178
+2025-11-05 16:19:56.079 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 59.3835 ms
+2025-11-05 16:19:56.079 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0007863044738769531
+2025-11-05 16:19:56.080 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010635852813720703
+2025-11-05 16:19:56.395 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3142082691192627
+2025-11-05 16:19:56.396 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.31743931770324707
+2025-11-05 16:19:56.397 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 44.1895 ms
+2025-11-05 16:19:56.397 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0014417171478271484
+2025-11-05 16:19:56.398 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0011203289031982422
+2025-11-05 16:19:56.725 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.99 FPS
+2025-11-05 16:19:56.744 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.34451746940612793
+2025-11-05 16:19:56.744 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3483872413635254
+2025-11-05 16:19:56.745 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 57.7490 ms
+2025-11-05 16:19:56.745 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0009260177612304688
+2025-11-05 16:19:56.746 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.001071929931640625
+2025-11-05 16:19:57.058 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3111402988433838
+2025-11-05 16:19:57.058 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.31451988220214844
+2025-11-05 16:19:57.060 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 39.7144 ms
+2025-11-05 16:19:57.060 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0013260841369628906
+2025-11-05 16:19:57.061 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0011813640594482422
+2025-11-05 16:19:57.394 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.33202576637268066
+2025-11-05 16:19:57.394 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3359355926513672
+2025-11-05 16:19:57.395 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.6698017120361328
+
+
+
+2025-11-05 16:19:57.395 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:19:57.395 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 42.2346 ms
+2025-11-05 16:19:57.395 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0001518726348876953
+2025-11-05 16:19:57.397 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:19:57.398 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 45.3962 ms
+2025-11-05 16:19:57.398 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0011484622955322266
+2025-11-05 16:19:57.399 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012598037719726562
+2025-11-05 16:19:57.791 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.39071035385131836
+2025-11-05 16:19:57.791 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3943624496459961
+2025-11-05 16:19:57.791 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.00 FPS
+2025-11-05 16:19:57.792 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 105.9587 ms
+2025-11-05 16:19:57.793 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.001300811767578125
+2025-11-05 16:19:57.794 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.001268625259399414
+2025-11-05 16:19:58.062 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.26660847663879395
+2025-11-05 16:19:58.062 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2706010341644287
+2025-11-05 16:19:58.064 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 44.4453 ms
+2025-11-05 16:19:58.064 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0018291473388671875
+2025-11-05 16:19:58.065 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.001409292221069336
+2025-11-05 16:19:58.378 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.31215500831604004
+2025-11-05 16:19:58.378 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.31670355796813965
+2025-11-05 16:19:58.380 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 27.1262 ms
+2025-11-05 16:19:58.380 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0011105537414550781
+2025-11-05 16:19:58.381 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010480880737304688
+2025-11-05 16:19:58.725 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3430447578430176
+2025-11-05 16:19:58.725 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.346677303314209
+2025-11-05 16:19:58.727 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 40.7197 ms
+2025-11-05 16:19:58.727 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0016460418701171875
+2025-11-05 16:19:58.729 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012750625610351562
+2025-11-05 16:19:58.858 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.00 FPS
+2025-11-05 16:19:59.027 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.29791879653930664
+2025-11-05 16:19:59.028 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3023695945739746
+2025-11-05 16:19:59.028 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.6330769062042236
+
+
+
+2025-11-05 16:19:59.028 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:19:59.028 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 75.3672 ms
+2025-11-05 16:19:59.028 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.00016188621520996094
+2025-11-05 16:19:59.029 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:19:59.031 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 78.2246 ms
+2025-11-05 16:19:59.031 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0011250972747802734
+2025-11-05 16:19:59.032 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010631084442138672
+2025-11-05 16:19:59.335 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3021712303161621
+2025-11-05 16:19:59.335 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3054792881011963
+2025-11-05 16:19:59.336 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 50.1606 ms
+2025-11-05 16:19:59.336 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0012083053588867188
+2025-11-05 16:19:59.338 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.00119781494140625
+2025-11-05 16:19:59.577 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.23840928077697754
+2025-11-05 16:19:59.577 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.24217605590820312
+2025-11-05 16:19:59.579 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 26.5186 ms
+2025-11-05 16:19:59.579 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0020241737365722656
+2025-11-05 16:19:59.581 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010499954223632812
+2025-11-05 16:19:59.861 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.27962231636047363
+2025-11-05 16:19:59.861 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2840259075164795
+2025-11-05 16:19:59.863 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 43.2417 ms
+2025-11-05 16:19:59.863 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0013575553894042969
+2025-11-05 16:19:59.864 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0013158321380615234
+2025-11-05 16:19:59.929 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.95 FPS
+2025-11-05 16:20:00.144 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2785971164703369
+2025-11-05 16:20:00.145 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2831594944000244
+2025-11-05 16:20:00.146 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 59.0154 ms
+2025-11-05 16:20:00.146 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0012745857238769531
+2025-11-05 16:20:00.147 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0011396408081054688
+2025-11-05 16:20:00.392 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.24367260932922363
+2025-11-05 16:20:00.392 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.24761462211608887
+2025-11-05 16:20:00.392 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.3645448684692383
+
+
+
+2025-11-05 16:20:00.392 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:00.392 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 39.9348 ms
+2025-11-05 16:20:00.392 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0001423358917236328
+2025-11-05 16:20:00.394 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:504 - 推理推理, steps_per_inference is 4
+2025-11-05 16:20:00.489 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.095s
+2025-11-05 16:20:00.489 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:run:563 - 更新更新, tcp_action_update_interval is 16
+2025-11-05 16:20:00.490 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 81.1985 ms
+2025-11-05 16:20:00.490 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0009255409240722656
+2025-11-05 16:20:00.491 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0007944107055664062
+2025-11-05 16:20:00.962 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.47015929222106934
+2025-11-05 16:20:00.963 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.47307658195495605
+2025-11-05 16:20:00.963 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 77.0942 ms
+2025-11-05 16:20:00.963 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0007085800170898438
+2025-11-05 16:20:00.965 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010383129119873047
+2025-11-05 16:20:00.984 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.15 FPS
+2025-11-05 16:20:01.231 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2651231288909912
+2025-11-05 16:20:01.231 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2682187557220459
+2025-11-05 16:20:01.232 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 78.3801 ms
+2025-11-05 16:20:01.232 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.000743865966796875
+2025-11-05 16:20:01.233 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012083053588867188
+2025-11-05 16:20:01.516 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2820761203765869
+2025-11-05 16:20:01.516 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.285491943359375
+2025-11-05 16:20:01.517 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 30.9399 ms
+2025-11-05 16:20:01.517 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0007796287536621094
+2025-11-05 16:20:01.518 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.001003265380859375
+2025-11-05 16:20:01.844 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3242344856262207
+2025-11-05 16:20:01.844 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3273885250091553
+2025-11-05 16:20:01.845 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 25.0608 ms
+2025-11-05 16:20:01.845 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0008106231689453125
+2025-11-05 16:20:01.846 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010178089141845703
+2025-11-05 16:20:01.989 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.94 FPS
+2025-11-05 16:20:02.188 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3416604995727539
+2025-11-05 16:20:02.189 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.34495997428894043
+2025-11-05 16:20:02.189 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.7964987754821777
+
+
+
+2025-11-05 16:20:02.189 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:02.189 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 36.1445 ms
+2025-11-05 16:20:02.189 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.00014162063598632812
+2025-11-05 16:20:02.205 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:20:02.206 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 53.3469 ms
+2025-11-05 16:20:02.206 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0009059906005859375
+2025-11-05 16:20:02.208 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012195110321044922
+2025-11-05 16:20:02.526 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.31726837158203125
+2025-11-05 16:20:02.527 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3212912082672119
+2025-11-05 16:20:02.528 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 41.5195 ms
+2025-11-05 16:20:02.528 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0014104843139648438
+2025-11-05 16:20:02.530 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012969970703125
+2025-11-05 16:20:02.924 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3932814598083496
+2025-11-05 16:20:02.924 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3974766731262207
+2025-11-05 16:20:02.926 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 39.4644 ms
+2025-11-05 16:20:02.926 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0015072822570800781
+2025-11-05 16:20:02.927 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012180805206298828
+2025-11-05 16:20:03.043 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.17 FPS
+2025-11-05 16:20:03.252 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.32422327995300293
+2025-11-05 16:20:03.253 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.32854247093200684
+2025-11-05 16:20:03.254 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 100.8213 ms
+2025-11-05 16:20:03.254 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0012903213500976562
+2025-11-05 16:20:03.256 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012195110321044922
+2025-11-05 16:20:03.576 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3197810649871826
+2025-11-05 16:20:03.576 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3238098621368408
+2025-11-05 16:20:03.578 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 24.7231 ms
+2025-11-05 16:20:03.578 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0010187625885009766
+2025-11-05 16:20:03.579 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010306835174560547
+2025-11-05 16:20:03.898 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.31868720054626465
+2025-11-05 16:20:03.899 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3220632076263428
+2025-11-05 16:20:03.899 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.7098073959350586
+
+
+
+2025-11-05 16:20:03.899 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:03.899 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 79.3027 ms
+2025-11-05 16:20:03.899 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.00011658668518066406
+2025-11-05 16:20:03.916 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:20:03.918 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 31.6331 ms
+2025-11-05 16:20:03.918 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0010805130004882812
+2025-11-05 16:20:03.919 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0009622573852539062
+2025-11-05 16:20:04.110 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.00 FPS
+2025-11-05 16:20:04.257 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.33756446838378906
+2025-11-05 16:20:04.258 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.34081339836120605
+2025-11-05 16:20:04.259 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 106.6599 ms
+2025-11-05 16:20:04.259 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0012500286102294922
+2025-11-05 16:20:04.260 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010936260223388672
+2025-11-05 16:20:04.563 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.30227136611938477
+2025-11-05 16:20:04.564 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.30596232414245605
+2025-11-05 16:20:04.565 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 78.5928 ms
+2025-11-05 16:20:04.565 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0011920928955078125
+2025-11-05 16:20:04.566 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012025833129882812
+2025-11-05 16:20:04.827 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2595489025115967
+2025-11-05 16:20:04.827 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2633838653564453
+2025-11-05 16:20:04.828 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 75.9646 ms
+2025-11-05 16:20:04.829 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0014667510986328125
+2025-11-05 16:20:04.830 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010526180267333984
+2025-11-05 16:20:05.112 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.96 FPS
+2025-11-05 16:20:05.133 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.30214858055114746
+2025-11-05 16:20:05.133 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3059830665588379
+2025-11-05 16:20:05.134 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 48.1660 ms
+2025-11-05 16:20:05.134 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0013279914855957031
+2025-11-05 16:20:05.136 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0011343955993652344
+2025-11-05 16:20:05.380 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.24351930618286133
+2025-11-05 16:20:05.380 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.24744677543640137
+2025-11-05 16:20:05.380 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.4818010330200195
+
+
+
+2025-11-05 16:20:05.381 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:05.381 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 27.7869 ms
+2025-11-05 16:20:05.381 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 9.012222290039062e-05
+2025-11-05 16:20:05.389 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:20:05.390 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 37.5039 ms
+2025-11-05 16:20:05.390 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0013134479522705078
+2025-11-05 16:20:05.391 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0009388923645019531
+2025-11-05 16:20:05.653 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2609529495239258
+2025-11-05 16:20:05.653 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.26432037353515625
+2025-11-05 16:20:05.655 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 35.1863 ms
+2025-11-05 16:20:05.655 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0013039112091064453
+2025-11-05 16:20:05.656 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.001051187515258789
+2025-11-05 16:20:05.911 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.25431299209594727
+2025-11-05 16:20:05.911 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.25795769691467285
+2025-11-05 16:20:05.953 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:304 - Step: 37, control_interval_time: 0.041666666666666664, cur_time-start_time: 1.5020370483398438e-05
+2025-11-05 16:20:05.995 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:304 - Step: 38, control_interval_time: 0.041666666666666664, cur_time-start_time: 2.3603439331054688e-05
+2025-11-05 16:20:06.037 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:304 - Step: 39, control_interval_time: 0.041666666666666664, cur_time-start_time: 1.5735626220703125e-05
+2025-11-05 16:20:06.052 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 0.6716163158416748
+
+
+
+2025-11-05 16:20:06.052 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:06.053 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 99.3643 ms
+2025-11-05 16:20:06.053 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.00021696090698242188
+2025-11-05 16:20:06.061 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:504 - 推理推理, steps_per_inference is 4
+2025-11-05 16:20:06.189 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.87 FPS
+2025-11-05 16:20:06.194 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.133s
+2025-11-05 16:20:06.194 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:run:563 - 更新更新, tcp_action_update_interval is 16
+2025-11-05 16:20:06.195 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 42.2830 ms
+2025-11-05 16:20:06.195 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0009183883666992188
+2025-11-05 16:20:06.196 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0009391307830810547
+2025-11-05 16:20:06.794 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.5971195697784424
+2025-11-05 16:20:06.794 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.6002767086029053
+2025-11-05 16:20:06.795 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 42.4434 ms
+2025-11-05 16:20:06.795 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0007615089416503906
+2025-11-05 16:20:06.796 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0011153221130371094
+2025-11-05 16:20:07.100 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.30239224433898926
+2025-11-05 16:20:07.100 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3055884838104248
+2025-11-05 16:20:07.101 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 81.8105 ms
+2025-11-05 16:20:07.101 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0008451938629150391
+2025-11-05 16:20:07.110 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.009425640106201172
+2025-11-05 16:20:07.190 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.98 FPS
+2025-11-05 16:20:07.365 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.253584623336792
+2025-11-05 16:20:07.365 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.26532816886901855
+2025-11-05 16:20:07.366 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 79.8735 ms
+2025-11-05 16:20:07.366 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.001191854476928711
+2025-11-05 16:20:07.368 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0015223026275634766
+2025-11-05 16:20:07.657 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.28797459602355957
+2025-11-05 16:20:07.657 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2922630310058594
+2025-11-05 16:20:07.659 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 106.0227 ms
+2025-11-05 16:20:07.659 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0013840198516845703
+2025-11-05 16:20:07.661 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012273788452148438
+2025-11-05 16:20:07.935 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2737851142883301
+2025-11-05 16:20:07.935 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2778899669647217
+2025-11-05 16:20:07.935 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.8830852508544922
+
+
+
+2025-11-05 16:20:07.935 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:07.936 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 48.7441 ms
+2025-11-05 16:20:07.936 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0001347064971923828
+2025-11-05 16:20:07.945 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:20:07.946 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 59.0515 ms
+2025-11-05 16:20:07.946 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0008857250213623047
+2025-11-05 16:20:07.947 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0008692741394042969
+2025-11-05 16:20:08.200 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2520732879638672
+2025-11-05 16:20:08.200 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.25498509407043457
+2025-11-05 16:20:08.201 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 48.1892 ms
+2025-11-05 16:20:08.201 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0013270378112792969
+2025-11-05 16:20:08.203 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012226104736328125
+2025-11-05 16:20:08.257 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.00 FPS
+2025-11-05 16:20:08.498 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2944827079772949
+2025-11-05 16:20:08.499 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2986173629760742
+2025-11-05 16:20:08.500 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 80.5649 ms
+2025-11-05 16:20:08.500 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.001039743423461914
+2025-11-05 16:20:08.501 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010485649108886719
+2025-11-05 16:20:08.762 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2599449157714844
+2025-11-05 16:20:08.762 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2635073661804199
+2025-11-05 16:20:08.764 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 77.3052 ms
+2025-11-05 16:20:08.764 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0015666484832763672
+2025-11-05 16:20:08.766 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0015769004821777344
+2025-11-05 16:20:09.019 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2522001266479492
+2025-11-05 16:20:09.019 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2568395137786865
+2025-11-05 16:20:09.020 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 67.0144 ms
+2025-11-05 16:20:09.020 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0010833740234375
+2025-11-05 16:20:09.022 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.001066446304321289
+2025-11-05 16:20:09.227 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.20486021041870117
+2025-11-05 16:20:09.227 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.20838189125061035
+2025-11-05 16:20:09.228 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.292078971862793
+
+
+
+2025-11-05 16:20:09.228 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:09.228 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 74.5281 ms
+2025-11-05 16:20:09.228 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.00012803077697753906
+2025-11-05 16:20:09.260 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:20:09.261 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.93 FPS
+2025-11-05 16:20:09.262 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 108.8738 ms
+2025-11-05 16:20:09.262 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.001461029052734375
+2025-11-05 16:20:09.263 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010840892791748047
+2025-11-05 16:20:09.466 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.201798677444458
+2025-11-05 16:20:09.466 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.20557308197021484
+2025-11-05 16:20:09.468 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 47.8320 ms
+2025-11-05 16:20:09.468 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0018002986907958984
+2025-11-05 16:20:09.470 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012195110321044922
+2025-11-05 16:20:09.712 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.24102163314819336
+2025-11-05 16:20:09.712 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.24550747871398926
+2025-11-05 16:20:09.713 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 27.2837 ms
+2025-11-05 16:20:09.714 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.001726388931274414
+2025-11-05 16:20:09.715 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0011870861053466797
+2025-11-05 16:20:09.977 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2611391544342041
+2025-11-05 16:20:09.977 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.26543188095092773
+2025-11-05 16:20:09.978 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 25.8862 ms
+2025-11-05 16:20:09.978 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.001199960708618164
+2025-11-05 16:20:09.980 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010120868682861328
+2025-11-05 16:20:10.188 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.20766186714172363
+2025-11-05 16:20:10.188 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2112138271331787
+2025-11-05 16:20:10.190 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 103.7134 ms
+2025-11-05 16:20:10.190 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0014429092407226562
+2025-11-05 16:20:10.191 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010573863983154297
+2025-11-05 16:20:10.315 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.18 FPS
+2025-11-05 16:20:10.450 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.25825047492980957
+2025-11-05 16:20:10.451 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2621469497680664
+2025-11-05 16:20:10.451 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.2230501174926758
+
+
+
+2025-11-05 16:20:10.451 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:10.451 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 31.2534 ms
+2025-11-05 16:20:10.451 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 9.083747863769531e-05
+2025-11-05 16:20:10.459 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:20:10.461 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 41.2532 ms
+2025-11-05 16:20:10.461 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0013837814331054688
+2025-11-05 16:20:10.462 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012660026550292969
+2025-11-05 16:20:10.717 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.25344133377075195
+2025-11-05 16:20:10.717 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2574028968811035
+2025-11-05 16:20:10.758 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:304 - Step: 56, control_interval_time: 0.041666666666666664, cur_time-start_time: 2.1219253540039062e-05
+2025-11-05 16:20:10.800 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:304 - Step: 57, control_interval_time: 0.041666666666666664, cur_time-start_time: 4.76837158203125e-06
+2025-11-05 16:20:10.855 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:304 - Step: 58, control_interval_time: 0.041666666666666664, cur_time-start_time: 2.6226043701171875e-06
+2025-11-05 16:20:10.896 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:304 - Step: 59, control_interval_time: 0.041666666666666664, cur_time-start_time: 2.1457672119140625e-06
+2025-11-05 16:20:10.897 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 0.44591474533081055
+
+
+
+2025-11-05 16:20:10.897 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:10.897 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 76.2546 ms
+2025-11-05 16:20:10.897 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0001347064971923828
+2025-11-05 16:20:10.913 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:504 - 推理推理, steps_per_inference is 4
+2025-11-05 16:20:11.017 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.104s
+2025-11-05 16:20:11.017 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:run:563 - 更新更新, tcp_action_update_interval is 16
+2025-11-05 16:20:11.018 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 65.6775 ms
+2025-11-05 16:20:11.018 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0006792545318603516
+2025-11-05 16:20:11.019 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0006585121154785156
+2025-11-05 16:20:11.321 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.92 FPS
+2025-11-05 16:20:11.585 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.5646491050720215
+2025-11-05 16:20:11.585 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.5671658515930176
+2025-11-05 16:20:11.585 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 32.9150 ms
+2025-11-05 16:20:11.585 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0007119178771972656
+2025-11-05 16:20:11.587 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010254383087158203
+2025-11-05 16:20:11.882 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2945830821990967
+2025-11-05 16:20:11.882 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.29757261276245117
+2025-11-05 16:20:11.883 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 63.2522 ms
+2025-11-05 16:20:11.883 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0007817745208740234
+2025-11-05 16:20:11.884 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010156631469726562
+2025-11-05 16:20:12.188 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3031027317047119
+2025-11-05 16:20:12.189 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.30633068084716797
+2025-11-05 16:20:12.190 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 37.2642 ms
+2025-11-05 16:20:12.190 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0013206005096435547
+2025-11-05 16:20:12.192 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012323856353759766
+2025-11-05 16:20:12.324 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.95 FPS
+2025-11-05 16:20:12.477 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2846951484680176
+2025-11-05 16:20:12.477 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.28873443603515625
+2025-11-05 16:20:12.478 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 59.2490 ms
+2025-11-05 16:20:12.478 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.000980377197265625
+2025-11-05 16:20:12.480 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012302398681640625
+2025-11-05 16:20:12.749 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2682075500488281
+2025-11-05 16:20:12.749 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2718062400817871
+2025-11-05 16:20:12.749 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.852651834487915
+
+
+
+2025-11-05 16:20:12.749 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:12.749 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 62.5884 ms
+2025-11-05 16:20:12.749 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.00010919570922851562
+2025-11-05 16:20:12.762 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:20:12.763 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 76.3323 ms
+2025-11-05 16:20:12.763 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0009186267852783203
+2025-11-05 16:20:12.765 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0011398792266845703
+2025-11-05 16:20:13.018 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.25272345542907715
+2025-11-05 16:20:13.018 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2559208869934082
+2025-11-05 16:20:13.019 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 66.6519 ms
+2025-11-05 16:20:13.019 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0009477138519287109
+2025-11-05 16:20:13.021 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010192394256591797
+2025-11-05 16:20:13.324 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3027379512786865
+2025-11-05 16:20:13.324 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.3060719966888428
+2025-11-05 16:20:13.324 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.00 FPS
+2025-11-05 16:20:13.325 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 105.9265 ms
+2025-11-05 16:20:13.325 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0011165142059326172
+2025-11-05 16:20:13.327 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010395050048828125
+2025-11-05 16:20:13.582 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.25458312034606934
+2025-11-05 16:20:13.582 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.25797271728515625
+2025-11-05 16:20:13.583 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 30.8210 ms
+2025-11-05 16:20:13.583 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.001008749008178711
+2025-11-05 16:20:13.585 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012595653533935547
+2025-11-05 16:20:13.794 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.20844674110412598
+2025-11-05 16:20:13.794 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2121281623840332
+2025-11-05 16:20:13.796 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 42.9900 ms
+2025-11-05 16:20:13.796 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0013401508331298828
+2025-11-05 16:20:13.797 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010232925415039062
+2025-11-05 16:20:14.000 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2017505168914795
+2025-11-05 16:20:14.000 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.20543336868286133
+2025-11-05 16:20:14.000 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.2506341934204102
+
+
+
+2025-11-05 16:20:14.000 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:14.000 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 47.6189 ms
+2025-11-05 16:20:14.000 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0001251697540283203
+2025-11-05 16:20:14.013 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:20:14.014 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 61.9346 ms
+2025-11-05 16:20:14.015 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0011210441589355469
+2025-11-05 16:20:14.016 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010097026824951172
+2025-11-05 16:20:14.228 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.21134018898010254
+2025-11-05 16:20:14.228 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.2147207260131836
+2025-11-05 16:20:14.230 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 77.3425 ms
+2025-11-05 16:20:14.230 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.001756429672241211
+2025-11-05 16:20:14.232 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0015442371368408203
+2025-11-05 16:20:14.325 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.99 FPS
+2025-11-05 16:20:14.459 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.2260148525238037
+2025-11-05 16:20:14.459 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.23091650009155273
+2025-11-05 16:20:14.461 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 108.4539 ms
+2025-11-05 16:20:14.461 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0019214153289794922
+2025-11-05 16:20:14.463 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0014677047729492188
+2025-11-05 16:20:14.666 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.20194339752197266
+2025-11-05 16:20:14.666 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.20672369003295898
+2025-11-05 16:20:14.667 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 47.8457 ms
+2025-11-05 16:20:14.667 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0012340545654296875
+2025-11-05 16:20:14.669 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.001252889633178711
+2025-11-05 16:20:14.878 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.20820116996765137
+2025-11-05 16:20:14.878 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.21205377578735352
+2025-11-05 16:20:14.880 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 60.2019 ms
+2025-11-05 16:20:14.880 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0018224716186523438
+2025-11-05 16:20:14.881 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0012447834014892578
+2025-11-05 16:20:15.084 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.20143651962280273
+2025-11-05 16:20:15.084 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.20594024658203125
+2025-11-05 16:20:15.084 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 1.0838425159454346
+
+
+
+2025-11-05 16:20:15.084 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:15.084 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 64.8206 ms
+2025-11-05 16:20:15.084 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.00010919570922851562
+2025-11-05 16:20:15.085 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.000s
+2025-11-05 16:20:15.087 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 67.6260 ms
+2025-11-05 16:20:15.087 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0012831687927246094
+2025-11-05 16:20:15.088 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0008592605590820312
+2025-11-05 16:20:15.311 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.22208476066589355
+2025-11-05 16:20:15.311 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.22531485557556152
+2025-11-05 16:20:15.353 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:304 - Step: 76, control_interval_time: 0.041666666666666664, cur_time-start_time: 4.5299530029296875e-06
+2025-11-05 16:20:15.391 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.01 FPS
+2025-11-05 16:20:15.394 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:304 - Step: 77, control_interval_time: 0.041666666666666664, cur_time-start_time: 1.1920928955078125e-06
+2025-11-05 16:20:15.436 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:304 - Step: 78, control_interval_time: 0.041666666666666664, cur_time-start_time: 1.6689300537109375e-06
+2025-11-05 16:20:15.478 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:304 - Step: 79, control_interval_time: 0.041666666666666664, cur_time-start_time: 1.6689300537109375e-06
+2025-11-05 16:20:15.478 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:608 - [RealRunner.run] run time is 0.3939244747161865
+
+
+
+2025-11-05 16:20:15.478 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:466 - [RealRunner.run] begin new run step**********
+2025-11-05 16:20:15.478 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 58.4480 ms
+2025-11-05 16:20:15.478 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.00010132789611816406
+2025-11-05 16:20:15.479 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:504 - 推理推理, steps_per_inference is 4
+2025-11-05 16:20:15.551 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:523 - [RealRunner.run] Slow inference time: 0.072s
+2025-11-05 16:20:15.551 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:run:563 - 更新更新, tcp_action_update_interval is 16
+2025-11-05 16:20:15.552 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 66.3494 ms
+2025-11-05 16:20:15.552 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0006930828094482422
+2025-11-05 16:20:15.553 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0006773471832275391
+2025-11-05 16:20:16.182 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.6281750202178955
+2025-11-05 16:20:16.182 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:406 - [RealRunner.action_command_thread] fast total time is 0.6307284832000732
+2025-11-05 16:20:16.183 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:584 - [old] Overall latency for get_obs() : 30.4768 ms
+2025-11-05 16:20:16.183 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:get_obs:585 - [RealRobotEnv] get_obs() latency is 0.0007214546203613281
+2025-11-05 16:20:16.184 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - [RealRunner.action_command_thread] fast inference time is 0.0010502338409423828

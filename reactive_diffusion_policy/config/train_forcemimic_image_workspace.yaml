@@ -91,7 +91,7 @@ policy:
 #      #     - -5.0
 #      #     - 5.0
 #      #   expand: false
-#      - _target_: torchvision.transforms.ColorJitter
+#      - _target_: torchvision.trtrain_diffusion_unet_real_3dtactile_workspaceansforms.ColorJitter
 #        brightness: 0.3
 #        contrast: 0.4
 #        saturation: 0.5

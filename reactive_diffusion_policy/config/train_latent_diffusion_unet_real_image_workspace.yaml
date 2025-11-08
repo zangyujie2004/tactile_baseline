@@ -21,6 +21,7 @@ past_action_visible: False
 keypoint_visible_rate: 1.0
 
 at_load_dir: null
+pca_load_dir: null
 use_latent_action_before_vq: True
 obs_as_global_cond: True
 
@@ -209,7 +210,7 @@ training:
   # optimization
   lr_scheduler: cosine
   lr_warmup_steps: 500
-  num_epochs: 801
+  b: 401
   gradient_accumulate_every: 1
   # EMA destroys performance when used with BatchNorm
   # replace BatchNorm with GroupNorm.

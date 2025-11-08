@@ -1,0 +1,27 @@
+from xarm.wrapper import XArmAPI
+import time
+
+if __name__ == '__main__':
+    arm = XArmAPI('192.168.1.239')
+
+    if arm.warn_code != 0:
+        arm.clean_warn()
+    if arm.error_code != 0:
+        arm.clean_error()
+
+    arm.motion_enable(enable=True)
+    arm.set_mode(0)
+    arm.set_state(state=0)
+
+    speed = 0.6
+    angle = [1.478541, -0.524974, 0.076473, 1.297253, -0.071307, 1.764924, -1.59078]
+    arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
+    time.sleep(1)
+    angle = [1.478288, -0.166976, -0.292118, 1.391008, -0.102355, 1.403859, -1.958061]
+    arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
+    time.sleep(1)
+    angle = [1.47827, -0.105039, -0.413837, 0.865564, -0.103457, 0.964442, -2.015087]
+    arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
+    time.sleep(1)
+
+    arm.disconnect()

@@ -1,0 +1,298 @@
+[get action] action[0:10] is [0.54286605 0.24959518 0.50065613], print_timestep is 0, self.timestep is 1, self.actions_start_timestep is 0, self.mode is new
+[get action] action[0:10] is [0.54286605 0.24959518 0.50065613], print_timestep is 0, self.timestep is 1, self.actions_start_timestep is 0, self.mode is new
+2025-11-05 22:27:23.643 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.071s
+向队列之中添加新的action, horizon is 25, timestep is 4, self.actions_start_timestep is 0, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 4, self.actions_start_timestep is 0, len(self.actions) is 21
+2025-11-05 22:27:23.643 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.10739350318908691
+2025-11-05 22:27:23.787 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.075s
+向队列之中添加新的action, horizon is 25, timestep is 8, self.actions_start_timestep is 0, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 8, self.actions_start_timestep is 0, len(self.actions) is 21
+2025-11-05 22:27:23.788 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.08543133735656738
+2025-11-05 22:27:23.930 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.060s
+向队列之中添加新的action, horizon is 25, timestep is 12, self.actions_start_timestep is 0, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 12, self.actions_start_timestep is 0, len(self.actions) is 21
+2025-11-05 22:27:23.930 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.06148791313171387
+2025-11-05 22:27:24.035 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.46364784240722656
+[get action] action[0:10] is [0.55010909 0.25615263 0.48574767], print_timestep is 12, self.timestep is 2, self.actions_start_timestep is 1, self.mode is new
+[get action] action[0:10] is [0.55010909 0.25615263 0.48574767], print_timestep is 12, self.timestep is 2, self.actions_start_timestep is 1, self.mode is new
+2025-11-05 22:27:24.177 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.136s
+向队列之中添加新的action, horizon is 25, timestep is 16, self.actions_start_timestep is 1, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 16, self.actions_start_timestep is 1, len(self.actions) is 21
+2025-11-05 22:27:24.178 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.1387958526611328
+2025-11-05 22:27:24.297 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.089s
+向队列之中添加新的action, horizon is 25, timestep is 20, self.actions_start_timestep is 1, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 20, self.actions_start_timestep is 1, len(self.actions) is 21
+2025-11-05 22:27:24.297 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.09129071235656738
+2025-11-05 22:27:24.416 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.19 FPS
+2025-11-05 22:27:24.416 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.37729883193969727
+[get action] action[0:10] is [0.53849733 0.2552346  0.48974818], print_timestep is 20, self.timestep is 3, self.actions_start_timestep is 2, self.mode is new
+[get action] action[0:10] is [0.53849733 0.2552346  0.48974818], print_timestep is 20, self.timestep is 3, self.actions_start_timestep is 2, self.mode is new
+2025-11-05 22:27:24.472 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.091s
+向队列之中添加新的action, horizon is 25, timestep is 24, self.actions_start_timestep is 2, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 24, self.actions_start_timestep is 2, len(self.actions) is 21
+2025-11-05 22:27:24.472 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.0991520881652832
+2025-11-05 22:27:24.656 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.101s
+向队列之中添加新的action, horizon is 25, timestep is 28, self.actions_start_timestep is 2, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 28, self.actions_start_timestep is 2, len(self.actions) is 21
+2025-11-05 22:27:24.656 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.11669468879699707
+2025-11-05 22:27:24.791 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3599116802215576
+[get action] action[0:10] is [0.5202834  0.25228819 0.51279438], print_timestep is 28, self.timestep is 4, self.actions_start_timestep is 3, self.mode is new
+[get action] action[0:10] is [0.5202834  0.25228819 0.51279438], print_timestep is 28, self.timestep is 4, self.actions_start_timestep is 3, self.mode is new
+2025-11-05 22:27:24.831 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.117s
+向队列之中添加新的action, horizon is 25, timestep is 32, self.actions_start_timestep is 3, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 32, self.actions_start_timestep is 3, len(self.actions) is 21
+2025-11-05 22:27:24.831 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.12502384185791016
+2025-11-05 22:27:24.987 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.090s
+向队列之中添加新的action, horizon is 25, timestep is 36, self.actions_start_timestep is 3, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 36, self.actions_start_timestep is 3, len(self.actions) is 21
+2025-11-05 22:27:24.987 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.11417078971862793
+2025-11-05 22:27:25.140 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.093s
+向队列之中添加新的action, horizon is 25, timestep is 40, self.actions_start_timestep is 3, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 40, self.actions_start_timestep is 3, len(self.actions) is 21
+2025-11-05 22:27:25.154 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.11410832405090332
+2025-11-05 22:27:25.223 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.4284801483154297
+[get action] action[0:10] is [0.54274672 0.24908657 0.50394398], print_timestep is 40, self.timestep is 5, self.actions_start_timestep is 4, self.mode is new
+[get action] action[0:10] is [0.54274672 0.24908657 0.50394398], print_timestep is 40, self.timestep is 5, self.actions_start_timestep is 4, self.mode is new
+2025-11-05 22:27:25.358 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.136s
+向队列之中添加新的action, horizon is 25, timestep is 44, self.actions_start_timestep is 4, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 44, self.actions_start_timestep is 4, len(self.actions) is 21
+2025-11-05 22:27:25.358 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.15223407745361328
+2025-11-05 22:27:25.494 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.85 FPS
+2025-11-05 22:27:25.537 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.161s
+向队列之中添加新的action, horizon is 25, timestep is 48, self.actions_start_timestep is 4, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 48, self.actions_start_timestep is 4, len(self.actions) is 21
+2025-11-05 22:27:25.537 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.16406631469726562
+2025-11-05 22:27:25.671 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.444838285446167
+[get action] action[0:10] is [0.51029456 0.24617095 0.53065342], print_timestep is 48, self.timestep is 6, self.actions_start_timestep is 5, self.mode is new
+[get action] action[0:10] is [0.51029456 0.24617095 0.53065342], print_timestep is 48, self.timestep is 6, self.actions_start_timestep is 5, self.mode is new
+2025-11-05 22:27:25.764 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.197s
+向队列之中添加新的action, horizon is 25, timestep is 52, self.actions_start_timestep is 5, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 52, self.actions_start_timestep is 5, len(self.actions) is 21
+2025-11-05 22:27:25.764 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.21252226829528809
+2025-11-05 22:27:25.897 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.131s
+向队列之中添加新的action, horizon is 25, timestep is 56, self.actions_start_timestep is 5, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 56, self.actions_start_timestep is 5, len(self.actions) is 21
+2025-11-05 22:27:25.897 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.13246726989746094
+2025-11-05 22:27:26.035 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.101s
+向队列之中添加新的action, horizon is 25, timestep is 60, self.actions_start_timestep is 5, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 60, self.actions_start_timestep is 5, len(self.actions) is 21
+2025-11-05 22:27:26.035 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.10395359992980957
+2025-11-05 22:27:26.154 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.46422505378723145
+[get action] action[0:10] is [0.52130771 0.24320519 0.52070302], print_timestep is 60, self.timestep is 7, self.actions_start_timestep is 6, self.mode is new
+[get action] action[0:10] is [0.52130771 0.24320519 0.52070302], print_timestep is 60, self.timestep is 7, self.actions_start_timestep is 6, self.mode is new
+2025-11-05 22:27:26.175 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.075s
+向队列之中添加新的action, horizon is 25, timestep is 64, self.actions_start_timestep is 6, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 64, self.actions_start_timestep is 6, len(self.actions) is 21
+2025-11-05 22:27:26.176 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.07760357856750488
+2025-11-05 22:27:26.329 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.062s
+向队列之中添加新的action, horizon is 25, timestep is 68, self.actions_start_timestep is 6, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 68, self.actions_start_timestep is 6, len(self.actions) is 21
+2025-11-05 22:27:26.330 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.06485915184020996
+2025-11-05 22:27:26.498 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.065s
+向队列之中添加新的action, horizon is 25, timestep is 72, self.actions_start_timestep is 6, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 72, self.actions_start_timestep is 6, len(self.actions) is 21
+2025-11-05 22:27:26.499 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.06724166870117188
+2025-11-05 22:27:26.556 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.06 FPS
+2025-11-05 22:27:26.634 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.4705493450164795
+[get action] action[0:10] is [0.50349259 0.23371489 0.54903686], print_timestep is 72, self.timestep is 8, self.actions_start_timestep is 7, self.mode is new
+[get action] action[0:10] is [0.50349259 0.23371489 0.54903686], print_timestep is 72, self.timestep is 8, self.actions_start_timestep is 7, self.mode is new
+2025-11-05 22:27:26.731 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.130s
+向队列之中添加新的action, horizon is 25, timestep is 76, self.actions_start_timestep is 7, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 76, self.actions_start_timestep is 7, len(self.actions) is 21
+2025-11-05 22:27:26.731 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.13274431228637695
+2025-11-05 22:27:26.846 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.078s
+向队列之中添加新的action, horizon is 25, timestep is 80, self.actions_start_timestep is 7, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 80, self.actions_start_timestep is 7, len(self.actions) is 21
+2025-11-05 22:27:26.847 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.08193063735961914
+2025-11-05 22:27:27.056 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.122s
+向队列之中添加新的action, horizon is 25, timestep is 84, self.actions_start_timestep is 7, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 84, self.actions_start_timestep is 7, len(self.actions) is 21
+2025-11-05 22:27:27.056 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.1243445873260498
+2025-11-05 22:27:27.165 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.064s
+向队列之中添加新的action, horizon is 25, timestep is 88, self.actions_start_timestep is 7, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 88, self.actions_start_timestep is 7, len(self.actions) is 21
+2025-11-05 22:27:27.165 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.06703925132751465
+2025-11-05 22:27:27.233 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.5818121433258057
+[get action] action[0:10] is [0.51238972 0.2362442  0.52785802], print_timestep is 88, self.timestep is 9, self.actions_start_timestep is 8, self.mode is new
+[get action] action[0:10] is [0.51238972 0.2362442  0.52785802], print_timestep is 88, self.timestep is 9, self.actions_start_timestep is 8, self.mode is new
+2025-11-05 22:27:27.336 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.069s
+向队列之中添加新的action, horizon is 25, timestep is 92, self.actions_start_timestep is 8, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 92, self.actions_start_timestep is 8, len(self.actions) is 21
+2025-11-05 22:27:27.337 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.07167553901672363
+2025-11-05 22:27:27.498 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.064s
+向队列之中添加新的action, horizon is 25, timestep is 96, self.actions_start_timestep is 8, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 96, self.actions_start_timestep is 8, len(self.actions) is 21
+2025-11-05 22:27:27.498 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.06630110740661621
+2025-11-05 22:27:27.616 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.10 FPS
+2025-11-05 22:27:27.639 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.4029560089111328
+[get action] action[0:10] is [0.48245859 0.23315208 0.56274283], print_timestep is 96, self.timestep is 10, self.actions_start_timestep is 9, self.mode is new
+[get action] action[0:10] is [0.48245859 0.23315208 0.56274283], print_timestep is 96, self.timestep is 10, self.actions_start_timestep is 9, self.mode is new
+2025-11-05 22:27:27.669 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.069s
+向队列之中添加新的action, horizon is 25, timestep is 100, self.actions_start_timestep is 9, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 100, self.actions_start_timestep is 9, len(self.actions) is 21
+2025-11-05 22:27:27.670 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.07150816917419434
+2025-11-05 22:27:27.823 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.056s
+向队列之中添加新的action, horizon is 25, timestep is 104, self.actions_start_timestep is 9, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 104, self.actions_start_timestep is 9, len(self.actions) is 21
+2025-11-05 22:27:27.823 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.05826139450073242
+2025-11-05 22:27:27.997 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.047s
+向队列之中添加新的action, horizon is 25, timestep is 108, self.actions_start_timestep is 9, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 108, self.actions_start_timestep is 9, len(self.actions) is 21
+2025-11-05 22:27:27.998 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.04885149002075195
+2025-11-05 22:27:28.105 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.45748043060302734
+[get action] action[0:10] is [0.46866989 0.24125151 0.56683761], print_timestep is 108, self.timestep is 11, self.actions_start_timestep is 10, self.mode is new
+[get action] action[0:10] is [0.46866989 0.24125151 0.56683761], print_timestep is 108, self.timestep is 11, self.actions_start_timestep is 10, self.mode is new
+2025-11-05 22:27:28.171 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.054s
+向队列之中添加新的action, horizon is 25, timestep is 112, self.actions_start_timestep is 10, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 112, self.actions_start_timestep is 10, len(self.actions) is 21
+2025-11-05 22:27:28.171 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.055999040603637695
+2025-11-05 22:27:28.331 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.046s
+向队列之中添加新的action, horizon is 25, timestep is 116, self.actions_start_timestep is 10, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 116, self.actions_start_timestep is 10, len(self.actions) is 21
+2025-11-05 22:27:28.332 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.048249006271362305
+2025-11-05 22:27:28.529 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.076s
+向队列之中添加新的action, horizon is 25, timestep is 120, self.actions_start_timestep is 10, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 120, self.actions_start_timestep is 10, len(self.actions) is 21
+2025-11-05 22:27:28.529 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.07864809036254883
+2025-11-05 22:27:28.567 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.4590263366699219
+[get action] action[0:10] is [0.50031477 0.24140854 0.53728485], print_timestep is 120, self.timestep is 12, self.actions_start_timestep is 11, self.mode is new
+[get action] action[0:10] is [0.50031477 0.24140854 0.53728485], print_timestep is 120, self.timestep is 12, self.actions_start_timestep is 11, self.mode is new
+2025-11-05 22:27:28.682 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.01 FPS
+2025-11-05 22:27:28.720 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.093s
+向队列之中添加新的action, horizon is 25, timestep is 124, self.actions_start_timestep is 11, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 124, self.actions_start_timestep is 11, len(self.actions) is 21
+2025-11-05 22:27:28.720 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.10023689270019531
+2025-11-05 22:27:28.960 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.171s
+向队列之中添加新的action, horizon is 25, timestep is 128, self.actions_start_timestep is 11, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 128, self.actions_start_timestep is 11, len(self.actions) is 21
+2025-11-05 22:27:28.961 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.17381978034973145
+2025-11-05 22:27:28.993 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.4225351810455322
+[get action] action[0:10] is [0.47826821 0.236242   0.5546093 ], print_timestep is 128, self.timestep is 13, self.actions_start_timestep is 12, self.mode is new
+[get action] action[0:10] is [0.47826821 0.236242   0.5546093 ], print_timestep is 128, self.timestep is 13, self.actions_start_timestep is 12, self.mode is new
+2025-11-05 22:27:29.063 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.095s
+向队列之中添加新的action, horizon is 25, timestep is 132, self.actions_start_timestep is 12, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 132, self.actions_start_timestep is 12, len(self.actions) is 21
+2025-11-05 22:27:29.063 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.10247373580932617
+2025-11-05 22:27:29.221 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.093s
+向队列之中添加新的action, horizon is 25, timestep is 136, self.actions_start_timestep is 12, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 136, self.actions_start_timestep is 12, len(self.actions) is 21
+2025-11-05 22:27:29.221 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.09421133995056152
+2025-11-05 22:27:29.375 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.079s
+向队列之中添加新的action, horizon is 25, timestep is 140, self.actions_start_timestep is 12, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 140, self.actions_start_timestep is 12, len(self.actions) is 21
+2025-11-05 22:27:29.375 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.08108329772949219
+2025-11-05 22:27:29.421 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.42535948753356934
+[get action] action[0:10] is [0.5018295  0.2405086  0.53336918], print_timestep is 140, self.timestep is 14, self.actions_start_timestep is 13, self.mode is new
+[get action] action[0:10] is [0.5018295  0.2405086  0.53336918], print_timestep is 140, self.timestep is 14, self.actions_start_timestep is 13, self.mode is new
+2025-11-05 22:27:29.600 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.137s
+向队列之中添加新的action, horizon is 25, timestep is 144, self.actions_start_timestep is 13, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 144, self.actions_start_timestep is 13, len(self.actions) is 21
+2025-11-05 22:27:29.600 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.13941335678100586
+2025-11-05 22:27:29.682 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.00 FPS
+2025-11-05 22:27:29.754 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.126s
+向队列之中添加新的action, horizon is 25, timestep is 148, self.actions_start_timestep is 13, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 148, self.actions_start_timestep is 13, len(self.actions) is 21
+2025-11-05 22:27:29.756 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.1287848949432373
+2025-11-05 22:27:29.817 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3925654888153076
+[get action] action[0:10] is [0.51038003 0.23840551 0.53032827], print_timestep is 148, self.timestep is 15, self.actions_start_timestep is 14, self.mode is new
+[get action] action[0:10] is [0.51038003 0.23840551 0.53032827], print_timestep is 148, self.timestep is 15, self.actions_start_timestep is 14, self.mode is new
+2025-11-05 22:27:29.895 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.099s
+向队列之中添加新的action, horizon is 25, timestep is 152, self.actions_start_timestep is 14, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 152, self.actions_start_timestep is 14, len(self.actions) is 21
+2025-11-05 22:27:29.895 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.10082578659057617
+2025-11-05 22:27:30.031 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.068s
+向队列之中添加新的action, horizon is 25, timestep is 156, self.actions_start_timestep is 14, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 156, self.actions_start_timestep is 14, len(self.actions) is 21
+2025-11-05 22:27:30.031 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.07005190849304199
+2025-11-05 22:27:30.195 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.065s
+向队列之中添加新的action, horizon is 25, timestep is 160, self.actions_start_timestep is 14, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 160, self.actions_start_timestep is 14, len(self.actions) is 21
+2025-11-05 22:27:30.196 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.06812763214111328
+2025-11-05 22:27:30.199 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.37128257751464844
+[get action] action[0:10] is [0.51797223 0.22320788 0.52608413], print_timestep is 160, self.timestep is 16, self.actions_start_timestep is 15, self.mode is new
+[get action] action[0:10] is [0.51797223 0.22320788 0.52608413], print_timestep is 160, self.timestep is 16, self.actions_start_timestep is 15, self.mode is new
+2025-11-05 22:27:30.361 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.066s
+向队列之中添加新的action, horizon is 25, timestep is 164, self.actions_start_timestep is 15, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 164, self.actions_start_timestep is 15, len(self.actions) is 21
+2025-11-05 22:27:30.377 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.08262848854064941
+2025-11-05 22:27:30.509 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3068969249725342
+[get action] action[0:10] is [0.51831973 0.23507543 0.52015465], print_timestep is 164, self.timestep is 17, self.actions_start_timestep is 16, self.mode is new
+[get action] action[0:10] is [0.51831973 0.23507543 0.52015465], print_timestep is 164, self.timestep is 17, self.actions_start_timestep is 16, self.mode is new
+2025-11-05 22:27:30.535 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.073s
+向队列之中添加新的action, horizon is 25, timestep is 168, self.actions_start_timestep is 16, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 168, self.actions_start_timestep is 16, len(self.actions) is 21
+2025-11-05 22:27:30.536 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.07477974891662598
+2025-11-05 22:27:30.683 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.99 FPS
+2025-11-05 22:27:30.691 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.060s
+向队列之中添加新的action, horizon is 25, timestep is 172, self.actions_start_timestep is 16, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 172, self.actions_start_timestep is 16, len(self.actions) is 21
+2025-11-05 22:27:30.691 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.06372785568237305
+2025-11-05 22:27:30.733 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.21930336952209473
+[get action] action[0:10] is [0.47783273 0.21777438 0.56593835], print_timestep is 172, self.timestep is 18, self.actions_start_timestep is 17, self.mode is new
+[get action] action[0:10] is [0.47783273 0.21777438 0.56593835], print_timestep is 172, self.timestep is 18, self.actions_start_timestep is 17, self.mode is new
+2025-11-05 22:27:30.865 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.068s
+向队列之中添加新的action, horizon is 25, timestep is 176, self.actions_start_timestep is 17, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 176, self.actions_start_timestep is 17, len(self.actions) is 21
+2025-11-05 22:27:30.865 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.07071948051452637
+2025-11-05 22:27:31.065 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.096s
+向队列之中添加新的action, horizon is 25, timestep is 180, self.actions_start_timestep is 17, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 180, self.actions_start_timestep is 17, len(self.actions) is 21
+2025-11-05 22:27:31.065 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.10409379005432129
+2025-11-05 22:27:31.224 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.48827600479125977
+[get action] action[0:10] is [0.51573497 0.22526617 0.52954769], print_timestep is 180, self.timestep is 19, self.actions_start_timestep is 18, self.mode is new
+[get action] action[0:10] is [0.51573497 0.22526617 0.52954769], print_timestep is 180, self.timestep is 19, self.actions_start_timestep is 18, self.mode is new
+2025-11-05 22:27:31.294 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.165s
+向队列之中添加新的action, horizon is 25, timestep is 184, self.actions_start_timestep is 18, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 184, self.actions_start_timestep is 18, len(self.actions) is 21
+2025-11-05 22:27:31.294 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.16653060913085938
+2025-11-05 22:27:31.372 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.076s
+向队列之中添加新的action, horizon is 25, timestep is 188, self.actions_start_timestep is 18, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 188, self.actions_start_timestep is 18, len(self.actions) is 21
+2025-11-05 22:27:31.401 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.10639762878417969
+2025-11-05 22:27:31.537 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.074s
+向队列之中添加新的action, horizon is 25, timestep is 192, self.actions_start_timestep is 18, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 192, self.actions_start_timestep is 18, len(self.actions) is 21
+2025-11-05 22:27:31.537 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.07564067840576172
+2025-11-05 22:27:31.561 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.3326096534729004
+[get action] action[0:10] is [0.48082477 0.21678923 0.57186848], print_timestep is 192, self.timestep is 20, self.actions_start_timestep is 19, self.mode is new
+[get action] action[0:10] is [0.48082477 0.21678923 0.57186848], print_timestep is 192, self.timestep is 20, self.actions_start_timestep is 19, self.mode is new
+2025-11-05 22:27:31.749 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.01 FPS
+2025-11-05 22:27:31.766 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.136s
+向队列之中添加新的action, horizon is 25, timestep is 196, self.actions_start_timestep is 19, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 196, self.actions_start_timestep is 19, len(self.actions) is 21
+2025-11-05 22:27:31.769 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.1409001350402832
+2025-11-05 22:27:31.884 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.087s
+向队列之中添加新的action, horizon is 25, timestep is 200, self.actions_start_timestep is 19, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 200, self.actions_start_timestep is 19, len(self.actions) is 21
+2025-11-05 22:27:31.884 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.08879399299621582
+2025-11-05 22:27:32.046 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.082s
+向队列之中添加新的action, horizon is 25, timestep is 204, self.actions_start_timestep is 19, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 204, self.actions_start_timestep is 19, len(self.actions) is 21
+2025-11-05 22:27:32.048 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.08554220199584961
+2025-11-05 22:27:32.085 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.5203757286071777
+[get action] action[0:10] is [0.47422457 0.20737235 0.58924711], print_timestep is 204, self.timestep is 21, self.actions_start_timestep is 20, self.mode is new
+[get action] action[0:10] is [0.47422457 0.20737235 0.58924711], print_timestep is 204, self.timestep is 21, self.actions_start_timestep is 20, self.mode is new
+2025-11-05 22:27:32.218 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.088s
+向队列之中添加新的action, horizon is 25, timestep is 208, self.actions_start_timestep is 20, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 208, self.actions_start_timestep is 20, len(self.actions) is 21
+2025-11-05 22:27:32.218 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.08956670761108398
+2025-11-05 22:27:32.364 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.067s
+向队列之中添加新的action, horizon is 25, timestep is 212, self.actions_start_timestep is 20, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 212, self.actions_start_timestep is 20, len(self.actions) is 21
+2025-11-05 22:27:32.365 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.06927347183227539
+2025-11-05 22:27:32.540 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.076s
+向队列之中添加新的action, horizon is 25, timestep is 216, self.actions_start_timestep is 20, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 216, self.actions_start_timestep is 20, len(self.actions) is 21
+2025-11-05 22:27:32.540 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.07782459259033203
+2025-11-05 22:27:32.600 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.5117709636688232
+[get action] action[0:10] is [0.50708896 0.23974295 0.53898454], print_timestep is 216, self.timestep is 22, self.actions_start_timestep is 21, self.mode is new
+[get action] action[0:10] is [0.50708896 0.23974295 0.53898454], print_timestep is 216, self.timestep is 22, self.actions_start_timestep is 21, self.mode is new
+2025-11-05 22:27:32.761 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.83 FPS
+2025-11-05 22:27:32.766 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.099s
+向队列之中添加新的action, horizon is 25, timestep is 220, self.actions_start_timestep is 21, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 220, self.actions_start_timestep is 21, len(self.actions) is 21
+2025-11-05 22:27:32.766 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.13727760314941406
+2025-11-05 22:27:32.863 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_async:run:487 - Policy inference time: 0.066s
+向队列之中添加新的action, horizon is 25, timestep is 224, self.actions_start_timestep is 21, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 224, self.actions_start_timestep is 21, len(self.actions) is 21
+2025-11-05 22:27:32.863 | INFO     | reactive_diffusion_policy.env_runner.real_runner_async:run:570 - [RealRunner.run] total latency of run is 0.06726908683776855

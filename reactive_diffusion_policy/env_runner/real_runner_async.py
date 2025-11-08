@@ -298,8 +298,8 @@ class RealRunner:
             if tcp_step_action is None or gripper_step_action is None:  # no action in the buffer => no movement.
                 cur_time = time.time()
                 precise_sleep(max(0., self.control_interval_time - (cur_time - start_time)))
-                logger.debug(f"Step: {self.action_step_count}, control_interval_time: {self.control_interval_time}, "
-                             f"cur_time-start_time: {cur_time - start_time}")
+                # logger.debug(f"Step: {self.action_step_count}, control_interval_time: {self.control_interval_time}, "
+                #              f"cur_time-start_time: {cur_time - start_time}")
                 self.action_step_count += 1
                 continue
 
@@ -336,7 +336,7 @@ class RealRunner:
                 tcp_step_action = policy.predict_from_latent_action(tcp_step_latent_action, extended_obs_dict, tcp_extended_obs_step, dataset_obs_temporal_downsample_ratio)['action'][0].detach().cpu().numpy()
                 gripper_step_action = policy.predict_from_latent_action(gripper_step_latent_action, extended_obs_dict, gripper_extended_obs_step, dataset_obs_temporal_downsample_ratio)['action'][0].detach().cpu().numpy()
                 self.fast_cnt += 1
-                logger.info(f"Slow cnt: {self.latent_cnt}, Fast cnt: {self.fast_cnt}, Step cnt: {self.step_cnt}")
+                # logger.info(f"Slow cnt: {self.latent_cnt}, Fast cnt: {self.fast_cnt}, Step cnt: {self.step_cnt}")
                 if self.use_relative_action:
                     tcp_step_action = relative_actions_to_absolute_actions(tcp_step_action, tcp_base_absolute_action)
                     gripper_step_action = relative_actions_to_absolute_actions(gripper_step_action, gripper_base_absolute_action)
@@ -380,6 +380,7 @@ class RealRunner:
             self.env.execute_action(step_action, use_relative_action=False, is_bimanual=is_bimanual)
 
             cur_time = time.time()
+            # logger.info(f"[RealRunner.action_command_thread] total latency of fast is {cur_time - start_time}")
             precise_sleep(max(0., self.control_interval_time - (cur_time - start_time)))
             self.action_step_count += 1
 
@@ -400,6 +401,7 @@ class RealRunner:
                 logger.error(f"Failed to stop recording video")
 
     def run(self, policy: Union[DiffusionUnetImagePolicy]):
+        logger.info(f"*************************************************Async****************************************")
         if self.use_latent_action_with_rnn_decoder:
             assert policy.at.use_rnn_decoder, "Policy should use rnn decoder for latent action."
         else:
@@ -440,7 +442,7 @@ class RealRunner:
         steps_per_inference = int(self.control_fps / self.inference_fps)
         start_timestamp = time.time()
         try:
-            time.sleep(10)
+            time.sleep(5)
             while True:
                 self.step_cnt = step_count
                 # profiler = Profiler()
@@ -473,6 +475,7 @@ class RealRunner:
 
                 policy_time = time.time()
                 # run policy
+                ## TODO: 额外推理可以删掉的
                 with torch.no_grad():
                     if self.use_latent_action_with_rnn_decoder:
                         action_dict = policy.predict_action(obs_dict,
@@ -520,49 +523,51 @@ class RealRunner:
                         action_all = interpolate_actions_with_ratio(action_all, self.action_interpolation_ratio)
 
                 # TODO: only takes the first n_action_steps and add to the ensemble buffer
-                if step_count % self.tcp_action_update_interval == 0:
-                    if self.use_latent_action_with_rnn_decoder:
-                        tcp_action = action_all[self.latency_step:, ...]
-                    else:
-                        if action_all.shape[-1] == 4:
-                            tcp_action = action_all[self.latency_step:, :3]
-                        elif action_all.shape[-1] == 8:
-                            tcp_action = action_all[self.latency_step:, :6]
-                        elif action_all.shape[-1] == 10:
-                            tcp_action = action_all[self.latency_step:, :9]
-                        elif action_all.shape[-1] == 20:
-                            tcp_action = action_all[self.latency_step:, :18]
+                if True:# only used to debug
+                    if step_count % self.tcp_action_update_interval == 0:
+                        if self.use_latent_action_with_rnn_decoder:
+                            tcp_action = action_all[self.latency_step:, ...]
                         else:
-                            raise NotImplementedError
-                    # add to ensemble buffer
-                    # logger.debug(f"Step: {step_count}, Add TCP action to ensemble buffer: {tcp_action}")
-                    self.tcp_ensemble_buffer.add_action(tcp_action, step_count)
+                            if action_all.shape[-1] == 4:
+                                tcp_action = action_all[self.latency_step:, :3]
+                            elif action_all.shape[-1] == 8:
+                                tcp_action = action_all[self.latency_step:, :6]
+                            elif action_all.shape[-1] == 10:
+                                tcp_action = action_all[self.latency_step:, :9]
+                            elif action_all.shape[-1] == 20:
+                                tcp_action = action_all[self.latency_step:, :18]
+                            else:
+                                raise NotImplementedError
+                        # add to ensemble buffer
+                        # logger.debug(f"Step: {step_count}, Add TCP action to ensemble buffer: {tcp_action}")
+                        self.tcp_ensemble_buffer.add_action(tcp_action, step_count)
 
-                    if self.env.enable_exp_recording and not self.use_latent_action_with_rnn_decoder:
-                        self.env.get_predicted_action(tcp_action, type='full_tcp')
+                        if self.env.enable_exp_recording and not self.use_latent_action_with_rnn_decoder:
+                            self.env.get_predicted_action(tcp_action, type='full_tcp')
 
-                if step_count % self.gripper_action_update_interval == 0:
-                    if self.use_latent_action_with_rnn_decoder:
-                        gripper_action = action_all[self.gripper_latency_step:, ...]
-                    else:
-                        if action_all.shape[-1] == 4:
-                            gripper_action = action_all[self.gripper_latency_step:, 3:]
-                        elif action_all.shape[-1] == 8:
-                            gripper_action = action_all[self.gripper_latency_step:, 6:]
-                        elif action_all.shape[-1] == 10:
-                            gripper_action = action_all[self.gripper_latency_step:, 9:]
-                        elif action_all.shape[-1] == 20:
-                            gripper_action = action_all[self.gripper_latency_step:, 18:]
+                    if step_count % self.gripper_action_update_interval == 0:
+                        if self.use_latent_action_with_rnn_decoder:
+                            gripper_action = action_all[self.gripper_latency_step:, ...]
                         else:
-                            raise NotImplementedError
-                    # add to ensemble buffer
-                    # logger.debug(f"Step: {step_count}, Add gripper action to ensemble buffer: {gripper_action}")
-                    self.gripper_ensemble_buffer.add_action(gripper_action, step_count)
+                            if action_all.shape[-1] == 4:
+                                gripper_action = action_all[self.gripper_latency_step:, 3:]
+                            elif action_all.shape[-1] == 8:
+                                gripper_action = action_all[self.gripper_latency_step:, 6:]
+                            elif action_all.shape[-1] == 10:
+                                gripper_action = action_all[self.gripper_latency_step:, 9:]
+                            elif action_all.shape[-1] == 20:
+                                gripper_action = action_all[self.gripper_latency_step:, 18:]
+                            else:
+                                raise NotImplementedError
+                        # add to ensemble buffer
+                        # logger.debug(f"Step: {step_count}, Add gripper action to ensemble buffer: {gripper_action}")
+                        self.gripper_ensemble_buffer.add_action(gripper_action, step_count)
 
-                    if self.env.enable_exp_recording and not self.use_latent_action_with_rnn_decoder:
-                        self.env.get_predicted_action(gripper_action, type='full_gripper')
+                        if self.env.enable_exp_recording and not self.use_latent_action_with_rnn_decoder:
+                            self.env.get_predicted_action(gripper_action, type='full_gripper')
 
                 cur_time = time.time()
+                logger.info(f"[RealRunner.run] total latency of run is {cur_time - start_time}")
                 precise_sleep(max(0., self.inference_interval_time - (cur_time - start_time)))
                 if cur_time - start_timestamp >= self.max_duration_time:
                     logger.info(f"Episode reaches max duration time {self.max_duration_time} seconds.")

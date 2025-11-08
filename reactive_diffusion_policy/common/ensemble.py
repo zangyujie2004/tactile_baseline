@@ -55,12 +55,20 @@ class EnsembleBuffer:
             assert self.action_shape == action.shape[1:], "Incompatible action shape."
         idx = timestep - self.actions_start_timestep
         horizon = action.shape[0]
-        while idx + horizon - 1 >= len(self.actions):
+        # while idx + horizon - 1 >= len(self.actions):#从第idx步开始添加action(一个chunk)内的全部动作
+        #     self.actions.append([])
+        #     self.actions_timestep.append([])
+        # for i in range(idx, idx + horizon):
+        #     self.actions[i].append(action[i - idx, ...])
+        #     self.actions_timestep[i].append(timestep)
+        while len(self.actions) < horizon:
             self.actions.append([])
             self.actions_timestep.append([])
-        for i in range(idx, idx + horizon):
-            self.actions[i].append(action[i - idx, ...])
+        for i in range(0, horizon):
+            self.actions[i].append(action[i, ...])
             self.actions_timestep[i].append(timestep)
+            self.actions_timestep[i].append(timestep+i-idx)
+        print(f"向队列之中添加新的action, horizon is {action.shape[0]}, timestep is {timestep}, self.actions_start_timestep is {self.actions_start_timestep}, len(self.actions) is {len(self.actions)}")
     
     def get_action(self):
         """
@@ -76,11 +84,12 @@ class EnsembleBuffer:
         actions_timestep = self.actions_timestep[0]
         if actions == []:
             return None      # no data
-        sorted_actions = sorted(zip(actions_timestep, actions))
+        sorted_actions = sorted(zip(actions_timestep, actions), key=lambda x: x[0])#only compare timestep
         all_actions = np.array([x for _, x in sorted_actions])
         all_timesteps = np.array([t for t, _ in sorted_actions])
         if self.mode == "new":
             action = all_actions[-1]
+            print_timestep = all_timesteps[-1]
         elif self.mode == "old":
             action = all_actions[0]
         elif self.mode == "avg":
@@ -98,6 +107,8 @@ class EnsembleBuffer:
         else:
             raise AttributeError("Ensemble mode {} not supported.".format(self.mode))
         self.timestep += 1
+        # 检查一下，是不是每次get的都是一个action（最新的那个），直到新添加队列
+        print(f"[get action] action[0:10] is {action[0:3]}, print_timestep is {print_timestep}, self.timestep is {self.timestep}, self.actions_start_timestep is {self.actions_start_timestep}, self.mode is {self.mode}")
         return action
 
     def _weighted_average_action(self, actions, weights):

@@ -13,8 +13,19 @@ python eval_real_robot_flexiv.py \
       task=rdp \
       +task.env_runner.output_dir=/home/robotics/Prometheus/reactive_diffusion_policy/data/outputs/videos \
       at=at_wipe_lift \
-      +ckpt_path=data/outputs/2025.11.06/21.07.40_train_latent_diffusion_unet_image_real_wipe_image_gelsight_emb_ldp_24fps_vase_a/checkpoints/latest.ckpt \
-      at_load_dir=data/outputs/2025.11.06/20.54.48_train_vae_real_wipe_image_gelsight_emb_at_24fps_vase_a/checkpoints/latest.ckpt \
+      +ckpt_path=data/outputs/2025.11.13/22.29.35_train_latent_diffusion_unet_image_real_wipe_image_gelsight_emb_ldp_24fps_vase_a/checkpoints/latest.ckpt \
+      at_load_dir=data/outputs/2025.11.13/22.03.48_train_vae_real_wipe_image_gelsight_emb_at_24fps_vase_a/checkpoints/latest.ckpt \
       pca_load_dir=/home/tars/projects/dataset/vase2_new_A/rdp_pca \
+
       # task.env_runner.tcp_action_update_interval=4 \
       # task.env_runner.gripper_action_update_interval=4
+
+# vase_c /home/tars/projects/dataset/vase_new_C/rdp_pca
+# python eval_real_robot_flexiv.py \
+#       --config-name train_latent_diffusion_unet_real_image_workspace \
+#       task=rdp \
+#       +task.env_runner.output_dir=/home/robotics/Prometheus/reactive_diffusion_policy/data/outputs/videos \
+#       at=at_wipe_lift \
+#       +ckpt_path= \
+#       at_load_dir= \
+#       pca_load_dir=/home/tars/projects/dataset/vase_new_C/rdp_pca \

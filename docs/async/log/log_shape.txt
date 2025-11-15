@@ -1,0 +1,123 @@
+2025-11-10 17:54:22.060 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:run:442 - Start evaluation episode
+2025-11-10 17:54:23.061 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:452 - Reset environment and policy.
+2025-11-10 17:54:23.619 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 0.28 FPS
+2025-11-10 17:54:24.669 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.25 FPS
+2025-11-10 17:54:25.669 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.99 FPS
+2025-11-10 17:54:26.734 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.03 FPS
+2025-11-10 17:54:27.735 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 14.99 FPS
+2025-11-10 17:54:28.564 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:473 - [RealRunner.run] begin new run step**********
+2025-11-10 17:54:28.566 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:511 - 推理推理, steps_per_inference is 4
+2025-11-10 17:54:28.801 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.01 FPS
+2025-11-10 17:54:29.141 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:530 - [RealRunner.run] Slow inference time: 0.575s
+2025-11-10 17:54:29.141 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:run:570 - 更新更新, tcp_action_update_interval is 16
+向队列之中添加新的action, horizon is 25, timestep is 0, self.actions_start_timestep is 0, len(self.actions) is 25
+向队列之中添加新的action, horizon is 21, timestep is 0, self.actions_start_timestep is 0, len(self.actions) is 21
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 1, self.actions_start_timestep is 0, self.mode is new
+2025-11-10 17:54:29.141 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:300 - after get_action tcp_step_action.shape is (65,)
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 1, self.actions_start_timestep is 0, self.mode is new
+2025-11-10 17:54:29.144 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:358 - before predict_from_latent_action tcp_step_latent_action.shape is torch.Size([1, 64])
+2025-11-10 17:54:29.168 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - after predict_from_latent_action tcp_step_action.shape is (5, 10)
+2025-11-10 17:54:29.168 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:364 - [RealRunner.action_command_thread] fast inference time is 0.0244443416595459
+2025-11-10 17:54:29.168 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:370 - after relative_actions_to_absolute_actions tcp_step_action.shape is (5, 10)
+2025-11-10 17:54:29.168 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:404 - before post_process_action combined_action.shape is (10,)
+2025-11-10 17:54:29.169 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:407 - after post_process_action step_action.shape is [ 6.50742586e-05 -8.34859684e-02  4.00000000e-02 -2.84473186e-01
+ -1.96469821e-01 -7.07212288e-02  5.54043531e-01  0.00000000e+00
+  6.50742586e-05 -8.34859684e-02  4.00000000e-02 -2.84473186e-01
+ -1.96469821e-01 -7.07212288e-02  5.54043531e-01  0.00000000e+00]
+ControllerError, code: 1
+[SDK][ERROR][2025-11-10 17:54:29][base.py:383] - - wait_feedback, xarm has error, error=1
+2025-11-10 17:54:29.637 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.4675173759460449
+2025-11-10 17:54:29.637 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:413 - [RealRunner.action_command_thread] fast total time is 0.49548912048339844
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 2, self.actions_start_timestep is 1, self.mode is new
+2025-11-10 17:54:29.637 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:300 - after get_action tcp_step_action.shape is (65,)
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 2, self.actions_start_timestep is 1, self.mode is new
+2025-11-10 17:54:29.639 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:358 - before predict_from_latent_action tcp_step_latent_action.shape is torch.Size([1, 64])
+2025-11-10 17:54:29.640 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - after predict_from_latent_action tcp_step_action.shape is (6, 10)
+2025-11-10 17:54:29.640 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:364 - [RealRunner.action_command_thread] fast inference time is 0.0013628005981445312
+2025-11-10 17:54:29.640 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:370 - after relative_actions_to_absolute_actions tcp_step_action.shape is (6, 10)
+2025-11-10 17:54:29.640 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:404 - before post_process_action combined_action.shape is (10,)
+2025-11-10 17:54:29.641 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:407 - after post_process_action step_action.shape is [-0.00215419 -0.08920325  0.04       -0.35447994 -0.23731807 -0.09175685
+  0.55776155  0.         -0.00215419 -0.08920325  0.04       -0.35447994
+ -0.23731807 -0.09175685  0.55776155  0.        ]
+[SDK][ERROR][2025-11-10 17:54:29][base.py:383] - - API -> set_position -> code=1, pos=[-2.1541945170611143, -89.20325338840485, 40.0, -0.35447994324826804, -0.23731806696651378, -0.0917568529321319], radius=-1, velo=100.0, acc=2000
+2025-11-10 17:54:29.641 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.0005128383636474609
+2025-11-10 17:54:29.641 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:413 - [RealRunner.action_command_thread] fast total time is 0.0047359466552734375
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 3, self.actions_start_timestep is 2, self.mode is new
+2025-11-10 17:54:29.679 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:300 - after get_action tcp_step_action.shape is (65,)
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 3, self.actions_start_timestep is 2, self.mode is new
+2025-11-10 17:54:29.681 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:358 - before predict_from_latent_action tcp_step_latent_action.shape is torch.Size([1, 64])
+2025-11-10 17:54:29.682 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - after predict_from_latent_action tcp_step_action.shape is (7, 10)
+2025-11-10 17:54:29.682 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:364 - [RealRunner.action_command_thread] fast inference time is 0.0014188289642333984
+2025-11-10 17:54:29.682 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:370 - after relative_actions_to_absolute_actions tcp_step_action.shape is (7, 10)
+2025-11-10 17:54:29.682 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:404 - before post_process_action combined_action.shape is (10,)
+2025-11-10 17:54:29.683 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:407 - after post_process_action step_action.shape is [-4.80908348e-04 -9.27725658e-02  4.00000000e-02 -4.24113787e-01
+ -2.82076209e-01 -1.16869385e-01  5.58579147e-01  0.00000000e+00
+ -4.80908348e-04 -9.27725658e-02  4.00000000e-02 -4.24113787e-01
+ -2.82076209e-01 -1.16869385e-01  5.58579147e-01  0.00000000e+00]
+[SDK][ERROR][2025-11-10 17:54:29][base.py:383] - - API -> set_position -> code=1, pos=[-0.4809083475265652, -92.77256578207016, 40.0, -0.4241137867004003, -0.28207620949245443, -0.11686938537692111], radius=-1, velo=100.0, acc=2000
+2025-11-10 17:54:29.683 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.000736236572265625
+2025-11-10 17:54:29.684 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:413 - [RealRunner.action_command_thread] fast total time is 0.0051097869873046875
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 4, self.actions_start_timestep is 3, self.mode is new
+2025-11-10 17:54:29.720 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:300 - after get_action tcp_step_action.shape is (65,)
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 4, self.actions_start_timestep is 3, self.mode is new
+2025-11-10 17:54:29.722 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:358 - before predict_from_latent_action tcp_step_latent_action.shape is torch.Size([1, 64])
+2025-11-10 17:54:29.723 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - after predict_from_latent_action tcp_step_action.shape is (8, 10)
+2025-11-10 17:54:29.724 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:364 - [RealRunner.action_command_thread] fast inference time is 0.001207113265991211
+2025-11-10 17:54:29.724 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:370 - after relative_actions_to_absolute_actions tcp_step_action.shape is (8, 10)
+2025-11-10 17:54:29.724 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:404 - before post_process_action combined_action.shape is (10,)
+2025-11-10 17:54:29.724 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:407 - after post_process_action step_action.shape is [ 0.00514073 -0.09439198  0.04       -0.48828818 -0.32715433 -0.14403129
+  0.55708843  0.          0.00514073 -0.09439198  0.04       -0.48828818
+ -0.32715433 -0.14403129  0.55708843  0.        ]
+[SDK][ERROR][2025-11-10 17:54:29][base.py:383] - - API -> set_position -> code=1, pos=[5.140731576830149, -94.39197927713394, 40.0, -0.4882881759421515, -0.3271543339322069, -0.14403128853595273], radius=-1, velo=100.0, acc=2000
+2025-11-10 17:54:29.725 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.0005147457122802734
+2025-11-10 17:54:29.725 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:413 - [RealRunner.action_command_thread] fast total time is 0.004894256591796875
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 5, self.actions_start_timestep is 4, self.mode is new
+2025-11-10 17:54:29.762 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:300 - after get_action tcp_step_action.shape is (65,)
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 5, self.actions_start_timestep is 4, self.mode is new
+2025-11-10 17:54:29.764 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:358 - before predict_from_latent_action tcp_step_latent_action.shape is torch.Size([1, 64])
+2025-11-10 17:54:29.765 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - after predict_from_latent_action tcp_step_action.shape is (9, 10)
+2025-11-10 17:54:29.765 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:364 - [RealRunner.action_command_thread] fast inference time is 0.001104593276977539
+2025-11-10 17:54:29.765 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:370 - after relative_actions_to_absolute_actions tcp_step_action.shape is (9, 10)
+2025-11-10 17:54:29.765 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:404 - before post_process_action combined_action.shape is (10,)
+2025-11-10 17:54:29.766 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:407 - after post_process_action step_action.shape is [ 0.01422773 -0.09439933  0.04       -0.54279258 -0.36822323 -0.17063995
+  0.55405354  0.          0.01422773 -0.09439933  0.04       -0.54279258
+ -0.36822323 -0.17063995  0.55405354  0.        ]
+[SDK][ERROR][2025-11-10 17:54:29][base.py:383] - - API -> set_position -> code=1, pos=[14.227732084691525, -94.3993330001831, 40.0, -0.542792575517487, -0.3682232303238724, -0.17063994868392462], radius=-1, velo=100.0, acc=2000
+2025-11-10 17:54:29.767 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.0005476474761962891
+2025-11-10 17:54:29.767 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:413 - [RealRunner.action_command_thread] fast total time is 0.004763126373291016
+2025-11-10 17:54:29.804 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:615 - [RealRunner.run] run time is 1.239140510559082
+
+
+
+2025-11-10 17:54:29.804 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:473 - [RealRunner.run] begin new run step**********
+2025-11-10 17:54:29.805 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:run:530 - [RealRunner.run] Slow inference time: 0.000s
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 6, self.actions_start_timestep is 5, self.mode is new
+2025-11-10 17:54:29.806 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:300 - after get_action tcp_step_action.shape is (65,)
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 6, self.actions_start_timestep is 5, self.mode is new
+2025-11-10 17:54:29.807 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:358 - before predict_from_latent_action tcp_step_latent_action.shape is torch.Size([1, 64])
+2025-11-10 17:54:29.807 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - after predict_from_latent_action tcp_step_action.shape is (10, 10)
+2025-11-10 17:54:29.808 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:364 - [RealRunner.action_command_thread] fast inference time is 0.0013806819915771484
+2025-11-10 17:54:29.808 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:370 - after relative_actions_to_absolute_actions tcp_step_action.shape is (10, 10)
+2025-11-10 17:54:29.808 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:404 - before post_process_action combined_action.shape is (10,)
+2025-11-10 17:54:29.809 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:407 - after post_process_action step_action.shape is [ 0.02597346 -0.09324303  0.04       -0.58568649 -0.40242486 -0.19474048
+  0.55015022  0.          0.02597346 -0.09324303  0.04       -0.58568649
+ -0.40242486 -0.19474048  0.55015022  0.        ]
+[SDK][ERROR][2025-11-10 17:54:29][base.py:383] - - API -> set_position -> code=1, pos=[25.97345970571041, -93.24303269386292, 40.0, -0.5856864863802, -0.40242486486011836, -0.19474048184877404], radius=-1, velo=100.0, acc=2000
+2025-11-10 17:54:29.809 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.0005068778991699219
+2025-11-10 17:54:29.809 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:413 - [RealRunner.action_command_thread] fast total time is 0.0037643909454345703
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 7, self.actions_start_timestep is 6, self.mode is new
+2025-11-10 17:54:29.847 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:300 - after get_action tcp_step_action.shape is (65,)
+[get action] action[0:10] is [0.80798084 0.83873534 0.56548691], print_timestep is 0, self.timestep is 7, self.actions_start_timestep is 6, self.mode is new
+2025-11-10 17:54:29.849 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:358 - before predict_from_latent_action tcp_step_latent_action.shape is torch.Size([1, 64])
+2025-11-10 17:54:29.849 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:360 - after predict_from_latent_action tcp_step_action.shape is (11, 10)
+2025-11-10 17:54:29.850 | DEBUG    | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:364 - [RealRunner.action_command_thread] fast inference time is 0.0012922286987304688
+2025-11-10 17:54:29.850 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:370 - after relative_actions_to_absolute_actions tcp_step_action.shape is (11, 10)
+2025-11-10 17:54:29.850 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:404 - before post_process_action combined_action.shape is (10,)
+2025-11-10 17:54:29.851 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:407 - after post_process_action step_action.shape is [ 0.03944699 -0.09139974  0.04       -0.61729365 -0.42946176 -0.21583772
+  0.54593122  0.          0.03944699 -0.09139974  0.04       -0.61729365
+ -0.42946176 -0.21583772  0.54593122  0.        ]
+[SDK][ERROR][2025-11-10 17:54:29][base.py:383] - - API -> set_position -> code=1, pos=[39.446987211704254, -91.39974415302277, 40.0, -0.6172936472634617, -0.4294617627335579, -0.21583772032236975], radius=-1, velo=100.0, acc=2000
+2025-11-10 17:54:29.851 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:execute_action:529 - [RealRobotEnv] execute_action latency is 0.0005021095275878906
+2025-11-10 17:54:29.851 | INFO     | reactive_diffusion_policy.env_runner.real_runner_sync:action_command_thread:413 - [RealRunner.action_command_thread] fast total time is 0.0038607120513916016
+2025-11-10 17:54:29.868 | DEBUG    | reactive_diffusion_policy.env.ours.sensors:synced_callback:449 - Frame rate: 15.00 FPS
+^Z

@@ -406,6 +406,10 @@ class RealRunner:
             logger.info(f"[RealRunner.action_command_thread] fast total time is {cur_time - start_time}")
             precise_sleep(max(0., self.control_interval_time - (cur_time - start_time)))
             self.action_step_count += 1
+        # DEBUG：试一试clear buffer
+        logger.info(f"[RealRunner.action_command_thread] clear buffer after every action_command_thread execution to prevent out-of-time")
+        self.tcp_ensemble_buffer.clear()
+        self.gripper_ensemble_buffer.clear()
 
     def start_record_video(self, video_path):
         for vcamera_server_ip, vcamera_server_port in zip(self.vcamera_server_ip_list, self.vcamera_server_port_list):

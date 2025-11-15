@@ -319,7 +319,9 @@ class RealRobotEnv():
                  vcamera_server_ip: Optional[str] = None,
                  vcamera_server_port: Optional[int] = None,
                  time_check: bool = False,
-                 debug: bool = False):
+                 debug: bool = False,
+                 add_z_mm: int = 0
+                 ):
         self.gripper = RobotiqGripper()
         self.motor = XArmController()
         rospy.init_node('all_topics_subscriber', anonymous=True)
@@ -368,6 +370,7 @@ class RealRobotEnv():
         # self.ts.registerCallback(self.synced_callback)
         self.session = requests.session()
         self.time = 0
+        self.add_z_mm = add_z_mm
 
     def ros_thread(self):
         self.sub_camera_1_image = message_filters.Subscriber('/camera_1_image', Image)
@@ -519,7 +522,8 @@ class RealRobotEnv():
             raise NotImplementedError
         else:
             left_action[:3] *= 1000.0
-            left_action[2] = left_action[2]
+            left_action[2] = left_action[2] + self.add_z_mm
+            logger.debug(f"[execute_action] 手动将z轴提高{self.add_z_mm}mm, 防止出错")
             left_action[3:6] = np.rad2deg(left_action[3:6])
             left_tcp_target_6d_in_robot = left_action[:6]
             # logger.debug(f"robot_action: {left_tcp_target_6d_in_robot}")

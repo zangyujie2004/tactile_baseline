@@ -63,7 +63,7 @@ class RealRunner:
                  latent_gripper_ensemble_buffer_params: DictConfig = None,
                  use_latent_action_with_rnn_decoder: bool = False,
                  use_relative_action: bool = False,
-                 use_relative_tcp_obs_for_relative_action: bool = True,
+                 use_relative_tcp_obs_for_relative_action: bool = False,
                  action_interpolation_ratio: int = 1,
                  eval_episodes=10,
                  max_duration_time: float = 30,

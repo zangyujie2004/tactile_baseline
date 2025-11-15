@@ -148,6 +148,7 @@ class LatentDiffusionUnetImagePolicy(DiffusionUnetImagePolicy):
 
         if return_latent_action:
             action_pred = state_vq.unsqueeze(1).expand(-1, self.original_horizon, -1)
+            # print(action_pred) # original_horizon这个维度上, 所有latent一模一样...... 所以非常依靠decoder来将这个一模一样的chunk变为各个timestep的action
         else:
             if self.at.use_rnn_decoder:
                 temporal_cond = self.at.get_temporal_cond(extended_obs_dict)

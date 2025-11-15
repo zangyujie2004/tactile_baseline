@@ -46,7 +46,7 @@ class RealImageTactileDataset(BaseImageDataset):
                  max_train_episodes=None,
                  delta_action=False,
                  relative_action=False,
-                 relative_tcp_obs_for_relative_action=True,
+                 relative_tcp_obs_for_relative_action=False,
                  transform_params=None,
                  ):
         assert os.path.isdir(dataset_path)

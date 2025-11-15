@@ -139,9 +139,9 @@ class RealRunner:
         self.inference_fps = inference_fps
         self.inference_interval_time = 1.0 / inference_fps
         assert self.control_fps % self.inference_fps == 0
-        # self.latency_step = latency_step
+        self.latency_step = latency_step
         self.latency_step = 0
-        # self.gripper_latency_step = gripper_latency_step if gripper_latency_step is not None else latency_step
+        self.gripper_latency_step = gripper_latency_step if gripper_latency_step is not None else latency_step
         self.gripper_latency_step = 0
         self.n_obs_steps = n_obs_steps
         self.obs_temporal_downsample_ratio = obs_temporal_downsample_ratio
@@ -151,13 +151,14 @@ class RealRunner:
         if self.use_latent_action_with_rnn_decoder:
             assert latent_tcp_ensemble_buffer_params.ensemble_mode == 'new', "Only support new ensemble mode for latent action."
             assert latent_gripper_ensemble_buffer_params.ensemble_mode == 'new', "Only support new ensemble mode for latent action."
-            self.tcp_ensemble_buffer = AlignEnsembleBuffer(**latent_tcp_ensemble_buffer_params, execute_horizon=5, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
-            self.gripper_ensemble_buffer = AlignEnsembleBuffer(**latent_gripper_ensemble_buffer_params, execute_horizon=5, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
+            execute_horizon=10
+            self.tcp_ensemble_buffer = AlignEnsembleBuffer(**latent_tcp_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
+            self.gripper_ensemble_buffer = AlignEnsembleBuffer(**latent_gripper_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
         else:
             # self.tcp_ensemble_buffer = EnsembleBuffer(**tcp_ensemble_buffer_params)
             # self.gripper_ensemble_buffer = EnsembleBuffer(**gripper_ensemble_buffer_params)
-            self.tcp_ensemble_buffer = AlignEnsembleBuffer(**latent_tcp_ensemble_buffer_params, execute_horizon=5, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
-            self.gripper_ensemble_buffer = AlignEnsembleBuffer(**latent_gripper_ensemble_buffer_params, execute_horizon=5, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
+            self.tcp_ensemble_buffer = AlignEnsembleBuffer(**latent_tcp_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
+            self.gripper_ensemble_buffer = AlignEnsembleBuffer(**latent_gripper_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
         self.use_relative_action = use_relative_action
         self.use_relative_tcp_obs_for_relative_action = use_relative_tcp_obs_for_relative_action
         self.action_interpolation_ratio = action_interpolation_ratio
@@ -493,12 +494,15 @@ class RealRunner:
                 # run policy
                 ## TODO: 额外推理可以删掉的
                 with torch.no_grad():
+                    print("-----------------------inference-----------")
                     if self.use_latent_action_with_rnn_decoder:
                         action_dict = policy.predict_action(obs_dict,
                                                             dataset_obs_temporal_downsample_ratio=self.dataset_obs_temporal_downsample_ratio,
                                                             return_latent_action=True)
                     else:
                         action_dict = policy.predict_action(obs_dict)
+                    # 手动引入大大的延迟, 测试异步的能力
+                    time.sleep(2)
                 self.latent_cnt += 1
                 logger.debug(f"Policy inference time: {time.time() - policy_time:.3f}s")
 
@@ -540,7 +544,6 @@ class RealRunner:
 
                 # TODO: only takes the first n_action_steps and add to the ensemble buffer
  
-                self.latency_step
                 if self.use_latent_action_with_rnn_decoder:
                     tcp_action = action_all[self.latency_step:, ...]
                 else:

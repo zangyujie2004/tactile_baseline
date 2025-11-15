@@ -30,7 +30,7 @@ shape_meta: &shape_meta
     shape: [10] # (3+6+1) (x, y, z, 6d rotation, gripper_width)
 
 env_runner:
-  _target_: reactive_diffusion_policy.env_runner.real_runner_async.RealRunner
+  _target_: reactive_diffusion_policy.env_runner.real_runner_async_align.RealRunner
   eval_episodes: 10
   max_duration_time: 45
   tcp_action_update_interval: 16
@@ -97,7 +97,8 @@ env_runner:
       use_6d_rotation: True
       marker_dimension: 2
       debug: False
-    add_z_mm: 8 # 用于debug, 在实际执行的时候, 手动提高add_z_mm, 用于防止怼在桌子上面
+    add_z_mm: 2 # 用于debug, 在实际执行的时候, 手动提高add_z_mm, 用于防止怼在桌子上面
+    max_stride: 100 # 限制每步最多走10mm, 从而保证chunk之间的步长一致性，从而防止回退
     max_fps: 10
     debug: False
     # gripper control params

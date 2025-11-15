@@ -320,7 +320,8 @@ class RealRobotEnv():
                  vcamera_server_port: Optional[int] = None,
                  time_check: bool = False,
                  debug: bool = False,
-                 add_z_mm: int = 0
+                 add_z_mm: int = 0,
+                 max_stride = 5
                  ):
         self.gripper = RobotiqGripper()
         self.motor = XArmController()
@@ -371,6 +372,8 @@ class RealRobotEnv():
         self.session = requests.session()
         self.time = 0
         self.add_z_mm = add_z_mm
+        self.last_xyz = None
+        self.max_stride = max_stride
 
     def ros_thread(self):
         self.sub_camera_1_image = message_filters.Subscriber('/camera_1_image', Image)
@@ -521,9 +524,42 @@ class RealRobotEnv():
         if use_relative_action:
             raise NotImplementedError
         else:
+            # left_action[:3] *= 1000.0
+            # left_action[2] = left_action[2] + self.add_z_mm
+            # logger.debug(f"[execute_action] 手动将z轴提高{self.add_z_mm}mm, 防止出错")
             left_action[:3] *= 1000.0
             left_action[2] = left_action[2] + self.add_z_mm
             logger.debug(f"[execute_action] 手动将z轴提高{self.add_z_mm}mm, 防止出错")
+
+            if self.last_xyz is None:
+                # 第一次执行动作，直接记录
+                self.last_xyz = (left_action[0], left_action[1], left_action[2])
+            else:
+                now_xyz = (left_action[0], left_action[1], left_action[2])
+
+                # -------------------------------
+                # TODO完成：计算步长，并做截断
+                # -------------------------------
+                last = np.array(self.last_xyz, dtype=float)
+                now = np.array(now_xyz, dtype=float)
+
+                diff = now - last
+                dist = np.linalg.norm(diff)
+
+                if dist > self.max_stride:
+                    # 超过最大步长 → 缩放方向向量，使其长度为 max_stride
+                    scale = self.max_stride / dist
+                    now = last + diff * scale
+
+                    # 更新left_action，使其保持一致
+                    left_action[0], left_action[1], left_action[2] = now.tolist()
+
+                logger.debug(f"[execute_action] 步长 {dist:.2f}, 最大限制 {self.max_stride}")
+
+                # 更新last_xyz
+                self.last_xyz = (left_action[0], left_action[1], left_action[2])
+
+
             left_action[3:6] = np.rad2deg(left_action[3:6])
             left_tcp_target_6d_in_robot = left_action[:6]
             # logger.debug(f"robot_action: {left_tcp_target_6d_in_robot}")

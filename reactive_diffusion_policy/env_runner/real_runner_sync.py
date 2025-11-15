@@ -136,7 +136,9 @@ class RealRunner:
         self.inference_interval_time = 1.0 / inference_fps
         assert self.control_fps % self.inference_fps == 0
         self.latency_step = latency_step
+        self.latency_step = 0
         self.gripper_latency_step = gripper_latency_step if gripper_latency_step is not None else latency_step
+        self.gripper_latency_step = 0
         self.n_obs_steps = n_obs_steps
         self.obs_temporal_downsample_ratio = 1 # obs_temporal_downsample_ratio
         self.dataset_obs_temporal_downsample_ratio = dataset_obs_temporal_downsample_ratio
@@ -293,7 +295,7 @@ class RealRunner:
 
     def action_command_thread(self, policy: Union[DiffusionUnetImagePolicy], stop_event):
         # while not stop_event.is_set():
-        for i in range(5):
+        for i in range(10):
             start_time = time.time()
             # get step action from ensemble buffer
             tcp_step_action = self.tcp_ensemble_buffer.get_action()
@@ -406,7 +408,7 @@ class RealRunner:
             logger.info(f"[RealRunner.action_command_thread] fast total time is {cur_time - start_time}")
             precise_sleep(max(0., self.control_interval_time - (cur_time - start_time)))
             self.action_step_count += 1
-        # DEBUG：试一试clear buffer
+        # DEBUG：试一试clear buffer. clear buffer之后行为好多了
         logger.info(f"[RealRunner.action_command_thread] clear buffer after every action_command_thread execution to prevent out-of-time")
         self.tcp_ensemble_buffer.clear()
         self.gripper_ensemble_buffer.clear()

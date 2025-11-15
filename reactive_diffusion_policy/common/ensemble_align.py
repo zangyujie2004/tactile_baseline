@@ -7,7 +7,7 @@ import numpy as np
 from collections import deque
 from scipy.spatial.transform import Rotation as R, Slerp
 from reactive_diffusion_policy.common.space_utils import ortho6d_to_rotation_matrix
-
+import time
 
 class AlignEnsembleBuffer:
     """
@@ -72,15 +72,23 @@ class AlignEnsembleBuffer:
         else:
             assert self.action_shape == action_chunk.shape[1:], "Incompatible action shape."
 
-        start = self.timestep - inf_timestep# 从开始推理开始, 执行了多少个step
+        start = self.timestep - inf_timestep+1# 从开始推理开始, 执行了多少个step
         horizon = action_chunk.shape[0]
 
+        self.actions = []
+        print("============================== add action ======================================")
+        # time.sleep(3)
+        # horizon = start + self.execute_horizon # 用于debug，在慢系统sleep(2)的时候，让快系统也不要跑
         for i in range(start, horizon):
-            self.actions[i-start] = action_chunk[i]
+            # print(f"action_chunk[{i}] is {action_chunk[i][0:3]}")
+            if len(self.actions) > i-start:
+                self.actions[i-start] = action_chunk[i]
+            else:
+                self.actions.append(action_chunk[i])
         
         self.last_update_timestep = self.timestep
             
-        print(f"向队列之中添加新的action, horizon is {action_chunk.shape[0]}, timestep is {self.timestep}, inf_timestep is {inf_timestep}")
+        print(f"向队列之中添加新的action, horizon is {action_chunk.shape[0]}, timestep is {self.timestep}, inf_timestep is {inf_timestep}, len(self.actions) is {len(self.actions)} start is {start}")
     
     def get_action(self):
         """
@@ -94,17 +102,19 @@ class AlignEnsembleBuffer:
         # action = self.actions.pop(0)
         # self.timestep += 1
         # 检查一下，是不是每次get的都是一个action（最新的那个），直到新添加队列
-        print(f"[get action] action[0:10] is {action[0:3]}")
+        print(f"[get action] timestep is {self.timestep} action[0:10] is {action[0:3]}")
         return action
     
     def update(self, env):
         """
         执行完毕, 更新latest_obs
         """
+        print("update obs")
         obs = env.get_obs(
                     obs_steps=self.n_obs_steps,
                     temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
-        self.actions.pop(0)
+        if len(self.actions) != 0:
+            self.actions.pop(0)
         self.timestep += 1
         self.latest_obs = obs
 

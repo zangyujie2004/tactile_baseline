@@ -23,7 +23,7 @@ from reactive_diffusion_policy.real_world.real_inference_util import (
 from reactive_diffusion_policy.real_world.real_world_transforms import RealWorldTransforms
 from reactive_diffusion_policy.common.space_utils import ortho6d_to_rotation_matrix
 # from reactive_diffusion_policy.common.ensemble import EnsembleBuffer
-from reactive_diffusion_policy.common.ensemble_align import AlignEnsembleBuffer
+from reactive_diffusion_policy.common.ensemble_align import AlignLazyController
 
 from reactive_diffusion_policy.common.action_utils import (
     interpolate_actions_with_ratio,
@@ -151,14 +151,14 @@ class RealRunner:
         if self.use_latent_action_with_rnn_decoder:
             assert latent_tcp_ensemble_buffer_params.ensemble_mode == 'new', "Only support new ensemble mode for latent action."
             assert latent_gripper_ensemble_buffer_params.ensemble_mode == 'new', "Only support new ensemble mode for latent action."
-            execute_horizon=10
-            self.tcp_ensemble_buffer = AlignEnsembleBuffer(**latent_tcp_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
-            self.gripper_ensemble_buffer = AlignEnsembleBuffer(**latent_gripper_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
+            execute_horizon=5
+            self.tcp_ensemble_buffer = AlignLazyController(**latent_tcp_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
+            self.gripper_ensemble_buffer = AlignLazyController(**latent_gripper_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
         else:
             # self.tcp_ensemble_buffer = EnsembleBuffer(**tcp_ensemble_buffer_params)
             # self.gripper_ensemble_buffer = EnsembleBuffer(**gripper_ensemble_buffer_params)
-            self.tcp_ensemble_buffer = AlignEnsembleBuffer(**latent_tcp_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
-            self.gripper_ensemble_buffer = AlignEnsembleBuffer(**latent_gripper_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
+            self.tcp_ensemble_buffer = AlignLazyController(**latent_tcp_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
+            self.gripper_ensemble_buffer = AlignLazyController(**latent_gripper_ensemble_buffer_params, execute_horizon=execute_horizon, n_obs_steps=self.n_obs_steps, obs_temporal_downsample_ratio=self.obs_temporal_downsample_ratio)
         self.use_relative_action = use_relative_action
         self.use_relative_tcp_obs_for_relative_action = use_relative_tcp_obs_for_relative_action
         self.action_interpolation_ratio = action_interpolation_ratio

@@ -181,7 +181,7 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
 
         # get action
         # start = To - 1: To-1算是一个hack, 因为会丢掉n_obs_steps个action, 而其实只应该丢n_obs_steps-1个action, 因为数据集里面, obs[0]对应的action[0]其实是下一步的状态
-        start = To
+        start = To-1
         end = start + self.n_action_steps
         action = action_pred[:,start:end]
         action_reverse = torch.flip(action_pred[:, :self.reverse_length], dims=[1]) # action是torch.Tensor，不能[::-1]

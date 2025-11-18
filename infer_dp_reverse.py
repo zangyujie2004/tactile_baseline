@@ -1,6 +1,7 @@
 """
 模型具有reverse的能力 \\
-infer_dp.py和infer_dp_reverse.py目前都还没有relative的能力
+infer_dp.py和infer_dp_reverse.py目前都还没有relative的能力 \\
+敲入回车, 机器就会停下来, 然后reverse执行
 """
 
 import sys
@@ -18,6 +19,21 @@ ROOT_DIR = str(pathlib.Path(__file__).parent)
 sys.path.append(ROOT_DIR)
 os.chdir(ROOT_DIR)
 from reactive_diffusion_policy.policy.diffusion_unet_image_policy import DiffusionUnetImagePolicy
+
+# 监控用户输入
+import queue
+import time
+import select
+
+def user_input_listener(input_queue):
+    """后台线程，监听用户按回车"""
+    while True:
+        # 使用select监听是否有输入（非阻塞）
+        if sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
+            _ = sys.stdin.readline()  # 读取整行，但不使用内容
+            if input_queue.empty():
+                input_queue.put("ENTER")
+        time.sleep(0.1)  # 避免占用CPU
 
 
 input_key_list = ['left_wrist_img', 'left_robot_tcp_pose', 'left_robot_gripper_width']
@@ -65,6 +81,13 @@ class RealWorldDPInfer:
         print("Start inference loop...")
         input_dict = dict()
 
+
+        input_queue = queue.Queue()  # 用于接收用户输入事件
+        # 启动独立线程监听键盘输入
+        listener_thread = threading.Thread(target=user_input_listener, args=(input_queue,), daemon=True)
+        listener_thread.start()
+        print("启动监听线程, 键入回车就可以让机器执行reverse")
+
         try:
             rossub_thread = threading.Thread(target=self.env.ros_thread, daemon=True)
             rossub_thread.start()
@@ -96,12 +119,28 @@ class RealWorldDPInfer:
 
                     # 提取动作序列
                     action_sequence = action_dict['action'].detach().cpu().numpy()[0]
-                    action_reverse = action_dict['action_reverse'].detach().cpu().numpy()[0]
+                    action_reverse_sequence = action_dict['action_reverse'].detach().cpu().numpy()[0]
                     
                     # 依次执行动作序列中的每个动作
                     for i in range(min(self.cfg.n_action_steps, len(action_sequence))):
                         action_step = action_sequence[i]
+                        if not input_queue.empty():
+                            event = input_queue.get()
+                            if event == "ENTER":
+                                print("🚨 检测到用户按下回车, 进入 reverse 模式!先暂停两秒, 然后reverse执行")
+                                should_reverse = True
+                                time.sleep(2)  # 暂停2秒
+                                break
+
                         self.env.execute_action(action_step)
+                    
+                    if should_reverse:
+                        for i in range(min(reverse_hoziron, len(action_reverse_sequence))):
+                            reverse_action_step = action_reverse_sequence[i]
+                            self.env.execute_action(reverse_action_step)
+                            print(f"往回走哟")
+                        should_reverse = False
+                        print(f"reverse执行完毕, 将继续正向执行")
                     
                     step_count += 1
                     if step_count >= self.env.max_steps:

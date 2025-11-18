@@ -27,6 +27,7 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
             kernel_size=5,
             n_groups=8,
             cond_predict_scale=True,
+            reverse_length=0,
             # parameters passed to step
             **kwargs):
         super().__init__()
@@ -78,6 +79,8 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
         if num_inference_steps is None:
             num_inference_steps = noise_scheduler.config.num_train_timesteps
         self.num_inference_steps = num_inference_steps
+
+        self.reverse_length = reverse_length
     
     # ========= inference  ============
     def conditional_sample(self, 
@@ -134,6 +137,7 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
         Da = self.action_dim
         Do = self.obs_feature_dim
         To = self.n_obs_steps
+        To += self.reverse_length # 
 
         # build input
         device = self.device
@@ -144,7 +148,8 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
         global_cond = None
         if self.obs_as_global_cond:
             # condition through global feature
-            this_nobs = dict_apply(nobs, lambda x: x[:,:To,...].reshape(-1,*x.shape[2:]))
+            # 输入的nobs是当前的nobs, 不要用reverse_length裁掉
+            this_nobs = dict_apply(nobs, lambda x: x[:,:To-self.reverse_length,...].reshape(-1,*x.shape[2:]))
             nobs_features = self.obs_encoder(this_nobs)
             # reshape back to B, Do
             global_cond = nobs_features.reshape(B, -1)
@@ -153,14 +158,14 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
             cond_mask = torch.zeros_like(cond_data, dtype=torch.bool)
         else:
             # condition through impainting
-            this_nobs = dict_apply(nobs, lambda x: x[:,:To,...].reshape(-1,*x.shape[2:]))
+            this_nobs = dict_apply(nobs, lambda x: x[:,:To-self.reverse_length,...].reshape(-1,*x.shape[2:]))
             nobs_features = self.obs_encoder(this_nobs)
             # reshape back to B, T, Do
-            nobs_features = nobs_features.reshape(B, To, -1)
+            nobs_features = nobs_features.reshape(B, To-self.reverse_length, -1)
             cond_data = torch.zeros(size=(B, T, Da+Do), device=device, dtype=dtype)
             cond_mask = torch.zeros_like(cond_data, dtype=torch.bool)
-            cond_data[:,:To,Da:] = nobs_features
-            cond_mask[:,:To,Da:] = True
+            cond_data[:,:To-self.reverse_length,Da:] = nobs_features
+            cond_mask[:,:To-self.reverse_length,Da:] = True
 
         # run sampling
         nsample = self.conditional_sample(
@@ -175,13 +180,17 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
         action_pred = self.normalizer['action'].unnormalize(naction_pred)
 
         # get action
-        start = To - 1
+        # start = To - 1: To-1算是一个hack, 因为会丢掉n_obs_steps个action, 而其实只应该丢n_obs_steps-1个action, 因为数据集里面, obs[0]对应的action[0]其实是下一步的状态
+        start = To
         end = start + self.n_action_steps
         action = action_pred[:,start:end]
+        action_reverse = torch.flip(action_pred[:, :self.reverse_length], dims=[1]) # action是torch.Tensor，不能[::-1]
+        # action_reverse = action_pred[:, 0:self.reverse_length][::-1] # action_reverse[0]是距离当前obs最近的, 而action_reverse[-1]是最远的
         
         result = {
-            'action': action,
-            'action_pred': action_pred
+            'action': action,# 未来的
+            'action_pred': action_pred,# 全部的
+            'action_reverse': action_reverse # 过去的
         }
         return result
 

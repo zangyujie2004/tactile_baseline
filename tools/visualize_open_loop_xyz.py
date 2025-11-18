@@ -6,11 +6,18 @@ from matplotlib import cm
 
 # ========= 配置：选择视图 =========
 # 可选: "xy", "xz", "yz", "xyz"
-view = "yz"
+view = "xyz"
 
 # 输出目录
-pkl_path = 'data/outputs/vis_outputs/plot_actions.pkl'
-output_dir = f'data/outputs/vis_outputs/plot_{view}'
+# pkl_path = 'data/outputs/vis_outputs/plot_actions.pkl'
+# output_dir = f'data/outputs/vis_outputs/plot_{view}'
+
+pkl_path = 'data/outputs/vis_outputs/dp_plot_actions.pkl'
+output_dir = f'data/outputs/vis_outputs/dp_plot_{view}'
+
+# pkl_path = 'data/outputs/vis_outputs/dp_plot_actions_reverse.pkl'
+# output_dir = f'data/outputs/vis_outputs/dp_plot_{view}_reverse'
+
 os.makedirs(output_dir, exist_ok=True)
 
 # ========= 定义 2D 视图映射 =========

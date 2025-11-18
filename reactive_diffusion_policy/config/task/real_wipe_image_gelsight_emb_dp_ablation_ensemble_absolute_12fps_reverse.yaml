@@ -2,7 +2,7 @@ defaults:
   - real_wipe_two_realsense_one_gelsight_one_mctac_24fps@_here_
   - _self_
 
-name: real_wipe_image_gelsight_emb_dp_ablation_ensemble_absolute_12fps
+name: real_wipe_image_gelsight_emb_dp_ablation_ensemble_absolute_12fps_reverse
 
 image_shape: [3, 240, 320]
 dataset_path: data/wipe_v1_zarr
@@ -100,7 +100,7 @@ env_runner:
     enable_gripper_width_clipping: True
 
 dataset:
-  _target_: reactive_diffusion_policy.dataset.real_image_tactile_dataset.RealImageTactileDataset
+  _target_: reactive_diffusion_policy.dataset.real_image_tactile_dataset_reverse.RealImageTactileDatasetReverse
   shape_meta: *shape_meta
   dataset_path: ${task.dataset_path}
   horizon: ${horizon}
@@ -113,3 +113,4 @@ dataset:
   max_train_episodes: null
   delta_action: False
   relative_action: False
+  reverse_length: 4 # dataset.obs_temporal_downsample_ratio默认为1(和env_runner的不共通)

@@ -137,6 +137,7 @@ policy:
   kernel_size: 5
   n_groups: 8
   cond_predict_scale: True
+  reverse_length: ${task.dataset.reverse_length}
 
   # scheduler.step params
   # predict_epsilon: True

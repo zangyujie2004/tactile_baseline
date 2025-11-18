@@ -39,11 +39,14 @@ def test_dataset(cfg: OmegaConf):
     dataset: BaseImageDataset
     dataset = hydra.utils.instantiate(cfg.task.dataset)
     assert isinstance(dataset, BaseImageDataset)
+    dataset[0]
+    print("=============")
+    dataset[3]
     # train_dataloader = DataLoader(dataset, **cfg.dataloader)
     # train_dataloader = iter(train_dataloader)
     # data = next(train_dataloader)
     # print(data.keys())
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     # print("over")
 
 def vis_obs(cfg: OmegaConf):
@@ -123,8 +126,8 @@ def main(cfg: OmegaConf):
     # will use the same time.
     OmegaConf.resolve(cfg)
 
-    # test_dataset(cfg)
-    vis_obs(cfg)
+    test_dataset(cfg)
+    # vis_obs(cfg)
     # print_xyz(cfg)
 
     # cls = hydra.utils.get_class(cfg._target_)

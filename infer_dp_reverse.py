@@ -36,7 +36,7 @@ def user_input_listener(input_queue):
         time.sleep(0.1)  # 避免占用CPU
 
 
-input_key_list = ['left_wrist_img', 'left_robot_tcp_pose', 'left_robot_gripper_width']
+input_key_list = ['left_wrist_img', 'left_robot_tcp_pose', 'left_robot_gripper_width', 'left_gripper1_marker_offset_emb']
 
 class RealWorldDPInfer:
     def __init__(self, cfg: OmegaConf):
@@ -127,9 +127,9 @@ class RealWorldDPInfer:
                         if not input_queue.empty():
                             event = input_queue.get()
                             if event == "ENTER":
-                                print("🚨 检测到用户按下回车, 进入 reverse 模式!先暂停两秒, 然后reverse执行")
+                                print("🚨 检测到用户按下回车, 进入 reverse 模式!先暂停0.5秒, 然后reverse执行")
                                 should_reverse = True
-                                time.sleep(2)  # 暂停2秒
+                                time.sleep(0.5)  # 暂停2秒
                                 break
 
                         self.env.execute_action(action_step)

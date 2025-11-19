@@ -4,4 +4,4 @@ python infer_dp_reverse.py \
   task.name=dp_infer \
   logging.mode=offline \
   +load_pca_path=/home/tars/projects/dataset/vase2_new_A/rdp_pca \
-  load_ckpt_path=data/outputs/2025.11.17/20.57.34_train_diffusion_unet_image_dp_tactile_vase/checkpoints/latest.ckpt
+  load_ckpt_path=data/outputs/reverse_ckpts/reverse_dp.ckpt

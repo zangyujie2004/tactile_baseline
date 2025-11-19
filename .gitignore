@@ -144,3 +144,6 @@ rdp_venv/
 
 # Pycharm
 .idea/
+
+# efficient system is another repo
+efficient_robot_sys

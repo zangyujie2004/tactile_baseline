@@ -723,7 +723,7 @@ def process_one_episode(data_path, policy, vis_save_path=None, save_camera_vis=F
             gripper_arrays = gripper_data[gripper_indices][:, None]
 
             start_frame = np.where(np.diff(states_arrays[:, 2]) > 0.5)[0][0]
-            end_frame = np.argmin(states_arrays[:, 0])
+            end_frame = np.argmin(states_arrays[:, 0]) + 20
             print('start:', start_frame, 'end:', end_frame)
             
             camera1_timestamps = camera1_timestamps[start_frame:end_frame]

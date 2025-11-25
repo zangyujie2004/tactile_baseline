@@ -4,12 +4,12 @@ GPU_ID=0
 
 TASK_NAME="wipe"
 # Point to the dataset directory that contains 'replay_buffer.zarr'
-DATASET_PATH="/data/kywang/projects/tactile_il/data/processed/vase_new_C/rdp_zarr"
+DATASET_PATH="/home/tars/projects/dataset/vase2_new_A/rdp_zarr"
 LOGGING_MODE="online"
-TIMESTAMP=vase_c
+TIMESTAMP=vase2_new_A_abs
 SEARCH_PATH="./data/outputs"
 
-# Stage 1: Train Asymmetric Tokenizer
+Stage 1: Train Asymmetric Tokenizer
 echo "Stage 1: training Asymmetric Tokenizer..."
 CUDA_VISIBLE_DEVICES=${GPU_ID} python train.py \
     --config-name=train_at_workspace \
@@ -24,7 +24,7 @@ CUDA_VISIBLE_DEVICES=${GPU_ID} python train.py \
 echo ""
 echo "Searching for the latest AT checkpoint..."
 AT_LOAD_DIR=$(find "${SEARCH_PATH}" -maxdepth 2 -path "*${TIMESTAMP}*" -type d)/checkpoints/latest.ckpt
-# AT_LOAD_DIR=data/outputs/2025.11.13/22.03.48_train_vae_real_wipe_image_gelsight_emb_at_24fps_vase_a/checkpoints/latest.ckpt
+# AT_LOAD_DIR=data/outputs/2025.11.23/17.18.29_train_vae_real_wipe_image_gelsight_emb_at_24fps_vase2_new_C/checkpoints/latest.ckpt
 
 # echo $(find "${SEARCH_PATH}" -maxdepth 2 -path "*${TIMESTAMP}*" -type d)/checkpoints/latest.ckpt
 echo ${AT_LOAD_DIR}

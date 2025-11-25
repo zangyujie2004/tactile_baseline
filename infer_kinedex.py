@@ -13,10 +13,9 @@ ROOT_DIR = str(pathlib.Path(__file__).parent)
 sys.path.append(ROOT_DIR)
 os.chdir(ROOT_DIR)
 from reactive_diffusion_policy.policy.diffusion_unet_image_policy import DiffusionUnetImagePolicy
-import time
 
 
-input_key_list = ['left_wrist_img', 'left_robot_tcp_pose', 'left_robot_gripper_width', 'left_gripper1_marker_offset_emb']
+input_key_list = ['left_wrist_img', 'left_robot_tcp_pose', 'left_robot_gripper_width','left_gripper1_marker_offset_emb']
 
 class RealWorldDPInfer:
     def __init__(self, cfg: OmegaConf):
@@ -51,7 +50,7 @@ class RealWorldDPInfer:
         self.policy.eval()
 
         # =========== Initialize observation buffer ===========
-        self.n_obs_steps = policy_cfg.n_obs_stepsdata/outputs/ckpts/vase2_new_C
+        self.n_obs_steps = policy_cfg.n_obs_steps
         # Get the observation keys from the training config's shape_meta
         self.key_to_shape = train_cfg.shape_meta['obs']
 
@@ -66,9 +65,7 @@ class RealWorldDPInfer:
             rossub_thread.start()
             step_count = 0
             while True:
-                start = time.time()
                 obs = self.env.get_obs()
-                print(f"============================ get obs time is {time.time() - start}=============")
                 if obs is None:
                     continue
                 else:
@@ -87,10 +84,8 @@ class RealWorldDPInfer:
                     
                     # Data Processing
                     # 使用模型进行动作预测
-                    start = time.time()
                     with torch.no_grad():
                         action_dict = self.policy.predict_action(input_dict)
-                    print(f"============================ predict time is {time.time() - start}=============")
 
                     # 提取动作序列
                     action_sequence = action_dict['action'].detach().cpu().numpy()[0]

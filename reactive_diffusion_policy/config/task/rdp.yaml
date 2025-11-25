@@ -30,7 +30,7 @@ shape_meta: &shape_meta
     shape: [10] # (3+6+1) (x, y, z, 6d rotation, gripper_width)
 
 env_runner:
-  _target_: reactive_diffusion_policy.env_runner.real_runner_async_align.RealRunner
+  _target_: reactive_diffusion_policy.env_runner.real_runner_sync.RealRunner
   eval_episodes: 10
   max_duration_time: 45
   tcp_action_update_interval: 16

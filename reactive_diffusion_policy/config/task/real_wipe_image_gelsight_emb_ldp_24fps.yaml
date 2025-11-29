@@ -122,7 +122,7 @@ dataset:
   val_ratio: 0.00
   max_train_episodes: null
   delta_action: False
-  relative_action: True
+  relative_action: False
 
   # for calculating the normalizer parameters for the latent action
   use_latent_action_before_vq: False

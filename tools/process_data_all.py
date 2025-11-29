@@ -851,7 +851,7 @@ def process_one_episode(data_path, policy, vis_save_path=None, save_camera_vis=F
 
             for i in range(len(samples)):
                 data_dict = {}
-                tactile_sample = samples[i]
+                tactile_sample = samplesvase2_new_C[i]
                 action_sample = action_arrays[sample_start_frames[i]:sample_start_frames[i] + window_size]
                 state_sample = tcp_pose_arrays[sample_start_frames[i]:sample_start_frames[i] + window_size]
                 cam1_image_sample = camera_data_dict['camera1']['image'][cam1_indices[i]:cam1_indices[i] + window_size // sample_ratio]

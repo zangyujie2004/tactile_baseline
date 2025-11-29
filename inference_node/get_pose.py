@@ -4,7 +4,7 @@ from xarm.wrapper import XArmAPI
 from scipy.spatial.transform import Rotation as R
 
 class XArmController:
-    def __init__(self, ip='192.168.1.228'):
+    def __init__(self, ip='192.168.1.239'):
         self.arm = XArmAPI(ip)
         time.sleep(0.5)
         self.clean_errors()

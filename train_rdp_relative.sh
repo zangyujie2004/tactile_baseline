@@ -5,9 +5,9 @@ GPU_ID=0
 TASK_NAME="wipe"
 # Point to the dataset directory that contains 'replay_buffer.zarr'
 # DATASET_PATH="/data/kywang/projects/tactile_il/data/processed/vase_new_C/rdp_zarr"
-DATASET_PATH="data/ckpts/vase2_new_A_vase2_new_B_vase2_new_C/rdp_zarr"
+DATASET_PATH="data/ckpts/vase_sponge_test1/rdp_zarr"
 LOGGING_MODE="online"
-TIMESTAMP=vase2_new_ABC
+TIMESTAMP=vase_sponge_1_rel
 SEARCH_PATH="./data/outputs"
 
 # Stage 1: Train Asymmetric Tokenizer
@@ -16,7 +16,7 @@ echo "Stage 1: training Asymmetric Tokenizer..."
 #     --config-name=train_at_workspace \
 #     task=real_${TASK_NAME}_image_gelsight_emb_at_24fps \
 #     task.dataset_path=${DATASET_PATH} \
-#     task.dataset.relative_action=False \
+#     task.dataset.relative_action=True \
 #     task.name=real_${TASK_NAME}_image_gelsight_emb_at_24fps_${TIMESTAMP} \
 #     at=at_wipe_lift \
 #     logging.mode=${LOGGING_MODE}
@@ -25,13 +25,13 @@ echo "Stage 1: training Asymmetric Tokenizer..."
 # # find the latest checkpoint
 echo ""
 echo "Searching for the latest AT checkpoint..."
-AT_LOAD_DIR=$(find "${SEARCH_PATH}" -maxdepth 2 -path "*${TIMESTAMP}*" -type d)/checkpoints/latest.ckpt
-# AT_LOAD_DIR=data/outputs/2025.11.13/22.03.48_train_vae_real_wipe_image_gelsight_emb_at_24fps_vase_a/checkpoints/latest.ckpt
+# AT_LOAD_DIR=$(find "${SEARCH_PATH}" -maxdepth 2 -path "*${TIMESTAMP}*" -type d)/checkpoints/latest.ckpt
+AT_LOAD_DIR=data/outputs/2025.11.26/20.00.51_train_vae_real_wipe_image_gelsight_emb_at_24fps_vase_sponge_test1_relative/checkpoints/latest.ckpt
 
 # echo $(find "${SEARCH_PATH}" -maxdepth 2 -path "*${TIMESTAMP}*" -type d)/checkpoints/latest.ckpt
-# echo ${AT_LOAD_DIR}
+echo ${AT_LOAD_DIR}
 
-AT_LOAD_DIR="data/outputs/2025.11.26/07.11.14_train_vae_real_wipe_image_gelsight_emb_at_24fps_vase2_new_ABC/checkpoints/latest.ckpt"
+# AT_LOAD_DIR="/home/tars/projects/visual_tactile_policy/Tactile-Baseline/data/outputs/2025.11.05/18.13.18_train_vae_real_wipe_image_gelsight_emb_at_24fps_vase_a/checkpoints/latest.ckpt"
 
 if [ ! -f "${AT_LOAD_DIR}" ]; then
     echo "Error: VAE checkpoint not found at ${AT_LOAD_DIR}"
@@ -45,7 +45,7 @@ CUDA_VISIBLE_DEVICES=${GPU_ID} accelerate launch train.py \
     --config-name=train_latent_diffusion_unet_real_image_workspace \
     task=real_${TASK_NAME}_image_gelsight_emb_ldp_24fps \
     task.dataset_path=${DATASET_PATH} \
-    task.dataset.relative_action=False \
+    task.dataset.relative_action=True \
     task.name=real_${TASK_NAME}_image_gelsight_emb_ldp_24fps_${TIMESTAMP} \
     at=at_wipe_lift \
     at_load_dir=${AT_LOAD_DIR} \

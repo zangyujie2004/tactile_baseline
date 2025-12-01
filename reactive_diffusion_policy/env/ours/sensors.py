@@ -429,7 +429,7 @@ class RealRobotEnv():
         
         raw_obs_dict['left_robot_tcp_pose'] = xarm_eef_array
         raw_obs_dict['left_robot_gripper_width'] = np.array([gripper_pos_array / 255.0])
-        raw_obs_dict['left_wrist_img'] = cv2.resize(cam1_img, (320, 240))
+        raw_obs_dict['left_wrist_img'] = cv2.resize(cam1_img, (320, 240))[...,::-1]
         raw_obs_dict['left_gripper1_marker_offset_emb'] = deform_emb
         raw_obs_dict['timestamp'] = np.array([cam1_ts, xarm_ts, tac1_ts]).mean(keepdims=True)
 

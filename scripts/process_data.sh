@@ -1,14 +1,14 @@
-python tools/process_data_all.py \
-    --root_path /home/tars/projects/raw_data \
-    --save_path /home/tars/projects/dataset \
-    --task_list vase_sponge_test \
-    # --save_camera_vis &
-
 # python tools/process_data_all.py \
 #     --root_path /home/tars/projects/raw_data \
 #     --save_path /home/tars/projects/dataset \
-#     --task_list vase_sponge_test1 \
-#     --save_camera_vis &
+#     --task_list vase_sponge_test \
+    # --save_camera_vis &
+
+python tools/process_data_all.py \
+    --root_path /home/tars/projects/raw_data \
+    --save_path /home/tars/projects/dataset \
+    --task_list vase_sponge_test1 \
+    --save_camera_vis 
 
 # python tools/process_data_all.py \
 #     --root_path /home/tars/projects/raw_data \

@@ -722,7 +722,7 @@ def process_one_episode(data_path, policy, vis_save_path=None, save_camera_vis=F
             states_6d_arrays = robot_6d_data[robot_state_indices]
             gripper_arrays = gripper_data[gripper_indices][:, None]
 
-            start_frame = np.where(np.diff(states_arrays[:, 2]) > 0.5)[0][0]
+            start_frame = np.where(np.diff(states_arrays[:, 2]) > 2)[0][0]
             end_frame = np.argmin(states_arrays[:, 0]) + 20
             print('start:', start_frame, 'end:', end_frame)
             
@@ -816,7 +816,7 @@ def process_one_episode(data_path, policy, vis_save_path=None, save_camera_vis=F
             print('sample_ratio:', sample_ratio)
             window_size = 16
 
-            start_time = robot_timestamps[np.where(np.diff(robot_data[:, 2]) > 0.5)[0][0]]
+            start_time = robot_timestamps[np.where(np.diff(robot_data[:, 2]) > 2)[0][0]]
             tactile1_start_time, tactile1_start_id = find_nearest_larger(tactile1_timestamps, start_time)
             tactile2_start_time, tactile2_start_id = find_nearest_larger(tactile2_timestamps, start_time)
 

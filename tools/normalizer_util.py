@@ -414,9 +414,13 @@ def get_normalizer(data_list):
     all_data_dict = defaultdict(list)
     for d in data_list:
         for k, v in d.items():
-            all_data_dict[k].append(v)
+            print(f"k is {k}")
+            if 'image' not in k:
+                all_data_dict[k].append(v)
     all_data_dict = dict(all_data_dict)
     all_data_dict = dict_apply(all_data_dict, np.stack)
+
+    print("--------------------")
     
     action_normalize_list = ['abs_action', 'delta_action', 'relative_action', 'state']
     normalizer = LinearNormalizer()

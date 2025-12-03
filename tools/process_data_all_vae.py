@@ -804,15 +804,15 @@ if __name__ == '__main__':
     args = parser.parse_args()
     WINDOW_SIZE = args.window_size
     DOWN_SAMPLE = args.downsample
-    task = args.task
+ 
     task_list = args.task_list
     root_path = args.root_path
     save_path = args.save_path
     policy = ['tac_wm'] # dp_zarr, tac_wm
 
-    save_camera_vis = False
-    save_tactile_vis = False
-    SAVE_ACTION_VIS = False
+    save_camera_vis = args.save_camera_vis
+    save_tactile_vis = args.save_tactile_vis
+    SAVE_ACTION_VIS = args.save_action_vis
 
     if len(task_list) == 1:
         task = task_list[0]
@@ -829,6 +829,7 @@ if __name__ == '__main__':
             for episode in sorted(os.listdir(data_dir)):
                 episode_list.append(os.path.join(data_dir, episode))
     save_data_path = os.path.join(save_path, task)
+    print(f"save_data_path is {save_data_path}")
 
     
 
@@ -858,18 +859,24 @@ if __name__ == '__main__':
                     train_data.extend(episode_data)
                 else:
                     test_data.extend(episode_data)
+        print(-4)
 
         save_path_train = os.path.join(save_data_path, 'tacwm_samples_' + str(WINDOW_SIZE), 'train')
         save_path_test = os.path.join(save_data_path, 'tacwm_samples_' + str(WINDOW_SIZE), 'test')
         save_path_train = os.path.join(save_data_path, f'tacwm_samples_{WINDOW_SIZE}_downsample_{DOWN_SAMPLE}', 'train')
         save_path_test = os.path.join(save_data_path, f'tacwm_samples_{WINDOW_SIZE}_downsample_{DOWN_SAMPLE}', 'test')
+        print(-3)
+        print(f"save_path_train is {save_path_train}")
         os.makedirs(save_path_train, exist_ok=True)
         os.makedirs(save_path_test, exist_ok=True)
         
         normalizer = get_normalizer(all_data)
+        print(-2)
         torch.save(normalizer, os.path.join(save_data_path, f'tacwm_samples_{WINDOW_SIZE}_downsample_{DOWN_SAMPLE}', 'normalizer.pth'))
+        print(-1)
             
         for i in range(len(train_data)):
+            print(i)
             sample = train_data[i]
             save_name = os.path.join(save_path_train, str("%05d"%i) + '.pkl')
             file = open(save_name, 'wb')

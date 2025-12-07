@@ -8,7 +8,8 @@ python tools/process_data_all_vae.py \
     --root_path /home/tars/projects/raw_data \
     --save_path /home/tars/projects/dataset_vae \
     --task_list vase_sponge_test1 \
-    --save_camera_vis 
+    --save_camera_vis \
+    --window_size 32
 
 # python tools/process_data_all.py \
 #     --root_path /home/tars/projects/raw_data \

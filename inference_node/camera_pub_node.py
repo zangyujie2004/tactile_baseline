@@ -58,8 +58,8 @@ def camera_worker(device_serial, device_name, feq, camera_id):
 
 
 class RealsenseMulti:
-    def __init__(self, feq=30):
-        self.feq = feq
+    def __init__(self, freq=30):
+        self.freq = freq
         self.device_info = []
         for device in rs.context().devices:
             device_name = device.get_info(rs.camera_info.name)
@@ -71,7 +71,7 @@ class RealsenseMulti:
         procs = []
         for i, (serial, name) in enumerate(self.device_info):
             camera_id = i+1
-            p = Process(target=camera_worker, args=(serial, name, self.feq, camera_id))
+            p = Process(target=camera_worker, args=(serial, name, self.freq, camera_id))
             p.start()
             procs.append(p)
         try:
@@ -85,5 +85,5 @@ class RealsenseMulti:
 
 if __name__ == '__main__':
     set_start_method("spawn", force=True)  # 避免多进程兼容性问题
-    realsense = RealsenseMulti(feq=15)
+    realsense = RealsenseMulti(freq=15)
     realsense.run()

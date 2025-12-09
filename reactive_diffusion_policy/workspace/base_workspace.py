@@ -51,6 +51,9 @@ class BaseWorkspace:
         } 
 
         for key, value in self.__dict__.items():
+            # print(f"key is {key}, exclude_keys is {exclude_keys}, include_keys is {include_keys}")
+            # if key == 'model':
+                # print(f"xxxxxxx {value.state_dict().keys()}")
             if hasattr(value, 'state_dict') and hasattr(value, 'load_state_dict'):
                 # modules, optimizers and samplers etc
                 if key not in exclude_keys:

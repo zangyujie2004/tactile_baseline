@@ -27,6 +27,7 @@ class RealImageTactileDataset(BaseImageDataset):
                  pad_after=0,
                  n_obs_steps=None,
                  obs_temporal_downsample_ratio=1, # for latent diffusion
+                 image_downsample_ratio =1,
                  n_latency_steps=0,
                  seed=42,
                  val_ratio=0.0,
@@ -91,7 +92,7 @@ class RealImageTactileDataset(BaseImageDataset):
             # only take first k obs from images
             for key in rgb_keys + lowdim_keys:
                 if key not in extended_rgb_keys + extended_lowdim_keys:
-                    key_first_k[key] = n_obs_steps * obs_temporal_downsample_ratio
+                    key_first_k[key] = n_obs_steps * obs_temporal_downsample_ratio * image_downsample_ratio
         self.key_first_k = key_first_k
 
         self.seed = seed
@@ -122,6 +123,7 @@ class RealImageTactileDataset(BaseImageDataset):
         self.extended_lowdim_keys = extended_lowdim_keys
         self.n_obs_steps = n_obs_steps
         self.obs_downsample_ratio = obs_temporal_downsample_ratio
+        self.image_downsample_ratio = image_downsample_ratio
         self.val_mask = val_mask
         self.horizon = horizon
         self.n_latency_steps = n_latency_steps
@@ -216,6 +218,8 @@ class RealImageTactileDataset(BaseImageDataset):
         # when self.n_obs_steps is None
         # this slice does nothing (takes all)
         T_slice = slice(self.n_obs_steps)
+        T_slice_image = slice(self.n_obs_steps*self.image_downsample_ratio)
+        # print(f"T_slice is {T_slice}, T_slice_image is {T_slice_image}")
         obs_downsample_ratio = self.obs_downsample_ratio
 
         obs_dict = dict()
@@ -223,7 +227,7 @@ class RealImageTactileDataset(BaseImageDataset):
             # move channel last to channel first
             # T,H,W,C
             # convert uint8 image to float32
-            obs_dict[key] = np.moveaxis(data[key][T_slice][::-obs_downsample_ratio][::-1],-1,1
+            obs_dict[key] = np.moveaxis(data[key][T_slice_image][::-obs_downsample_ratio*self.image_downsample_ratio][::-1],-1,1
                 ).astype(np.float32) / 255.
             # T,C,H,W
             # save ram
@@ -231,7 +235,12 @@ class RealImageTactileDataset(BaseImageDataset):
                 del data[key]
         for key in self.lowdim_keys:
             if 'wrt' not in key:
-                obs_dict[key] = data[key][:, :self.shape_meta['obs'][key]['shape'][0]][T_slice][::-obs_downsample_ratio][::-1].astype(np.float32)
+                # obs_dict[key] = data[key][:, :self.shape_meta['obs'][key]['shape'][0]][T_slice][::-obs_downsample_ratio][::-1].astype(np.float32)
+                # print(f"obs_dict[{key}].shape is {obs_dict[key].shape}")
+                obs_dict[key] = data[key][:, :self.shape_meta['obs'][key]['shape'][0]][T_slice_image][::-obs_downsample_ratio*self.image_downsample_ratio][::-1].astype(np.float32)
+                # obs_dict[key] = data[key][:, :self.shape_meta['obs'][key]['shape'][0]][T_slice][::-obs_downsample_ratio][::-1].astype(np.float32)
+                # print(f"data[{key}].shape is {data[key].shape}")
+                # print(f"hah obs_dict[{key}].shape is {obs_dict[key].shape}")
                 # save ram
                 if key not in self.extended_lowdim_keys:
                     del data[key]

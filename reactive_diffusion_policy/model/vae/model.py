@@ -323,6 +323,35 @@ class VAE:
 
         return return_dict
 
+
+    def encode_then_decode(self, batch):
+
+        state = batch["action"]
+        state = self.normalizer['action'].normalize(state)
+        state = state / self.act_scale
+        state = self.preprocess(state)
+
+        state_rep = self.encoder(state)
+        if self.use_vq:
+            state_vq, vq_code, vq_loss_state = self.quant_state_with_vq(state_rep)
+        else:
+            state_vq, posterior = self.quant_state_without_vq(state_rep)
+            state_vq = self.postprocess_quant_state_without_vq(state_vq)
+
+        if self.use_rnn_decoder:
+            temporal_cond = self.get_temporal_cond(batch["extended_obs"])
+            temporal_cond = temporal_cond.to(self.device)
+            dec_out = self.decoder(state_vq, temporal_cond)
+        else:
+            dec_out = self.decoder(state_vq)
+
+        # encoder_loss = (state - dec_out).abs().mean()
+        dec_out = einops.rearrange(dec_out, "N (T A) -> N T A", T=self.input_dim_h)
+        dec_out = dec_out * self.act_scale
+        dec_out = self.normalizer['action'].unnormalize(dec_out)
+
+        return dec_out
+
     def eval(self):
         self.encoder.eval()
         self.decoder.eval()
@@ -355,6 +384,7 @@ class VAE:
         state_dict = {
             "encoder": self.encoder.state_dict(),
             "decoder": self.decoder.state_dict(),
+            "normalizer": self.normalizer.state_dict()
         }
         if self.use_vq:
             state_dict["vq_embedding"] = self.vq_layer.state_dict()
@@ -369,9 +399,10 @@ class VAE:
             state_dict = state_dict['state_dicts']['model']
         self.encoder.load_state_dict(state_dict["encoder"])
         self.decoder.load_state_dict(state_dict["decoder"])
+        self.normalizer.load_state_dict(state_dict["normalizer"])
         if self.use_vq:
             self.vq_layer.load_state_dict(state_dict["vq_embedding"])
             self.vq_layer.eval()
         else:
             self.quant.load_state_dict(state_dict["quant"])
-            self.post_quant.load_state_dict(state_dict["post_quant"])
+            self.post_quant.load_state_dict(state_dict["post_quant"])     

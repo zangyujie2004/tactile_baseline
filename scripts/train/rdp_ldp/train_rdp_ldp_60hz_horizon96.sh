@@ -21,6 +21,9 @@ echo ""
 echo "Stage 2: training Latent Diffusion Policy..."
 CUDA_VISIBLE_DEVICES=${GPU_ID} accelerate launch train.py \
     --config-name=train_latent_diffusion_unet_real_image_workspace \
+    +policy.change_kernel_size=False \
+    policy.noise_scheduler.num_train_timesteps=30 \
+    policy.num_inference_steps=30 \
     task=real_${TASK_NAME}_image_gelsight_emb_ldp_24fps \
     task.dataset_path=${DATASET_PATH} \
     task.dataset.relative_action=False \

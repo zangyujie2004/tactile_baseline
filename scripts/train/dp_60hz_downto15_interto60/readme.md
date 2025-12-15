@@ -1,0 +1,1 @@
+训练的时候downsample4x, predict_action的时候再upsample回来

@@ -30,6 +30,7 @@ class LatentDiffusionUnetImagePolicy(DiffusionUnetImagePolicy):
                  kernel_size=5,  # dummy
                  n_groups=8,
                  cond_predict_scale=True,
+                 change_kernel_size=True,
                  # parameters passed to step
                  **kwargs):
 
@@ -41,7 +42,11 @@ class LatentDiffusionUnetImagePolicy(DiffusionUnetImagePolicy):
         original_horizon = horizon
         if at.use_conv_encoder:
             horizon = at.downsampled_input_h
-            kernel_size = 3
+            if change_kernel_size:# original behavior
+                print("change_kernel_size"+"="*100)
+                kernel_size = 3
+            else:
+                print("NOT change_kernel_size"+"="*100)
         else:
             # hack: latent action can be viewed as a sequence of latent actions with horizon 1
             horizon = at.downsampled_input_h

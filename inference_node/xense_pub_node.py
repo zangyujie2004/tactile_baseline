@@ -70,7 +70,7 @@ class XenseSensor:
 
 if __name__ == '__main__':
     # cfgs = ['OG000027', 'OG000222']
-    cfgs = ['OG000238', 'OG000236']# 可以改这样马
+    cfgs = ['OG000238', 'OG000561']# 可以改这样马
     parser = argparse.ArgumentParser()
     parser.add_argument("--freq", type=int, default=30)
     args = parser.parse_args()

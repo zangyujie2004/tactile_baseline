@@ -324,6 +324,53 @@ class VAE:
         return return_dict
 
 
+    def encode_to_latent(self, batch):
+        """
+        input: N,T,A
+        output: N,T,A
+        """
+        if isinstance(batch, dict):
+            state = batch["action"]
+        else:
+            state = batch
+        state = self.normalizer['action'].normalize(state)
+        state = state / self.act_scale
+        state = self.preprocess(state)
+
+        state_rep = self.encoder(state)
+        if self.use_vq:
+            raise NotImplementedError()
+        else:
+            state_vq, posterior = self.quant_state_without_vq(state_rep)
+        state_vq = einops.rearrange(state_vq, 'N (T A) -> N T A', T=self.downsampled_input_h)
+        return state_vq
+    
+    def decode_from_latent(self, action):
+        """
+        input: N,T(compressed),A
+        output: N,T,A
+        """
+        N,compress_T,A = action.shape
+        action = einops.rearrange(action, 'N T A -> N (T A)')
+        if self.use_vq:
+            raise NotImplementedError()
+        else:
+            state_vq = self.postprocess_quant_state_without_vq(action)
+        
+        if self.use_rnn_decoder:
+            raise NotImplementedError()
+        else:
+            dec_out = self.decoder(state_vq)
+
+        # encoder_loss = (state - dec_out).abs().mean()
+        dec_out = einops.rearrange(dec_out, "N (T A) -> N T A", T=self.input_dim_h)
+        dec_out = dec_out * self.act_scale
+        dec_out = self.normalizer['action'].unnormalize(dec_out)
+
+        return dec_out
+
+            
+
     def encode_then_decode(self, batch):
 
         state = batch["action"]
@@ -336,6 +383,7 @@ class VAE:
             state_vq, vq_code, vq_loss_state = self.quant_state_with_vq(state_rep)
         else:
             state_vq, posterior = self.quant_state_without_vq(state_rep)
+            # latent policy在这里切开
             state_vq = self.postprocess_quant_state_without_vq(state_vq)
 
         if self.use_rnn_decoder:
@@ -351,6 +399,9 @@ class VAE:
         dec_out = self.normalizer['action'].unnormalize(dec_out)
 
         return dec_out
+    
+
+    
 
     def eval(self):
         self.encoder.eval()
@@ -399,10 +450,13 @@ class VAE:
             state_dict = state_dict['state_dicts']['model']
         self.encoder.load_state_dict(state_dict["encoder"])
         self.decoder.load_state_dict(state_dict["decoder"])
-        self.normalizer.load_state_dict(state_dict["normalizer"])
+        if "normalizer" in state_dict.keys():
+            self.normalizer.load_state_dict(state_dict["normalizer"])
+        else:
+            print(f"normalizer not in state_dict.keys() in load_state_dict of vae")
         if self.use_vq:
             self.vq_layer.load_state_dict(state_dict["vq_embedding"])
             self.vq_layer.eval()
         else:
             self.quant.load_state_dict(state_dict["quant"])
-            self.post_quant.load_state_dict(state_dict["post_quant"])     
+            self.post_quant.load_state_dict(state_dict["post_quant"])

@@ -123,6 +123,7 @@ dataset:
   max_train_episodes: null
   delta_action: False
   relative_action: False
+  use_block_vae: False
 
   # for calculating the normalizer parameters for the latent action
   use_latent_action_before_vq: False

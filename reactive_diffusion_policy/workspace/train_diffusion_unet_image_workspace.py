@@ -330,6 +330,7 @@ class TrainDiffusionUnetImageWorkspace(BaseWorkspace):
                         else:
                             result = policy.predict_action(obs_dict)
                         pred_action = result['action_pred']
+                        # import pdb; pdb.set_trace()
 
                         all_preds, all_gt = accelerator.gather_for_metrics((pred_action, gt_action))
 

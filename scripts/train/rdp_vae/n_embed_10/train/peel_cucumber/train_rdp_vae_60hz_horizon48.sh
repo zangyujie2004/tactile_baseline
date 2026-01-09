@@ -1,13 +1,13 @@
 # #!/bin/bash
 
-GPU_ID=1
+GPU_ID=3
 
 TASK_NAME="wipe"
 # Point to the dataset directory that contains 'replay_buffer.zarr'
 # DATASET_PATH="/data/kywang/projects/tactile_il/data/processed/vase_new_C/rdp_zarr"
-DATASET_PATH="data/ckpts/vase_sponge_test1_60hz/rdp_zarr"
+DATASET_PATH="/home/kywang/projects/efficient_robot_sys/data/ckpts/peel_cucumber_60hz/rdp_zarr"
 LOGGING_MODE="online"
-TIMESTAMP=vase_sponge1_rdp_vae_60hz_horizon48
+TIMESTAMP=peel_cucumber_rdp_vae_60hz_horizon48
 SEARCH_PATH="./data/outputs"
 
 # Stage 1: Train Asymmetric Tokenizer

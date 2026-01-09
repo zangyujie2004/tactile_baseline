@@ -1,20 +1,20 @@
 # #!/bin/bash
 
-GPU_ID=2
+GPU_ID=4
 
 horizon=48
 
 TASK_NAME="wipe"
 # Point to the dataset directory that contains 'replay_buffer.zarr'
 # DATASET_PATH="/data/kywang/projects/tactile_il/data/processed/vase_new_C/rdp_zarr"
-DATASET_PATH="data/ckpts/vase_sponge_test1_60hz/rdp_zarr"
+DATASET_PATH="/home/kywang/projects/efficient_robot_sys/data/ckpts/peel_cucumber_60hz/rdp_zarr"
 LOGGING_MODE="online"
-TIMESTAMP=vase_sponge1_rdp_ldp_block_vae_60hz_horizon${horizon}
+TIMESTAMP=peel_cucumber_rdp_ldp_block_vae_60hz_horizon${horizon}
 SEARCH_PATH="./data/outputs"
 
 
 
-AT_LOAD_DIR="/home/kywang/projects/efficient_robot_sys/data/ckpts/vase_sponge_test1_60hz/ckpts_abs/rdp_block_vae/n_embed_10/horizon${horizon}/latest.ckpt"
+AT_LOAD_DIR="/home/kywang/projects/efficient_robot_sys/data/ckpts/peel_cucumber_60hz/ckpts_abs/rdp_block_vae/n_embed_10/horizon48/latest.ckpt"
 
 # # # Stage 2: Train Latent Diffusion Policy
 echo ""

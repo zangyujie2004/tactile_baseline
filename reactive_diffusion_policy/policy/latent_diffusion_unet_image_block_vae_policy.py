@@ -327,7 +327,7 @@ class LatentDiffusionUnetImageBlockVaePolicy(DiffusionUnetImagePolicy):
         action = batch['action']
         batch_size,T,action_dim = action.shape
         action = action.reshape(batch_size*self.at.encode_block_num, T//self.at.encode_block_num, action_dim)
-        nlatent_actions = self.at.encode_to_latent(action)
+        nlatent_actions = self.at.encode_to_latent(action,reshape_in_vae=False)
         nlatent_actions = nlatent_actions.reshape(batch_size, self.at.downsampled_input_h*self.at.encode_block_num, -1)
         nlatent_actions = self.normalizer['latent_action'].normalize(nlatent_actions)
 

@@ -320,10 +320,11 @@ class BlockEncodeVAE:
         return return_dict
 
 
-    def encode_to_latent(self, batch):
+    def encode_to_latent(self, batch, reshape_in_vae=True):
         """
         before use encode_to_latent, reshape action from (N,T,A) to (N*self.encode_block_num, T//self.encode_block_num,A) \\
         after output, reshape action from (N*self.encode_block_num, T//self.encode_block_num,A) to (N,T,A) \\
+        那我为什么不把reshape在encode_to_latent里面做好呢？？？
         input: N,T,A
         output: N,T,A
         """
@@ -331,6 +332,9 @@ class BlockEncodeVAE:
             state = batch["action"]
         else:
             state = batch
+        if reshape_in_vae:
+            batch_size, T, action_dim = state.shape
+            state = state.reshape(batch_size*self.encode_block_num, T//self.at.encode_block_num, action_dim)
         state = self.normalizer['action'].normalize(state)
         state = state / self.act_scale
         state = self.preprocess(state)
@@ -341,30 +345,9 @@ class BlockEncodeVAE:
         else:
             state_vq, posterior = self.quant_state_without_vq(state_rep)
         state_vq = einops.rearrange(state_vq, 'N (T A) -> N T A', T=self.downsampled_input_h)
+        if reshape_in_vae:
+            state_vq = state_vq.reshape(batch_size, self.downsampled_input_h*self.encode_block_num, -1)
         return state_vq
-    
-    def decode_from_latent(self, action):
-        """
-        input: N,T(compressed),A
-        output: N,T,A
-        """
-        action = einops.rearrange(action, 'N T A -> N (T A)')
-        if self.use_vq:
-            raise NotImplementedError()
-        else:
-            state_vq = self.postprocess_quant_state_without_vq(action)
-        
-        if self.use_rnn_decoder:
-            raise NotImplementedError()
-        else:
-            dec_out = self.decoder(state_vq)
-
-        # encoder_loss = (state - dec_out).abs().mean()
-        dec_out = einops.rearrange(dec_out, "N (T A) -> N T A", T=self.input_dim_h_decode)
-        dec_out = dec_out * self.act_scale
-        dec_out = self.normalizer['action'].unnormalize(dec_out)
-
-        return dec_out
 
             
 

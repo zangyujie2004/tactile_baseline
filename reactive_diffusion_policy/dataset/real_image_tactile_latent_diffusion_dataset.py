@@ -46,7 +46,7 @@ class RealImageTactileLatentDiffusionDataset(RealImageTactileDataset):
                 self.at:BlockEncodeVAE = self.at
                 batch_size, T, action_dim = action.shape # batch_size is 1
                 action = action.reshape(batch_size*self.at.encode_block_num, T//self.at.encode_block_num, action_dim)
-                latent_action = self.at.encode_to_latent(action)
+                latent_action = self.at.encode_to_latent(action,reshape_in_vae=False)
                 latent_action = latent_action.reshape(batch_size, self.at.downsampled_input_h*self.at.encode_block_num, -1)
                 latent_action_all.append(latent_action[0].cpu().detach().numpy())
 

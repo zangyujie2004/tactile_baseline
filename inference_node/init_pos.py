@@ -21,7 +21,14 @@ if __name__ == '__main__':
     angle = [1.478288, -0.166976, -0.292118, 1.391008, -0.102355, 1.403859, -1.958061]
     arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
     time.sleep(1)
-    angle = [1.47827, -0.105039, -0.413837, 0.865564, -0.103457, 0.964442, -2.015087]
+
+    ### vase_sponge_test1
+    # angle = [1.47827, -0.105039, -0.413837, 0.865564, -0.103457, 0.964442, -2.015087]
+    # arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
+    # time.sleep(1)
+
+    ### peel_cucumber
+    angle = [1.478748, -0.122841, -0.437593, 0.906287, -0.087462, 1.008328, -1.995694]
     arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
     time.sleep(1)
 

@@ -742,8 +742,8 @@ def process_one_episode(data_path, policy, vis_save_path=None, save_camera_vis=F
             gripper_arrays = gripper_data[gripper_indices][:, None]
 
             # start_frame = np.where(np.diff(states_arrays[:, 2]) > 2)[0][0] # 之前action从60hz降采样到15hz
-            start_frame = np.where(np.diff(states_arrays[:, 2]) > 1)[0][0] # 现在action是60hz, 因此阈值降为0.5
-            end_frame = np.argmin(states_arrays[:, 0]) + 20 # 多截取end_frame
+            start_frame = np.where(np.diff(states_arrays[:, 2]) > 1)[0][0] # 现在action是60hz, 因此阈值降为0.5 # 截取开头frame
+            end_frame = np.argmin(states_arrays[:, 0]) + 3 # 多截取xx frame
             print('start:', start_frame, 'end:', end_frame)
             
             # 之前已经做过对齐了, 因此可以用start_frame和end_frame来截取需要的部分

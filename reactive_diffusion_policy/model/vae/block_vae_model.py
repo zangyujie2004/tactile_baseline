@@ -97,10 +97,12 @@ class DecoderRNN(nn.Module):
         x = einops.rearrange(x, "N T A -> N (T A)")
         return x
 
-class VAE:
+class BlockEncodeVAE:
     def __init__(
         self,
-        horizon=10, # length of action chunk
+        horizon=48,
+        encode_horizon=12, # length of action chunk
+        encode_block_num=4,# encode_horizon*encode_block_num -> horizon
         shape_meta={},
         n_latent_dims=512,
         mlp_layer_num=1,
@@ -120,7 +122,10 @@ class VAE:
         encoder_loss_multiplier=1.0,
         act_scale=1.0,
     ):
-        self.input_dim_h = horizon
+        self.horizon = horizon
+        self.encode_block_num = encode_block_num
+        self.input_dim_h = encode_horizon
+        self.input_dim_h_decode = encode_horizon*encode_block_num
         self.input_dim_w = shape_meta['action']['shape'][0]
         self.use_conv_encoder = use_conv_encoder
         self.use_rnn_decoder = use_rnn_decoder
@@ -156,12 +161,12 @@ class VAE:
             self.downsampled_input_h = output_shape[0]
 
         if self.use_rnn_decoder:
-            self.decoder = DecoderRNN(global_cond_dim=decoder_n_latent_dims, temporal_cond_dim=self.rnn_temporal_cond_dim,
+            self.decoder = DecoderRNN(global_cond_dim=decoder_n_latent_dims*self.encode_block_num, temporal_cond_dim=self.rnn_temporal_cond_dim,
                                       output_dim=self.input_dim_w, hidden_dim=rnn_latent_dims,
                                       layer_num=rnn_layer_num).to(self.device)
         else:
             self.decoder = MLP(
-                input_dim=decoder_n_latent_dims, output_dim=self.input_dim_w * self.input_dim_h, layer_num=mlp_layer_num
+                input_dim=decoder_n_latent_dims*self.encode_block_num, output_dim=self.input_dim_w*self.input_dim_h_decode, layer_num=mlp_layer_num
             ).to(self.device)
         self.n_latent_dims = n_latent_dims
 
@@ -203,20 +208,6 @@ class VAE:
     def set_normalizer(self, normalizer: LinearNormalizer):
         self.normalizer.load_state_dict(normalizer.state_dict())
 
-    def get_action_from_latent(self, latent):
-        output = self.decoder(latent) * self.act_scale
-        if self.input_dim_h == 1:
-            return einops.rearrange(output, "N (T A) -> N T A", A=self.input_dim_w)
-        else:
-            return einops.rearrange(output, "N (T A) -> N T A", A=self.input_dim_w)
-
-    def get_action_from_latent_with_temporal_cond(self, latent, temporal_cond):
-        output = self.decoder(latent, temporal_cond) * self.act_scale
-        if self.input_dim_h == 1:
-            return einops.rearrange(output, "N (T A) -> N T A", A=self.input_dim_w)
-        else:
-            return einops.rearrange(output, "N (T A) -> N T A", A=self.input_dim_w)
-
     def preprocess(self, state):
         if not torch.is_tensor(state):
             state = get_tensor(state, self.device)
@@ -253,7 +244,7 @@ class VAE:
         return state_vq, posterior
 
     def postprocess_quant_state_without_vq(self, state_vq):
-        state_vq = einops.rearrange(state_vq, "N (T A) -> N A T", T=self.downsampled_input_h)
+        state_vq = einops.rearrange(state_vq, "N (T A) -> N A T", T=self.downsampled_input_h*self.encode_block_num)
         state_vq = self.post_quant(state_vq)
         state_vq = einops.rearrange(state_vq, "N A T -> N (T A)")
 
@@ -279,13 +270,17 @@ class VAE:
         state = batch["action"]
         state = self.normalizer['action'].normalize(state)
         state = state / self.act_scale
+        batch_size, t_encode, action_dim = state.shape
+        state = state.reshape(batch_size*self.encode_block_num,t_encode//self.encode_block_num, action_dim)
         state = self.preprocess(state)
 
         state_rep = self.encoder(state)
         if self.use_vq:
             state_vq, vq_code, vq_loss_state = self.quant_state_with_vq(state_rep)
         else:
-            state_vq, posterior = self.quant_state_without_vq(state_rep)
+            state_vq, posterior = self.quant_state_without_vq(state_rep) # 暂时不处理posterior，我还不清楚T维度和batch维度的reshape是否会对posterior造成影响
+            state_vq = einops.rearrange(state_vq, "N (T A) -> N T A", T=self.downsampled_input_h).reshape(batch_size, self.downsampled_input_h*self.encode_block_num, -1).reshape(batch_size,-1)
+            # import pdb;pdb.set_trace()
             state_vq = self.postprocess_quant_state_without_vq(state_vq)
 
         if self.use_rnn_decoder:
@@ -295,6 +290,7 @@ class VAE:
         else:
             dec_out = self.decoder(state_vq)
 
+        state = state.reshape(batch_size, t_encode, action_dim).reshape(batch_size,-1)
         encoder_loss = (state - dec_out).abs().mean()
         vae_recon_loss = torch.nn.MSELoss()(state, dec_out)
 
@@ -324,8 +320,11 @@ class VAE:
         return return_dict
 
 
-    def encode_to_latent(self, batch):
+    def encode_to_latent(self, batch, reshape_in_vae=True):
         """
+        before use encode_to_latent, reshape action from (N,T,A) to (N*self.encode_block_num, T//self.encode_block_num,A) \\
+        after output, reshape action from (N*self.encode_block_num, T//self.encode_block_num,A) to (N,T,A) \\
+        那我为什么不把reshape在encode_to_latent里面做好呢？？？
         input: N,T,A
         output: N,T,A
         """
@@ -333,6 +332,9 @@ class VAE:
             state = batch["action"]
         else:
             state = batch
+        if reshape_in_vae:
+            batch_size, T, action_dim = state.shape
+            state = state.reshape(batch_size*self.encode_block_num, T//self.at.encode_block_num, action_dim)
         state = self.normalizer['action'].normalize(state)
         state = state / self.act_scale
         state = self.preprocess(state)
@@ -343,31 +345,9 @@ class VAE:
         else:
             state_vq, posterior = self.quant_state_without_vq(state_rep)
         state_vq = einops.rearrange(state_vq, 'N (T A) -> N T A', T=self.downsampled_input_h)
+        if reshape_in_vae:
+            state_vq = state_vq.reshape(batch_size, self.downsampled_input_h*self.encode_block_num, -1)
         return state_vq
-    
-    def decode_from_latent(self, action):
-        """
-        input: N,T(compressed),A
-        output: N,T,A
-        """
-        N,compress_T,A = action.shape
-        action = einops.rearrange(action, 'N T A -> N (T A)')
-        if self.use_vq:
-            raise NotImplementedError()
-        else:
-            state_vq = self.postprocess_quant_state_without_vq(action)
-        
-        if self.use_rnn_decoder:
-            raise NotImplementedError()
-        else:
-            dec_out = self.decoder(state_vq)
-
-        # encoder_loss = (state - dec_out).abs().mean()
-        dec_out = einops.rearrange(dec_out, "N (T A) -> N T A", T=self.input_dim_h)
-        dec_out = dec_out * self.act_scale
-        dec_out = self.normalizer['action'].unnormalize(dec_out)
-
-        return dec_out
 
             
 
@@ -376,6 +356,8 @@ class VAE:
         state = batch["action"]
         state = self.normalizer['action'].normalize(state)
         state = state / self.act_scale
+        batch_size, t_encode, action_dim = state.shape
+        state = state.reshape(batch_size*self.encode_block_num,t_encode//self.encode_block_num, action_dim)
         state = self.preprocess(state)
 
         state_rep = self.encoder(state)
@@ -384,6 +366,7 @@ class VAE:
         else:
             state_vq, posterior = self.quant_state_without_vq(state_rep)
             # latent policy在这里切开
+            state_vq = einops.rearrange(state_vq, "N (T A) -> N T A", T=self.downsampled_input_h).reshape(batch_size, self.downsampled_input_h*self.encode_block_num, -1).reshape(batch_size,-1)
             state_vq = self.postprocess_quant_state_without_vq(state_vq)
 
         if self.use_rnn_decoder:
@@ -394,7 +377,7 @@ class VAE:
             dec_out = self.decoder(state_vq)
 
         # encoder_loss = (state - dec_out).abs().mean()
-        dec_out = einops.rearrange(dec_out, "N (T A) -> N T A", T=self.input_dim_h)
+        dec_out = einops.rearrange(dec_out, "N (T A) -> N T A", T=self.input_dim_h_decode)
         dec_out = dec_out * self.act_scale
         dec_out = self.normalizer['action'].unnormalize(dec_out)
 

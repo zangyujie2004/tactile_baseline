@@ -51,7 +51,7 @@ class RealWorldDPInfer:
         self.policy.eval()
 
         # =========== Initialize observation buffer ===========
-        self.n_obs_steps = policy_cfg.n_obs_stepsdata/outputs/ckpts/vase2_new_C
+        self.n_obs_steps = policy_cfg.n_obs_steps
         # Get the observation keys from the training config's shape_meta
         self.key_to_shape = train_cfg.shape_meta['obs']
 

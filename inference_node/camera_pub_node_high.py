@@ -20,7 +20,6 @@ class CameraNode:
         self.capture_freq = capture_freq
         self.publish_freq = publish_freq
 
-        # 共享 buffer（最新帧）
         self.latest_frame = {
             'color': None,
             'depth': None,
@@ -28,12 +27,10 @@ class CameraNode:
         }
         self.buffer_lock = threading.Lock()
 
-        # ROS 发布器
         self.bridge = CvBridge()
-        self.image_pub = rospy.Publisher(f'/camera_{camera_id}/image', Image, queue_size=10)
-        self.depth_pub = rospy.Publisher(f'/camera_{camera_id}/depth', Image, queue_size=10)
+        self.image_pub = rospy.Publisher(f'/camera_{camera_id}_image', Image, queue_size=10)
+        # self.depth_pub = rospy.Publisher(f'/camera_{camera_id}_depth', Image, queue_size=10)
 
-        # RealSense 配置
         self.align = rs.align(rs.stream.color)
         self.pipeline = None
 
@@ -52,7 +49,6 @@ class CameraNode:
             pass
 
     def _capture_loop(self):
-        # 配置 RealSense
         config = rs.config()
         config.enable_device(self.device_serial)
         if 'L515' in self.device_name:
@@ -178,7 +174,6 @@ class RealsenseMultiManager:
 
 
 if __name__ == '__main__':
-    # 必须设置 spawn 模式以兼容 ROS + multiprocessing
     set_start_method("spawn", force=True)
 
     # 启动多相机管理器

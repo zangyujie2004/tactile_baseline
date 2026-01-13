@@ -1,9 +1,3 @@
-"""
-原来的process_data_all: 向下对齐, 60hz的action被压制到15hz, 和image同样频率
-修改为process_data_all_zarr_60hz: action依然保持60hz(不被降采样), 其他部分的逻辑不变
-"""
-
-
 import os
 import pickle
 import numpy as np
@@ -709,44 +703,29 @@ def process_one_episode(data_path, policy, vis_save_path=None, save_camera_vis=F
         '''second step: choose mode: tac_wm or dp_zarr'''
         if policy == 'dp_zarr':
             image_resize_shape = (320, 240)
-            # print(f"len(camera1_timestamps) is {len(camera1_timestamps)}") # 208
-            # print(f"len(camera2_timestamps) is {len(camera2_timestamps)}") # 209
-            # print(f"len(tactile1_timestamps) is {len(tactile1_timestamps)}") # 831
-            # print(f"len(tactile2_timestamps) is {len(tactile2_timestamps)}") # 831
-            # print(f"len(robot_timestamps) is {len(robot_timestamps)}") # 832
-            # print(f"len(gripper_timestamps) is {len(gripper_timestamps)}") # 832
-            # ==== original ====
-            # camera2_timestamps, cam2_indices = align_timestamps(camera1_timestamps, camera2_timestamps)
-            # tactile1_timestamps, tac1_indices = align_timestamps(camera1_timestamps, tactile1_timestamps)
-            # tactile2_timestamps, tac2_indices = align_timestamps(camera1_timestamps, tactile2_timestamps)
-            # robot_state_timestamps, robot_state_indices = align_timestamps(camera1_timestamps, robot_timestamps)
-            # gripper_timestamps, gripper_indices = align_timestamps(camera1_timestamps, gripper_timestamps)
-            # ==== 60hz, 向action对齐 ====
-            camera1_timestamps, cam1_indices = align_timestamps(robot_timestamps, camera1_timestamps)
-            camera2_timestamps, cam2_indices = align_timestamps(robot_timestamps, camera2_timestamps)
-            tactile1_timestamps, tac1_indices = align_timestamps(robot_timestamps, tactile1_timestamps)
-            tactile2_timestamps, tac2_indices = align_timestamps(robot_timestamps, tactile2_timestamps)
-            # robot_state_timestamps, robot_state_indices = align_timestamps(camera1_timestamps, robot_timestamps)
-            gripper_timestamps, gripper_indices = align_timestamps(robot_timestamps, gripper_timestamps)
+
+            camera2_timestamps, cam2_indices = align_timestamps(camera1_timestamps, camera2_timestamps)
+            tactile1_timestamps, tac1_indices = align_timestamps(camera1_timestamps, tactile1_timestamps)
+            tactile2_timestamps, tac2_indices = align_timestamps(camera1_timestamps, tactile2_timestamps)
+            robot_state_timestamps, robot_state_indices = align_timestamps(camera1_timestamps, robot_timestamps)
+            gripper_timestamps, gripper_indices = align_timestamps(camera1_timestamps, gripper_timestamps)
             
             tac1_arrays = tac1_data[tac1_indices]
             tac2_arrays = tac2_data[tac2_indices]
             tac1_arrays = tac1_arrays.reshape(len(tactile1_timestamps), -1, 3)
             tac2_arrays = tac2_arrays.reshape(len(tactile2_timestamps), -1, 3)
-            camera1_image_arrays = camera_data_dict['camera1']['image'][cam1_indices]
-            camera1_depth_arrays = camera_data_dict['camera1']['depth'][cam1_indices]
+            camera1_image_arrays = camera_data_dict['camera1']['image']
+            camera1_depth_arrays = camera_data_dict['camera1']['depth']
             camera2_image_arrays = camera_data_dict['camera2']['image'][cam2_indices]
             camera2_depth_arrays = camera_data_dict['camera2']['depth'][cam2_indices]
-            states_arrays = robot_data#[robot_state_indices]
-            states_6d_arrays = robot_6d_data#[robot_state_indices]
+            states_arrays = robot_data[robot_state_indices]
+            states_6d_arrays = robot_6d_data[robot_state_indices]
             gripper_arrays = gripper_data[gripper_indices][:, None]
 
-            # start_frame = np.where(np.diff(states_arrays[:, 2]) > 2)[0][0] # 之前action从60hz降采样到15hz
-            start_frame = np.where(np.diff(states_arrays[:, 2]) > 1)[0][0] # 现在action是60hz, 因此阈值降为0.5
-            end_frame = np.argmin(states_arrays[:, 0]) + 20 # 多截取end_frame
+            start_frame = np.where(np.diff(states_arrays[:, 2]) > 2)[0][0]
+            end_frame = np.argmin(states_arrays[:, 0]) + 3 # 多截取xxframe
             print('start:', start_frame, 'end:', end_frame)
             
-            # 之前已经做过对齐了, 因此可以用start_frame和end_frame来截取需要的部分
             camera1_timestamps = camera1_timestamps[start_frame:end_frame]
             camera1_image_arrays = camera1_image_arrays[start_frame:end_frame]
             camera2_image_arrays = camera2_image_arrays[start_frame:end_frame]
@@ -762,7 +741,6 @@ def process_one_episode(data_path, policy, vis_save_path=None, save_camera_vis=F
             
             state_arrays = np.concatenate([tcp_pose_arrays, gripper_arrays], axis=-1)
             new_action_arrays = state_arrays[1:, ...].copy()
-            # action是下一步的state
             action_arrays = np.concatenate([new_action_arrays, new_action_arrays[-1][np.newaxis, :]], axis=0)
 
             camera2_crop_list = []
@@ -832,7 +810,62 @@ def process_one_episode(data_path, policy, vis_save_path=None, save_camera_vis=F
             tac2_arrays = np.concatenate((tac2_arrays, tac2_n_arrays[..., None]), axis=-1)
             return tcp_pose_arrays, gripper_arrays, tac1_arrays, tac2_arrays, camera1_image_arrays[..., ::-1], camera2_image_arrays[..., ::-1], pts_arrays, action_arrays
         
+        if policy == 'tac_wm':
+            episode_data = list()
+            sample_ratio = int(np.diff(camera1_timestamps).mean() // np.diff(tactile1_timestamps).mean())
+            print('sample_ratio:', sample_ratio)
+            window_size = 16
 
+            start_time = robot_timestamps[np.where(np.diff(robot_data[:, 2]) > 2)[0][0]]
+            tactile1_start_time, tactile1_start_id = find_nearest_larger(tactile1_timestamps, start_time)
+            tactile2_start_time, tactile2_start_id = find_nearest_larger(tactile2_timestamps, start_time)
+
+            end_time = robot_timestamps[np.argmin(robot_data[:, 0])]
+            tactile1_end_time, tactile1_end_id = find_nearest_larger(tactile1_timestamps, end_time)
+            tactile2_end_time, tactile2_end_id = find_nearest_larger(tactile2_timestamps, end_time)
+            tactile1_end_id = int(sample_ratio - ((tactile1_end_id + 1 - tactile1_start_id - window_size) % sample_ratio) + tactile1_end_id + 1)
+            tactile2_end_id = int(sample_ratio - ((tactile2_end_id + 1 - tactile2_start_id - window_size) % sample_ratio) + tactile2_end_id + 1)
+
+            tactile1_timestamps = tactile1_timestamps[tactile1_start_id:tactile1_end_id]
+            tactile2_timestamps = tactile2_timestamps[tactile2_start_id:tactile2_end_id]
+
+            tac1_arrays = tac1_data_dict['deform'][tactile1_start_id:tactile1_end_id]
+            tac2_arrays = tac2_data_dict['deform'][tactile2_start_id:tactile2_end_id]
+            min_len = min(tac1_arrays.shape[0], tac2_arrays.shape[0])
+            tac1_arrays = tac1_arrays[:min_len]
+            tac2_arrays = tac2_arrays[:min_len]
+
+            tac_arrays = np.concatenate([tac1_arrays, tac2_arrays], axis=-1)
+            
+            samples, sample_start_frames, sample_start_time, sample_end_time = sliding_slices(tac_arrays, tactile1_timestamps, window_size, sample_ratio)
+            camera1_timestamps, cam1_indices = align_timestamps(sample_start_time, camera1_timestamps)
+            camera2_timestamps, cam2_indices = align_timestamps(sample_start_time, camera2_timestamps)
+            # robot_state_timestamps, robot_state_indices = align_timestamps(camera1_timestamps, robot_timestamps)
+            gripper_timestamps, gripper_indices = align_timestamps(gripper_timestamps, gripper_timestamps)
+            robot_state_timestamps, robot_state_indices = align_timestamps(tactile1_timestamps, robot_timestamps)
+
+            tcp_pose_arrays = robot_data[robot_state_indices]
+            tcp_pose_arrays[:, :3] /= 1000.0
+            new_action_arrays = tcp_pose_arrays[1:, ...].copy()
+            action_arrays = np.concatenate([new_action_arrays, new_action_arrays[-1][np.newaxis, :]], axis=0)
+
+            for i in range(len(samples)):
+                data_dict = {}
+                tactile_sample = samplesvase2_new_C[i]
+                action_sample = action_arrays[sample_start_frames[i]:sample_start_frames[i] + window_size]
+                state_sample = tcp_pose_arrays[sample_start_frames[i]:sample_start_frames[i] + window_size]
+                cam1_image_sample = camera_data_dict['camera1']['image'][cam1_indices[i]:cam1_indices[i] + window_size // sample_ratio]
+                cam1_depth_sample = camera_data_dict['camera1']['depth'][cam1_indices[i]:cam1_indices[i] + window_size // sample_ratio]
+                # cam2_image_sample = camera_data_dict['camera2']['image'][cam2_indices[i]]
+                # cam2_depth_sample = camera_data_dict['camera2']['depth'][cam2_indices[i]]
+                data_dict['state'] = state_sample
+                data_dict['action'] = action_sample
+                data_dict['tactile'] = tactile_sample
+                data_dict['camera1_image'] = cam1_image_sample
+                data_dict['camera1_depth'] = cam1_depth_sample
+                episode_data.append(data_dict)
+
+            return episode_data
     
     except Exception as e:
         print(f"Error loading data: {data_path}")
@@ -1039,4 +1072,43 @@ if __name__ == '__main__':
         del episode_ends_arrays
         gc.collect()
 
-    
+    if 'tac_wm' in policy:
+        train_data = list()
+        test_data = list()
+        num_total = len(episode_list)
+        num_train = int(num_total * 0.9)
+        num_test = num_total - num_train
+        random_indices = np.random.permutation(num_total)
+        train_indices = random_indices[:num_train]
+        test_indices = random_indices[num_train:]
+
+        for episode_id in tqdm.tqdm(range(num_total)):
+            data_path = episode_list[episode_id]
+            print('loading episode:', data_path)
+            episode_data = process_one_episode(data_path, policy='tac_wm')
+            if episode_data is None:
+                continue
+            else:
+                if episode_id in train_indices:
+                    train_data.extend(episode_data)
+                else:
+                    test_data.extend(episode_data)
+
+        save_path_train = os.path.join(save_data_path, 'tacwm_samples', 'train')
+        os.makedirs(save_path_train, exist_ok=True)
+        save_path_test = os.path.join(save_data_path, 'tacwm_samples', 'test')
+        os.makedirs(save_path_test, exist_ok=True)
+        for i in range(len(train_data)):
+            sample = train_data[i]
+            save_name = os.path.join(save_path_train, str("%05d"%i) + '.pkl')
+            file = open(save_name, 'wb')
+            pickle.dump(sample, file)
+            print(f'create training samples: {i+1} / {len(train_data)}')
+        for i in range(len(test_data)):
+            sample = test_data[i]
+            save_name = os.path.join(save_path_test, str("%05d"%i) + '.pkl')
+            file = open(save_name, 'wb')
+            pickle.dump(sample, file)
+            print(f'create testing samples: {i+1} / {len(test_data)}')
+
+        print('end')

@@ -29,14 +29,14 @@ if __name__ == '__main__':
     # time.sleep(1)
 
     ### peel_cucumber
-    # angle = [1.478748, -0.122841, -0.437593, 0.906287, -0.087462, 1.008328, -1.995694]
-    # arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
-    # time.sleep(1)
-
-    ### wipe_vase_ky
-    angle = [1.47827, -0.105039, -0.413837, 0.865564, -0.103457, 0.964442, -2.015087]
+    angle = [1.478748, -0.122841, -0.437593, 0.906287, -0.087462, 1.008328, -1.995694]
     arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
     time.sleep(1)
+
+    ### wipe_vase_ky
+    # angle = [1.47827, -0.105039, -0.413837, 0.865564, -0.103457, 0.964442, -2.015087]
+    # arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
+    # time.sleep(1)
 
 
     arm.disconnect()

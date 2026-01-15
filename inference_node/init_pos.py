@@ -38,8 +38,8 @@ if __name__ == '__main__':
     # arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
     # time.sleep(1)
 
-    ### write_board
-    angle = [1.477538, -0.295261, -0.465017, 0.78498, -0.157166, 1.01665, -1.995719]
+    ### push_square
+    angle = [1.478385, -0.280153, -0.391595, 0.949745, -0.157129, 1.18542, -1.99573]
     arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
     time.sleep(1)
 

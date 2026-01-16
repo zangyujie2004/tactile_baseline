@@ -34,14 +34,14 @@ if __name__ == '__main__':
     # time.sleep(1)
 
     ### wipe_vase_ky
-    # angle = [1.47827, -0.105039, -0.413837, 0.865564, -0.103457, 0.964442, -2.015087]
-    # arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
-    # time.sleep(1)
-
-    ### push_square
-    angle = [1.478385, -0.280153, -0.391595, 0.949745, -0.157129, 1.18542, -1.99573]
+    angle = [1.47827, -0.105039, -0.413837, 0.865564, -0.103457, 0.964442, -2.015087]
     arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
     time.sleep(1)
+
+    ### push_square
+    # angle = [1.478385, -0.280153, -0.391595, 0.949745, -0.157129, 1.18542, -1.99573]
+    # arm.set_servo_angle(angle=angle, speed=speed, is_radian=True, wait=True)
+    # time.sleep(1)
 
 
     arm.disconnect()

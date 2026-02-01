@@ -12,10 +12,13 @@ gripper = gripper.RobotiqGripper()
 # gripper.move(position=220, speed=255, force=1) # with tactile
 
 ### wipe_vase_ky
-gripper.move(position=110, speed=255, force=1) # with tactile
+# gripper.move(position=110, speed=255, force=1) # with tactile
 
 ### push_square
 # gripper.move(position=220, speed=255, force=1) # with tactile
 
 ### write_board
 # gripper.move(position=220, speed=255, force=1) # with tactile
+
+### cut
+gripper.move(position=252, speed=255, force=120) 

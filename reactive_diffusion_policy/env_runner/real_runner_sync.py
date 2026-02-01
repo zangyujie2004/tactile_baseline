@@ -64,7 +64,7 @@ class RealRunner:
                  latent_gripper_ensemble_buffer_params: DictConfig = None,
                  use_latent_action_with_rnn_decoder: bool = False,
                  use_relative_action: bool = False,
-                 use_relative_tcp_obs_for_relative_action: bool = False,
+                 use_relative_tcp_obs_for_relative_action: bool = True,
                  action_interpolation_ratio: int = 1,
                  eval_episodes=10,
                  max_duration_time: float = 30,
@@ -86,8 +86,6 @@ class RealRunner:
                  vcamera_server_port: Optional[Union[int, ListConfig]] = None,
                  task_name=None,
                  ):
-        # self.save_tac_dir = "/home/robotics/Prometheus/reactive_diffusion_policy/tactile_data_save"
-        # os.makedirs(self.save_tac_dir, exist_ok=True)
         self.task_name = task_name
         self.transforms = RealWorldTransforms(option=transform_params)
         self.shape_meta = dict(shape_meta)
@@ -136,9 +134,7 @@ class RealRunner:
         self.inference_interval_time = 1.0 / inference_fps
         assert self.control_fps % self.inference_fps == 0
         self.latency_step = latency_step
-        self.latency_step = 0
         self.gripper_latency_step = gripper_latency_step if gripper_latency_step is not None else latency_step
-        self.gripper_latency_step = 0
         self.n_obs_steps = n_obs_steps
         self.obs_temporal_downsample_ratio = 1 # obs_temporal_downsample_ratio
         self.dataset_obs_temporal_downsample_ratio = dataset_obs_temporal_downsample_ratio
@@ -255,13 +251,13 @@ class RealRunner:
         else:
             raise NotImplementedError
         # clip action (x, y, z)
-        left_action_6d[:, :3] = np.clip(left_action_6d[:, :3], np.array(self.tcp_pos_clip_range[0]), np.array(self.tcp_pos_clip_range[1]))
-        if right_action_6d is not None:
-            right_action_6d[:, :3] = np.clip(right_action_6d[:, :3], np.array(self.tcp_pos_clip_range[2]), np.array(self.tcp_pos_clip_range[3]))
-        # clip action (r, p, y)
-        left_action_6d[:, 3:] = np.clip(left_action_6d[:, 3:], np.array(self.tcp_rot_clip_range[0]), np.array(self.tcp_rot_clip_range[1]))
-        if right_action_6d is not None:
-            right_action_6d[:, 3:] = np.clip(right_action_6d[:, 3:], np.array(self.tcp_rot_clip_range[2]), np.array(self.tcp_rot_clip_range[3]))
+        # left_action_6d[:, :3] = np.clip(left_action_6d[:, :3], np.array(self.tcp_pos_clip_range[0]), np.array(self.tcp_pos_clip_range[1]))
+        # if right_action_6d is not None:
+        #     right_action_6d[:, :3] = np.clip(right_action_6d[:, :3], np.array(self.tcp_pos_clip_range[2]), np.array(self.tcp_pos_clip_range[3]))
+        # # clip action (r, p, y)
+        # left_action_6d[:, 3:] = np.clip(left_action_6d[:, 3:], np.array(self.tcp_rot_clip_range[0]), np.array(self.tcp_rot_clip_range[1]))
+        # if right_action_6d is not None:
+        #     right_action_6d[:, 3:] = np.clip(right_action_6d[:, 3:], np.array(self.tcp_rot_clip_range[2]), np.array(self.tcp_rot_clip_range[3]))
         # add gripper action
         if action.shape[-1] == 4:
             left_action = np.concatenate([left_action_6d, action[:, 3][:, np.newaxis],
@@ -295,7 +291,7 @@ class RealRunner:
 
     def action_command_thread(self, policy: Union[DiffusionUnetImagePolicy], stop_event):
         # while not stop_event.is_set():
-        for i in range(10):
+        for i in range(5):
             start_time = time.time()
             # get step action from ensemble buffer
             tcp_step_action = self.tcp_ensemble_buffer.get_action()
@@ -338,28 +334,8 @@ class RealRunner:
                 gripper_step_latent_action = torch.from_numpy(gripper_step_action.astype(np.float32)).unsqueeze(0)
 
                 dataset_obs_temporal_downsample_ratio = self.dataset_obs_temporal_downsample_ratio
-                ###### add tactile saving
-                # 保存 left_gripper1_marker_offset_emb 到本地 npy 文件，编号从0000开始
-                # if 'left_gripper1_marker_offset_emb' in extended_obs_dict:
-                #     left_marker_emb = extended_obs_dict['left_gripper1_marker_offset_emb']
-                #     if hasattr(left_marker_emb, 'cpu'):
-                #         left_marker_emb_np = left_marker_emb.cpu().numpy()
-                #     else:
-                #         left_marker_emb_np = left_marker_emb
-                #     # 统计当前目录下已有的npy文件数量，命名为 left_gripper1_marker_offset_emb_0000.npy 这样
-                #     existing_files = [f for f in os.listdir(self.save_tac_dir) if f.startswith('left_gripper1_marker_offset_emb_') and f.endswith('.npy')]
-                #     idx = len(existing_files)
-                #     tactile_save_path = osp.join(self.save_tac_dir, f'left_gripper1_marker_offset_emb_{idx:04d}.npy')
-                #     np.save(tactile_save_path, left_marker_emb_np)
-                #     logger.info(f"Saved left_gripper1_marker_offset_emb to {tactile_save_path}")
-                ######
-                torch.cuda.synchronize()
-                before_fast_time = time.time()
                 tcp_step_action = policy.predict_from_latent_action(tcp_step_latent_action, extended_obs_dict, tcp_extended_obs_step, dataset_obs_temporal_downsample_ratio)['action'][0].detach().cpu().numpy()
                 gripper_step_action = policy.predict_from_latent_action(gripper_step_latent_action, extended_obs_dict, gripper_extended_obs_step, dataset_obs_temporal_downsample_ratio)['action'][0].detach().cpu().numpy()
-                torch.cuda.synchronize()
-                after_fast_time = time.time()
-                logger.debug(f"[RealRunner.action_command_thread] fast inference time is {after_fast_time - before_fast_time}")
                 self.fast_cnt += 1
                 # logger.info(f"Slow cnt: {self.latent_cnt}, Fast cnt: {self.fast_cnt}, Step cnt: {self.step_cnt}")
                 if self.use_relative_action:
@@ -405,13 +381,8 @@ class RealRunner:
             self.env.execute_action(step_action, use_relative_action=False, is_bimanual=is_bimanual)
 
             cur_time = time.time()
-            logger.info(f"[RealRunner.action_command_thread] fast total time is {cur_time - start_time}")
             precise_sleep(max(0., self.control_interval_time - (cur_time - start_time)))
             self.action_step_count += 1
-        # DEBUG：试一试clear buffer. clear buffer之后行为好多了
-        logger.info(f"[RealRunner.action_command_thread] clear buffer after every action_command_thread execution to prevent out-of-time")
-        self.tcp_ensemble_buffer.clear()
-        self.gripper_ensemble_buffer.clear()
 
     def start_record_video(self, video_path):
         for vcamera_server_ip, vcamera_server_port in zip(self.vcamera_server_ip_list, self.vcamera_server_port_list):
@@ -469,7 +440,6 @@ class RealRunner:
         try:
             time.sleep(5)
             while True:
-                logger.debug("[RealRunner.run] begin new run step"+"*"*10)
                 self.step_cnt = step_count
                 # profiler = Profiler()
                 # profiler.start()
@@ -499,34 +469,17 @@ class RealRunner:
                                         lambda x: torch.from_numpy(x).unsqueeze(0).to(
                                             device=device))
 
-                torch.cuda.synchronize()
-                before_slow_time = time.time()
+                policy_time = time.time()
                 # run policy
-                reduce_useless_inference = True
-                if reduce_useless_inference:
-                    if (step_count % self.tcp_action_update_interval == 0) or (step_count % self.gripper_action_update_interval == 0):
-                        with torch.no_grad():
-                            if self.use_latent_action_with_rnn_decoder:
-                                logger.debug(f"推理推理, steps_per_inference is {steps_per_inference}")
-                                action_dict = policy.predict_action(obs_dict,
-                                                                    dataset_obs_temporal_downsample_ratio=self.dataset_obs_temporal_downsample_ratio,
-                                                                    return_latent_action=True)
-                            else:
-                                action_dict = policy.predict_action(obs_dict)
-                            self.latent_cnt += 1
-                else:
-                    with torch.no_grad():
-                        if self.use_latent_action_with_rnn_decoder:
-                            logger.debug(f"推理推理, steps_per_inference is {steps_per_inference}")
-                            action_dict = policy.predict_action(obs_dict,
-                                                                dataset_obs_temporal_downsample_ratio=self.dataset_obs_temporal_downsample_ratio,
-                                                                return_latent_action=True)
-                        else:
-                            action_dict = policy.predict_action(obs_dict)
-                        self.latent_cnt += 1
-                torch.cuda.synchronize()
-                after_slow_time = time.time()
-                logger.debug(f"[RealRunner.run] Slow inference time: {after_slow_time - before_slow_time:.3f}s")
+                with torch.no_grad():
+                    if self.use_latent_action_with_rnn_decoder:
+                        action_dict = policy.predict_action(obs_dict,
+                                                            dataset_obs_temporal_downsample_ratio=self.dataset_obs_temporal_downsample_ratio,
+                                                            return_latent_action=True)
+                    else:
+                        action_dict = policy.predict_action(obs_dict)
+                self.latent_cnt += 1
+                logger.debug(f"Policy inference time: {time.time() - policy_time:.3f}s")
 
                 # device_transfer
                 np_action_dict = dict_apply(action_dict,
@@ -566,7 +519,6 @@ class RealRunner:
 
                 # TODO: only takes the first n_action_steps and add to the ensemble buffer
                 if step_count % self.tcp_action_update_interval == 0:
-                    logger.info(f"更新更新, tcp_action_update_interval is {self.tcp_action_update_interval}")
                     if self.use_latent_action_with_rnn_decoder:
                         tcp_action = action_all[self.latency_step:, ...]
                     else:
@@ -611,7 +563,6 @@ class RealRunner:
 
                 cur_time = time.time()
                 precise_sleep(max(0., self.inference_interval_time - (cur_time - start_time)))
-                logger.debug(f"[RealRunner.run] run time is {cur_time - start_time}\n\n\n")
                 if cur_time - start_timestamp >= self.max_duration_time:
                     logger.info(f"Episode reaches max duration time {self.max_duration_time} seconds.")
                     break

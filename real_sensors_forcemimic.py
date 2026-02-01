@@ -21,7 +21,20 @@ import message_filters
 from cv_bridge import CvBridge
 import transforms3d as t3d
 
-
+CAM1_INTRINSIC = np.array([[604.307, 0, 310.155],
+                            [0, 604.662, 251.013],
+                            [0, 0, 1]])
+CAM1_EXTRINSIC = np.array([[-1, 0, 0, 5],
+                           [0, -0.9659, -0.2588, 96.678],
+                           [0, -0.2588, 0.9659, -26.625],
+                           [0, 0, 0, 1]])
+CAM2_INTRINSIC = np.array([[905.998, 0, 651.417],
+                           [0, 905.892, 360.766],
+                           [0, 0, 1]])
+CAM2_EXTRINSIC = np.array([[-0.667935, 0.509141, -0.517803, 612.403564],
+                           [0.725919, 0.455896, -0.487969, 1034.735474],
+                           [-0.013807, -0.709331, -0.682814, 1016.627197],
+                           [0, 0, 0, 1]])
 
 def pose_6d_to_4x4matrix(pose: np.ndarray) -> np.ndarray:
     # convert 6D pose (x, y, z, r, p, y) to 4x4 transformation matrix
@@ -315,6 +328,37 @@ class XArmController:
 
         return pose
 
+def pts_downsample(pointcloud, target_num, mode = 'uniform'):
+    if mode == 'uniform':
+        n = pointcloud.shape[0]
+        if target_num >= n:
+            return pointcloud.copy()
+        idx = np.random.choice(n, target_num, replace=False)
+        return pointcloud[idx]
+    
+def signal_points_to_world(points, s2w):
+    xyz = points[:, :3]
+    xyz = np.dot(xyz, s2w[:3, :3].T) + s2w[:3, 3]
+    if points.shape[1] == 6:
+        rgb = points[:, 3:]
+        return np.concatenate((xyz, rgb), axis=-1)
+    else:
+        return xyz
+
+def depth_image_to_camera_points(depth_image, color_image, intrinsic, mask=None):
+    fx, fy, cx, cy = intrinsic[0,0], intrinsic[1,1], intrinsic[0,2], intrinsic[1,2]
+    height, width = depth_image.shape 
+    u, v = np.meshgrid(np.arange(width), np.arange(height))
+    Z = depth_image
+    X = (u - cx) * Z / fx
+    Y = (v - cy) * Z / fy
+    point_cloud = np.dstack((X, Y, Z))
+    pts = np.concatenate((point_cloud, color_image), axis=-1)
+    if mask is not None:
+        mask = (mask != 0).astype(np.bool).reshape(-1)
+        pts = pts[mask]
+    depth_mask = (depth_image > 0) * (depth_image < 1500)
+    return pts.reshape(-1, 6), depth_mask
 
 class RealRobotEnv:
     def __init__(self,
@@ -334,7 +378,6 @@ class RealRobotEnv:
         self.mutex = threading.Lock()
         self.bridge = CvBridge()
         self.n_obs_steps = n_obs_steps
-
 
     def ros_thread(self):
         self.sub_camera_1_image = message_filters.Subscriber('/camera_1_image', Image)
@@ -380,8 +423,23 @@ class RealRobotEnv:
         deform_emb_2 = (deform2[:,:-1].reshape(-1, 1)[0] - self.left_tac_mean_matrix) @ self.left_tac_transform_matrix
 
         cam1_img = self.bridge.imgmsg_to_cv2(camera_1_image, desired_encoding='bgr8')
-
+        cam2_img = self.bridge.imgmsg_to_cv2(camera_2_image, desired_encoding='bgr8')
         cam2_depth = self.bridge.imgmsg_to_cv2(camera_2_depth, desired_encoding='32FC1')
+        cam2_depth = cam2_depth * 0.25
+
+        # pts process
+        pts, depth_mask = depth_image_to_camera_points(
+                    cam2_depth, 
+                    cam2_img[..., ::-1],  # BGR to RGB
+                    CAM2_INTRINSIC
+                )
+        pts = signal_points_to_world(pts, CAM2_EXTRINSIC)
+        pts_mask = (pts[:, 1] > 300) * (pts[:, 1] < 800) * (pts[:, 0] > -440) * (pts[:, 0] < 350) * (pts[:, 2] > 75) * (pts[:, 2] < 550)
+        pts = pts[pts_mask * depth_mask.reshape(-1,)]
+        pts = pts_downsample(pts, 8192)
+        global_pts = pts.copy().astype(np.float32)
+        global_pts[:, :3] /= 1000.0
+        global_pts = global_pts[:, :3]
 
         tx = xarm_eef.pose.position.x,
         ty = xarm_eef.pose.position.y,
@@ -404,6 +462,7 @@ class RealRobotEnv:
         raw_obs_dict['left_gripper1_tactile'] = np.concatenate((mesh1, deform1), axis=-1)
         raw_obs_dict['left_gripper2_tactile'] = np.concatenate((mesh2, deform2), axis=-1)
         raw_obs_dict['global_depth'] = cam2_depth
+        raw_obs_dict['global_pts'] = global_pts
 
         self.obs_buffer.append_obs(raw_obs_dict)
 

@@ -19,15 +19,24 @@ shape_meta: &shape_meta
     left_robot_gripper_width:
       shape: [1]
       type: low_dim
-    left_gripper1_marker_offset_emb:
+    left_gripper1_marker_offset_emb: # use joint marker
+      shape: [ 15 ]  # the raw dimension is (63*2), we use PCA to reduce the dimension to 15
+      type: low_dim
+    left_gripper2_marker_offset_emb: # use joint marker
       shape: [ 15 ]  # the raw dimension is (63*2), we use PCA to reduce the dimension to 15
       type: low_dim
     global_pts:
       shape: [ 8192 , 3 ]
       type: cloud_point
   action:
-    shape: [25] # (3+6+1+15) (x, y, z, 6d rotation, gripper_width, tactile_emb_15d)
-
+    shape: [40] # (3+6+1+15) (x, y, z, 6d rotation, gripper_width, tactile_emb_15d)
+  tactile:
+    left_gripper1_tactile:
+      shape: [700, 3]
+      type: tac
+    left_gripper2_tactile:
+      shape: [700, 3]
+      type: tac
 
 env_runner:
   _target_: reactive_diffusion_policy.env_runner.real_runner.RealRunner

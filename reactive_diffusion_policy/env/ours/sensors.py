@@ -331,8 +331,8 @@ class RealRobotEnv():
         self.data_processing_manager = DataPostProcessingManager(transforms,
                                                                  **data_processing_params)
         
-        self.left_tac_transform_matrix = np.load(os.path.join(pca_load_dir, 'pca_matrix1.npy'))
-        self.left_tac_mean_matrix = np.load(os.path.join(pca_load_dir, 'pca_mean1.npy'))
+        self.left_tac_transform_matrix = np.load(os.path.join(pca_load_dir, 'pca_matrix_all.npy'))
+        self.left_tac_mean_matrix = np.load(os.path.join(pca_load_dir, 'pca_mean_all.npy'))
 
         self.mutex = threading.Lock()
         self.bridge = CvBridge()
@@ -562,6 +562,7 @@ class RealRobotEnv():
 
             left_action[3:6] = np.rad2deg(left_action[3:6])
             left_tcp_target_6d_in_robot = left_action[:6]
+            print(left_tcp_target_6d_in_robot[:3])
             # logger.debug(f"robot_action: {left_tcp_target_6d_in_robot}")
             # print(f"robot_action: {left_tcp_target_6d_in_robot}")
         self.motor.move_to_pose(left_tcp_target_6d_in_robot)#you can add comment out this line to disable realy control. for debug

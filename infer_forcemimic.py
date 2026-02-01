@@ -8,14 +8,14 @@ import numpy as np
 from termcolor import cprint
 import copy
 import threading
-from real_sensors import RealRobotEnv
+from real_sensors_forcemimic import RealRobotEnv
 ROOT_DIR = str(pathlib.Path(__file__).parent)
 sys.path.append(ROOT_DIR)
 os.chdir(ROOT_DIR)
 from reactive_diffusion_policy.policy.diffusion_unet_image_policy import DiffusionUnetImagePolicy
 
 
-input_key_list = ['left_wrist_img', 'left_robot_tcp_pose', 'left_robot_gripper_width','left_gripper1_marker_offset_emb','left_gripper2_marker_offset_emb']
+input_key_list = ['global_pts', 'left_robot_tcp_pose', 'left_robot_gripper_width','left_gripper1_marker_offset_emb','left_gripper2_marker_offset_emb']
 
 class RealWorldDPInfer:
     def __init__(self, cfg: OmegaConf):

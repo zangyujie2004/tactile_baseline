@@ -53,7 +53,8 @@ start_inference() {
     TACTILE_CMD="python ./xense_pub_node.py"
     
     ### STEP1: move the arm to initial position
-    cd $PROJ_MAIN_DIR && python init_pos.py && python gripper_activate.py
+    cd $PROJ_MAIN_DIR && python gripper_activate.py && python init_pos.py
+    sleep 1 
     
     ### STEP2: Start all nodes
     # 启动触觉发布（同一终端的新标签页）

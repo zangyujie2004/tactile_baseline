@@ -38,7 +38,8 @@ class DiffusionUnetImagePolicy(BaseImagePolicy):
         
         # Determine output action dimension (may be less than action_dim if tactile is included)
         # For kinedex: full action_dim=25 (10 robot + 15 tactile), but output only first 10
-        self.output_action_dim = 10 if action_dim == 25 else action_dim
+        self.robot_action_dim = 10
+        self.output_action_dim = self.robot_action_dim if action_dim in (25, 40) else action_dim
         
         # get feature dim
         obs_feature_dim = obs_encoder.output_shape()[0]

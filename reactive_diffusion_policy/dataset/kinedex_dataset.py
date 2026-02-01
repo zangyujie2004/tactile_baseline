@@ -33,7 +33,7 @@ class RealImageTactileDataset(BaseImageDataset):
                  max_train_episodes=None,
                  delta_action=False,
                  relative_action=False,
-                 relative_tcp_obs_for_relative_action=False,
+                 relative_tcp_obs_for_relative_action=True,
                  transform_params=None,
                  action_quant_bits: int = 0,
                  action_noise_std: float = 0.0,
@@ -86,8 +86,11 @@ class RealImageTactileDataset(BaseImageDataset):
         tactile_keys = [k for k in shape_meta.get('obs', {}).keys() if 'marker_offset_emb' in k]
         if tactile_keys and action_shape_cfg > base_action_vals.shape[1]:
             # Need to concatenate tactile data to action for min/max computation
-            tactile_key = tactile_keys[0]  # use first tactile key
-            tactile_vals = replay_buffer[tactile_key][:].astype(np.float32)
+            tactile_list = []
+            for k in tactile_keys:
+                tactile_list.append(replay_buffer[k][:].astype(np.float32))  # (N, 15)
+
+            tactile_vals = np.concatenate(tactile_list, axis=-1)  # (N, 30) if two keys
             # Concatenate along feature dimension
             full_action_vals = np.concatenate([base_action_vals, tactile_vals], axis=-1)
             action_dim = full_action_vals.shape[1]
@@ -228,8 +231,11 @@ class RealImageTactileDataset(BaseImageDataset):
                 # Need to append tactile data to action
                 tactile_keys = [k for k in self.shape_meta.get('obs', {}).keys() if 'marker_offset_emb' in k]
                 if tactile_keys:
-                    tactile_key = tactile_keys[0]
-                    tactile_data = self.replay_buffer[tactile_key][:]
+                    tactile_list = []
+                    for k in tactile_keys:
+                        tactile_list.append(self.replay_buffer[k][:].astype(np.float32))  # (N, 15)
+                    # (N, 30) for two tactile keys
+                    tactile_data = np.concatenate(tactile_list, axis=-1)
                     print(f"[DEBUG] Concatenating tactile: base_action.shape={base_action.shape}, tactile_data.shape={tactile_data.shape}")
                     # Concatenate along feature dimension
                     action_all = np.concatenate([base_action, tactile_data], axis=-1)
@@ -297,11 +303,13 @@ class RealImageTactileDataset(BaseImageDataset):
         tactile_data_for_action = None
         tactile_keys = [k for k in self.shape_meta.get('obs', {}).keys() if 'marker_offset_emb' in k]
         if tactile_keys:
-            tactile_key = tactile_keys[0]
             # Get raw data slice from replay buffer using sampler's indices for this item
             buffer_start_idx, buffer_end_idx, _, _ = self.sampler.indices[idx]
             indices = np.arange(buffer_start_idx, buffer_end_idx)
-            tactile_data_for_action = self.replay_buffer[tactile_key][indices].astype(np.float32)
+            tactile_list = []
+            for k in tactile_keys:
+                tactile_list.append(self.replay_buffer[k][indices].astype(np.float32))  
+            tactile_data_for_action = np.concatenate(tactile_list, axis=-1)
         
         for key in self.rgb_keys:
             # move channel last to channel first

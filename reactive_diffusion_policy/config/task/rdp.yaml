@@ -32,7 +32,7 @@ shape_meta: &shape_meta
 env_runner:
   _target_: reactive_diffusion_policy.env_runner.real_runner_sync.RealRunner
   eval_episodes: 10
-  max_duration_time: 45
+  max_duration_time: 100
   tcp_action_update_interval: 16
   gripper_action_update_interval: 16
   tcp_pos_clip_range: # no clip for x, y, clip for z
